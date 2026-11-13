@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Han Grup İnşaat | Palplanş, İksa ve Zemin Mühendisliği</title>
+<meta name="description" content="Han Grup İnşaat; palplanş çakma, söküm ve kiralama, fore kazık, ankrajlı iksa ve zemin iyileştirme alanlarında anahtar teslim çözümler sunar.">
+<meta name="theme-color" content="#0b1420">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b1420'/%3E%3Cpath d='M4 20h5l3-8h8l3 8h5' fill='none' stroke='%23f59e0b' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0b1420; --bg-2:#101c2c; --bg-3:#16263a;
+  --line:rgba(255,255,255,.09);
+  --text:#e8eef5; --muted:#93a4b8;
+  --accent:#f59e0b; --accent-2:#ffb938;
+  --steel:#7d93ab; --paper:#f4f6f9; --ink:#0f1b2a;
+  --head:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --wrap:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px;overflow-x:clip}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+.wrap{width:min(var(--wrap),100% - 40px);margin-inline:auto}
+h1,h2,h3{font-family:var(--head);font-weight:700;line-height:1.02;letter-spacing:.005em;text-transform:uppercase}
+h2{font-size:clamp(2.2rem,5vw,3.6rem)}
+h3{font-size:1.5rem;letter-spacing:.02em}
+section{padding:clamp(72px,10vw,128px) 0;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:var(--head);font-weight:600;font-size:1rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--accent)}
+.lead{color:var(--muted);font-size:1.08rem;max-width:62ch;margin-top:18px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--head);font-weight:600;font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 28px;border:2px solid var(--accent);background:var(--accent);color:#14100a;cursor:pointer;transition:transform .25s,background .25s,color .25s,box-shadow .25s;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
+.btn:hover{transform:translateY(-3px);background:var(--accent-2);border-color:var(--accent-2)}
+.btn.ghost{background:transparent;color:var(--text);border-color:rgba(255,255,255,.3)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn svg{width:18px;height:18px;transition:transform .25s}
+.btn:hover svg{transform:translateX(4px)}
+
+/* ---------- Header ---------- */
+header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,box-shadow .3s,padding .3s;padding:18px 0}
+header.scrolled{background:rgba(11,20,32,.92);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line);padding:10px 0}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo svg{width:46px;height:46px;flex:none}
+.logo b{font-family:var(--head);font-size:1.7rem;letter-spacing:.06em;line-height:1;display:block}
+.logo small{font-family:var(--head);font-size:.78rem;letter-spacing:.34em;color:var(--accent);text-transform:uppercase;display:block;margin-top:3px}
+.menu{display:flex;align-items:center;gap:30px}
+.menu a:not(.btn){font-weight:600;font-size:.93rem;color:#c9d5e2;position:relative;padding:6px 0}
+.menu a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .3s}
+.menu a:not(.btn):hover::after,.menu a.active::after{transform:scaleX(1);transform-origin:left}
+.menu a.active{color:#fff}
+.menu .btn{padding:10px 20px;font-size:1rem}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;position:relative}
+.burger span{position:absolute;left:10px;right:10px;height:2px;background:#fff;transition:transform .3s,opacity .3s,top .3s}
+.burger span:nth-child(1){top:14px}.burger span:nth-child(2){top:21px}.burger span:nth-child(3){top:28px}
+.burger[aria-expanded=true] span:nth-child(1){top:21px;transform:rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){opacity:0}
+.burger[aria-expanded=true] span:nth-child(3){top:21px;transform:rotate(-45deg)}
+
+/* ---------- Hero ---------- */
+.hero{min-height:100svh;display:flex;align-items:center;padding:130px 0 0;overflow:hidden;
+  background:radial-gradient(1100px 600px at 85% 10%,rgba(245,158,11,.13),transparent 60%),linear-gradient(180deg,#0b1420 0%,#0e1a2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at 60% 40%,#000 10%,transparent 72%);-webkit-mask-image:radial-gradient(ellipse at 60% 40%,#000 10%,transparent 72%);animation:gridmove 26s linear infinite}
+@keyframes gridmove{to{background-position:64px 64px}}
+.hero-grid{display:grid;grid-template-columns:1.02fr 1fr;gap:40px;align-items:center;position:relative}
+.hero h1{font-size:clamp(3rem,7.4vw,6.2rem)}
+.hero h1 .ln{display:block;overflow:hidden}
+.hero h1 .ln>span{display:block;transform:translateY(105%);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .ln:nth-child(2)>span{animation-delay:.12s}
+.hero h1 .ln:nth-child(3)>span{animation-delay:.24s}
+.hero h1 em{font-style:normal;color:var(--accent)}
+@keyframes rise{to{transform:none}}
+.fade{opacity:0;animation:fadeup .9s .5s forwards}
+.fade.d2{animation-delay:.7s}.fade.d3{animation-delay:.9s}
+@keyframes fadeup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.hero-tags{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:38px;color:var(--muted);font-size:.9rem;font-weight:600}
+.hero-tags li{display:flex;align-items:center;gap:9px}
+.hero-tags li::before{content:"";width:8px;height:8px;background:var(--accent);transform:rotate(45deg)}
+.scene{position:relative;align-self:end}
+.scene svg{width:100%;height:auto;overflow:visible}
+.pile{animation:drive 1.5s cubic-bezier(.5,0,.4,1) both;animation-delay:calc(.9s + var(--i) * .32s)}
+@keyframes drive{0%{transform:translateY(-330px);opacity:0}12%{opacity:1}
+  40%{transform:translateY(-190px)}44%{transform:translateY(-196px)}
+  70%{transform:translateY(-70px)}74%{transform:translateY(-76px)}100%{transform:none;opacity:1}}
+.dig{animation:dig 2.4s 5.6s ease-in-out both;transform-origin:top;transform-box:fill-box}
+@keyframes dig{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.anno{opacity:0;animation:fadeup .8s 7.6s forwards}
+.anno.a2{animation-delay:8s}
+.water{animation:wave 5s ease-in-out infinite alternate}
+@keyframes wave{to{transform:translateX(-24px)}}
+.pulse{animation:pulse 2.2s ease-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes pulse{0%{transform:scale(.5);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+
+/* ---------- Marquee ---------- */
+.marquee{background:var(--accent);color:#17120a;overflow:hidden;padding:14px 0;transform:rotate(-1.2deg) scale(1.03);position:relative;z-index:3}
+.marquee div{display:flex;gap:44px;width:max-content;animation:marq 34s linear infinite;font-family:var(--head);font-weight:700;font-size:1.35rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.marquee span::after{content:"◆";margin-left:44px;font-size:.8em;opacity:.55}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ---------- Stats ---------- */
+.stats{padding:76px 0 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--bg-2)}
+.stat{padding:34px 28px;border-right:1px solid var(--line);position:relative;overflow:hidden}
+.stat:last-child{border-right:0}
+.stat::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.stat:hover::after{transform:scaleX(1)}
+.stat b{white-space:nowrap;font-family:var(--head);font-size:clamp(2.2rem,3.6vw,3.3rem);line-height:1;display:block;color:#fff}
+.stat b i{font-style:normal;color:var(--accent)}
+.stat>span{color:var(--muted);font-weight:600;font-size:.92rem}
+
+/* ---------- Palplanş feature ---------- */
+.feature{background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%)}
+.profile-line{width:100%;height:60px;margin:0 0 46px;color:var(--accent);opacity:.9}
+.profile-line path{stroke-dasharray:3200;stroke-dashoffset:3200;transition:stroke-dashoffset 3s ease}
+.profile-line.in path{stroke-dashoffset:0}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.checks{margin-top:30px;display:grid;gap:14px}
+.checks li{display:flex;gap:14px;align-items:flex-start;color:#cfdae6}
+.checks svg{flex:none;width:24px;height:24px;color:var(--accent);margin-top:2px}
+.methods{display:grid;gap:16px}
+.method{background:var(--bg-3);border:1px solid var(--line);padding:26px 28px 26px 92px;position:relative;transition:transform .35s,border-color .35s,background .35s}
+.method:hover{transform:translateX(10px);border-color:rgba(245,158,11,.55);background:#1a2d44}
+.method .no{position:absolute;left:26px;top:22px;font-family:var(--head);font-weight:700;font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--accent)}
+.method p{color:var(--muted);font-size:.95rem;margin-top:6px}
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:64px}
+.type{border:1px solid var(--line);padding:28px;background:rgba(255,255,255,.02)}
+.type svg{height:54px;width:100%;color:var(--steel);margin-bottom:20px;transition:color .3s}
+.type:hover svg{color:var(--accent)}
+.type p{color:var(--muted);font-size:.93rem;margin-top:8px}
+
+/* ---------- Services ---------- */
+.services{background:var(--paper);color:var(--ink)}
+.services .lead{color:#55657a}
+.head-row{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;margin-bottom:52px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:#fff;padding:32px 26px 30px;position:relative;overflow:hidden;border:1px solid #e1e6ed;transition:transform .35s,box-shadow .35s;isolation:isolate}
+.card::before{content:"";position:absolute;inset:0;background:var(--ink);transform:translateY(101%);transition:transform .45s cubic-bezier(.2,.8,.2,1);z-index:-1}
+.card:hover{transform:translateY(-8px);box-shadow:0 26px 50px -24px rgba(15,27,42,.5)}
+.card:hover::before{transform:none}
+.card:hover h3{color:#fff}.card:hover p{color:#a9b8c9}
+.card .ico{width:52px;height:52px;color:var(--accent);margin-bottom:22px}
+.card h3{transition:color .3s}
+.card p{color:#5b6b7f;font-size:.93rem;margin-top:10px;transition:color .3s}
+.card.main{grid-column:span 2;background:var(--ink);color:#fff;border-color:var(--ink)}
+.card.main::before{background:var(--accent)}
+.card.main p{color:#a9b8c9}
+.card.main:hover h3,.card.main:hover p{color:#17120a}
+.card.main:hover .ico{color:#17120a}
+.card.main .tag{position:absolute;top:22px;right:22px;font-family:var(--head);letter-spacing:.18em;font-size:.82rem;text-transform:uppercase;background:var(--accent);color:#17120a;padding:4px 12px;font-weight:700}
+.card.main:hover .tag{background:#17120a;color:var(--accent)}
+
+/* ---------- Process ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;position:relative}
+.steps::before{content:"";position:absolute;top:27px;left:0;height:2px;width:100%;background:var(--line)}
+.steps::after{content:"";position:absolute;top:27px;left:0;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 2.2s ease .2s}
+.steps.in::after{transform:scaleX(1)}
+.step{padding-right:28px;position:relative;z-index:1}
+.step .dot{width:56px;height:56px;display:grid;place-items:center;background:var(--bg);border:2px solid var(--accent);font-family:var(--head);font-weight:700;font-size:1.5rem;color:var(--accent);transform:rotate(45deg);margin:0 0 34px 8px}
+.step .dot span{transform:rotate(-45deg)}
+.step p{color:var(--muted);font-size:.94rem;margin-top:8px}
+
+/* ---------- Areas ---------- */
+.areas{background:var(--bg-2)}
+.area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}
+.area{position:relative;min-height:250px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border:1px solid var(--line);background:linear-gradient(160deg,#1b2f47,#0f1b2a)}
+.area svg.bgp{position:absolute;inset:auto -10% 0 -10%;width:120%;height:70%;color:rgba(255,255,255,.07);transition:transform .6s,color .4s}
+.area:hover svg.bgp{transform:translateY(-14px);color:rgba(245,158,11,.3)}
+.area .n{position:absolute;top:22px;left:28px;font-family:var(--head);color:var(--accent);letter-spacing:.2em;font-weight:600}
+.area h3,.area p{position:relative}
+.area p{color:var(--muted);font-size:.92rem;margin-top:6px;max-height:0;opacity:0;overflow:hidden;transition:max-height .5s,opacity .4s}
+.area:hover p,.area:focus-within p{max-height:120px;opacity:1}
+
+/* ---------- Why ---------- */
+.why-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+.why-list{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.why{padding:26px;border:1px solid var(--line);background:var(--bg-2);transition:border-color .3s,transform .3s}
+.why:hover{border-color:var(--accent);transform:translateY(-5px)}
+.why svg{width:34px;height:34px;color:var(--accent);margin-bottom:14px}
+.why p{color:var(--muted);font-size:.92rem;margin-top:6px}
+
+/* ---------- FAQ ---------- */
+.faq{background:var(--paper);color:var(--ink)}
+.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px}
+details{border-bottom:1px solid #d5dce6}
+summary{list-style:none;cursor:pointer;padding:22px 44px 22px 0;font-weight:700;font-size:1.05rem;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-family:var(--head);font-size:2rem;color:var(--accent);transition:transform .3s}
+details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+details p{padding:0 0 24px;color:#55657a;max-width:64ch}
+
+/* ---------- CTA + Contact ---------- */
+.contact{background:linear-gradient(180deg,var(--bg-2),var(--bg))}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+.info{display:grid;gap:18px;margin-top:36px}
+.info a,.info div{display:flex;gap:16px;align-items:center;padding:18px 20px;border:1px solid var(--line);background:rgba(255,255,255,.02);transition:border-color .3s,transform .3s}
+.info a:hover{border-color:var(--accent);transform:translateX(6px)}
+.info svg{width:26px;height:26px;color:var(--accent);flex:none}
+.info small{display:block;color:var(--muted);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.info b{font-weight:600}
+form{background:var(--bg-3);border:1px solid var(--line);padding:clamp(24px,4vw,40px);display:grid;gap:16px;grid-template-columns:1fr 1fr}
+form h3{grid-column:1/-1;margin-bottom:6px}
+label{display:grid;gap:7px;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+label.full{grid-column:1/-1}
+input,select,textarea{font:inherit;font-size:1rem;letter-spacing:0;text-transform:none;color:var(--text);background:var(--bg);border:1px solid var(--line);padding:13px 14px;outline:0;transition:border-color .25s,box-shadow .25s;width:100%;border-radius:0}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(245,158,11,.18)}
+textarea{min-height:120px;resize:vertical}
+form .btn{grid-column:1/-1;justify-content:center}
+form .note{grid-column:1/-1;font-size:.82rem;color:var(--muted)}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);padding:56px 0 28px;background:#080f18}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+.foot p{color:var(--muted);font-size:.92rem;margin-top:16px;max-width:42ch}
+.foot h4{font-family:var(--head);letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-size:1rem;margin-bottom:14px}
+.foot li{margin-bottom:8px;color:#b4c2d2;font-size:.93rem}
+.foot li a:hover{color:var(--accent)}
+.copy{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.fab{position:fixed;right:20px;bottom:20px;z-index:40;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .3s}
+.fab:hover{transform:scale(1.1)}
+.fab svg{width:30px;height:30px;color:#fff}
+.top{position:fixed;right:24px;bottom:90px;z-index:40;width:48px;height:48px;background:var(--bg-3);border:1px solid var(--line);color:#fff;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(10px)}
+.top.show{opacity:1;pointer-events:auto;transform:none}
+.top:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ---------- Reveal ---------- */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--d,0) * 90ms)}
+.rv.left{transform:translateX(-40px)}.rv.right{transform:translateX(40px)}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:1020px){
+  .hero-grid,.feature-grid,.why-grid,.faq-grid,.contact-grid{grid-template-columns:1fr;gap:44px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .steps{grid-template-columns:1fr 1fr;row-gap:40px}.steps::before,.steps::after{display:none}
+  .area-grid,.types{grid-template-columns:1fr 1fr}
+  .foot{grid-template-columns:1fr 1fr}
+  .burger{display:block}
+  header.scrolled{backdrop-filter:none;background:rgba(11,20,32,.97)}
+  .menu{position:fixed;inset:0;background:#080f18;flex-direction:column;justify-content:center;gap:26px;transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);z-index:-1}
+  .menu.open{transform:none}
+  .menu a:not(.btn){font-family:var(--head);font-size:1.9rem;text-transform:uppercase;letter-spacing:.08em}
+  .area p{max-height:none;opacity:1}
+}
+@media (max-width:620px){
+  .cards,.area-grid,.types,.why-list,.steps,.foot{grid-template-columns:1fr}
+  .card.main{grid-column:auto}
+  form{grid-template-columns:1fr}
+  .hero{padding-top:110px}
+  .method{padding-left:78px}.method .no{left:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#top" class="logo" aria-label="Han Grup İnşaat ana sayfa">
+      <svg viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" stroke="#f59e0b" stroke-width="2"/><path d="M5 29h7l4-12h14l4 12h7" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/><path d="M5 36h36" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3 3"/></svg>
+      <span><b>HAN GRUP</b><small>İnşaat</small></span>
+    </a>
+    <nav class="menu" id="menu">
+      <a href="#palplans">Palplanş</a>
+      <a href="#hizmetler">Hizmetler</a>
+      <a href="#surec">Süreç</a>
+      <a href="#alanlar">Uygulama Alanları</a>
+      <a href="#neden">Kurumsal</a>
+      <a href="#sss">S.S.S.</a>
+      <a href="#iletisim" class="btn">Teklif Al</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menü" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow fade">Palplanş · İksa · Zemin Mühendisliği</div>
+      <h1>
+        <span class="ln"><span>Zemini</span></span>
+        <span class="ln"><span><em>çelikle</em></span></span>
+        <span class="ln"><span>güvenceye alıyoruz</span></span>
+      </h1>
+      <p class="lead fade d2">Han Grup İnşaat; palplanş çakma, söküm ve kiralamadan fore kazık ve ankrajlı iksa sistemlerine kadar derin kazı projelerinizi keşiften teslime tek elden yönetir.</p>
+      <div class="cta fade d3">
+        <a href="#iletisim" class="btn">Ücretsiz Keşif İste <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#palplans" class="btn ghost">Palplanş Çözümleri</a>
+      </div>
+      <ul class="hero-tags fade d3">
+        <li>Vibro çakma &amp; hidrolik baskı</li>
+        <li>Satış · Kiralama · Söküm</li>
+        <li>Projelendirme desteği</li>
+      </ul>
+    </div>
+
+    <!-- Animated sheet-pile scene -->
+    <div class="scene" aria-hidden="true">
+      <svg viewBox="0 0 600 560">
+        <defs>
+          <linearGradient id="steel" x1="0" x2="1"><stop offset="0" stop-color="#5d7088"/><stop offset=".5" stop-color="#a9bbcf"/><stop offset="1" stop-color="#4c5e75"/></linearGradient>
+          <linearGradient id="steel2" x1="0" x2="1"><stop offset="0" stop-color="#3f5068"/><stop offset=".5" stop-color="#7d91a9"/><stop offset="1" stop-color="#35465c"/></linearGradient>
+          <linearGradient id="soil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2f22"/><stop offset="1" stop-color="#1c1712"/></linearGradient>
+          <pattern id="hatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><path d="M0 0v14" stroke="rgba(255,255,255,.07)" stroke-width="2"/></pattern>
+          <clipPath id="pit"><rect x="20" y="230" width="560" height="330"/></clipPath>
+        </defs>
+        <!-- soil -->
+        <rect x="0" y="230" width="600" height="330" fill="url(#soil)"/>
+        <rect x="0" y="230" width="600" height="330" fill="url(#hatch)"/>
+        <!-- piles -->
+        <g id="piles"></g>
+        <!-- soil in front (semi transparent) -->
+        <rect x="0" y="230" width="600" height="330" fill="#241c14" opacity=".62"/>
+        <!-- excavated pit revealing the wall -->
+        <g clip-path="url(#pit)">
+          <g class="dig">
+            <rect x="20" y="230" width="560" height="170" fill="#0c1622"/>
+            <use href="#piles" />
+            <rect x="20" y="230" width="560" height="170" fill="rgba(11,20,32,.18)"/>
+            <path class="water" d="M0 386q15-8 30 0t30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0 30 0V402H0z" fill="rgba(56,146,214,.35)"/>
+          </g>
+        </g>
+        <path d="M0 230h600" stroke="#f59e0b" stroke-width="2" stroke-dasharray="8 6"/>
+        <!-- annotations -->
+        <g class="anno" font-family="Barlow Condensed,sans-serif" font-weight="600" letter-spacing="2">
+          <path d="M590 70v160M582 70h16M582 230h16" stroke="#93a4b8" stroke-width="1.5" fill="none"/>
+          <text x="-198" y="578" transform="rotate(-90)" fill="#93a4b8" font-size="15">ÇAKMA KOTU</text>
+          <text x="6" y="220" fill="#f59e0b" font-size="15" stroke="#0b1420" stroke-width="5" paint-order="stroke">ZEMİN KOTU ±0.00</text>
+        </g>
+        <g class="anno a2">
+          <circle class="pulse" cx="300" cy="316" r="9" fill="none" stroke="#f59e0b" stroke-width="2"/>
+          <circle cx="300" cy="316" r="5" fill="#f59e0b"/>
+          <path d="M300 316l56-52h118" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
+          <text x="360" y="256" fill="#fff" font-family="Barlow Condensed,sans-serif" font-weight="600" font-size="17" letter-spacing="2">SIZDIRMAZ KİLİT SİSTEMİ</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div id="marq"></div></div>
+
+<!-- ================= STATS ================= -->
+<!-- NOT: Aşağıdaki rakamlar örnek değerlerdir; data-count değerlerini firmanızın gerçek verileriyle güncelleyin. -->
+<section class="stats">
+  <div class="wrap stats-grid">
+    <div class="stat rv"><b><span data-count="15">0</span><i>+</i></b><span>Yıllık saha deneyimi</span></div>
+    <div class="stat rv" style="--d:1"><b><span data-count="250">0</span><i>+</i></b><span>Tamamlanan proje</span></div>
+    <div class="stat rv" style="--d:2"><b><span data-count="120000">0</span><i> m²</i></b><span>Palplanş perde imalatı</span></div>
+    <div class="stat rv" style="--d:3"><b><span data-count="40">0</span><i>+</i></b><span>İl genelinde uygulama</span></div>
+  </div>
+</section>
+
+<!-- ================= PALPLANŞ ================= -->
+<section class="feature" id="palplans">
+  <div class="wrap">
+    <svg class="profile-line" viewBox="0 0 1200 60" preserveAspectRatio="none" fill="none" aria-hidden="true">
+      <path d="M0 48h30l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h30" stroke="currentColor" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="feature-grid">
+      <div class="rv left">
+        <div class="eyebrow">Uzmanlık alanımız</div>
+        <h2>Palplanş<br>uygulamaları</h2>
+        <p class="lead">Palplanş; birbirine kilitlenen çelik profillerin zemine çakılmasıyla oluşturulan, toprak ve suyu aynı anda tutan perde sistemidir. Yüksek yeraltı suyu, dar şantiye alanı ve sıkışık iş programlarında en hızlı ve en ekonomik iksa çözümüdür.</p>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg><span><b>Hızlı imalat:</b> priz süresi beklenmez, çakılan perde aynı gün yük alır.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg><span><b>Su geçirimsizlik:</b> kilitli birleşimler yeraltı suyunu kazı çukurundan uzak tutar.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg><span><b>Geri kazanım:</b> geçici işlerde profiller sökülür ve yeniden kullanılır; maliyet düşer.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg><span><b>Dar alanda çalışma:</b> komşu yapılara yakın, sınırlı parsellerde uygulanabilir.</span></li>
+        </ul>
+        <a href="#iletisim" class="btn" style="margin-top:34px">Palplanş Teklifi Al <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="methods">
+        <div class="method rv right"><span class="no">01</span><h3>Vibrasyonlu çakma</h3><p>Ekskavatöre monte veya vinç askılı vibro çekiçlerle, kumlu ve gevşek zeminlerde yüksek üretim hızıyla palplanş çakımı.</p></div>
+        <div class="method rv right" style="--d:1"><span class="no">02</span><h3>Hidrolik baskı (sessiz çakma)</h3><p>Titreşime ve gürültüye hassas kent içi projelerde, komşu yapıları etkilemeden hidrolik presle sürme yöntemi.</p></div>
+        <div class="method rv right" style="--d:2"><span class="no">03</span><h3>Ön delgili çakma</h3><p>Sert ve sıkı zeminlerde burgu ile ön delgi yapılarak profilin proje kotuna hasarsız indirilmesi.</p></div>
+        <div class="method rv right" style="--d:3"><span class="no">04</span><h3>Söküm ve kiralama</h3><p>İş bitiminde profillerin sökülmesi; proje süresine göre palplanş kiralama, satış ve geri alım seçenekleri.</p></div>
+      </div>
+    </div>
+
+    <div class="types">
+      <div class="type rv">
+        <svg viewBox="0 0 300 54" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M6 46h22l16-38h52l16 38h44l16-38h52l16 38h22"/></svg>
+        <h3>U tipi profiller</h3><p>Geçici iksa ve batardolarda en yaygın tip. Tekrar kullanıma uygun, çakımı ve sökümü kolaydır.</p>
+      </div>
+      <div class="type rv" style="--d:1">
+        <svg viewBox="0 0 300 54" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M6 46h40l26-38h44l26 38h16l26-38h44l26 38h40"/></svg>
+        <h3>Z tipi profiller</h3><p>Yüksek atalet momenti ile derin kazılar, rıhtım duvarları ve kalıcı perdeler için tercih edilir.</p>
+      </div>
+      <div class="type rv" style="--d:2">
+        <svg viewBox="0 0 300 54" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M6 27h288M40 14v26M110 14v26M180 14v26M250 14v26"/></svg>
+        <h3>Kuşak ve destek sistemleri</h3><p>Çelik kuşak kirişleri, boru destekler ve ankrajlarla perdenin proje yüklerine göre desteklenmesi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="services" id="hizmetler">
+  <div class="wrap">
+    <div class="head-row">
+      <div class="rv"><div class="eyebrow">Hizmetlerimiz</div><h2>Derin kazıda<br>tek adres</h2></div>
+      <p class="lead rv" style="--d:1">Zemin etüdünden iksa projesine, imalattan söküme kadar tüm kalemleri kendi ekip ve ekipmanımızla yürütüyoruz.</p>
+    </div>
+    <div class="cards">
+      <article class="card main rv"><span class="tag">Ana faaliyet</span>
+        <svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M4 30h8l5-14h18l5 14h8"/><path d="M14 4v8M26 4v8M38 4v8M4 44h44" stroke-dasharray="4 4"/></svg>
+        <h3>Palplanş çakma, söküm ve kiralama</h3><p>U ve Z tipi çelik palplanşlarla geçici ve kalıcı perde imalatı. Vibro çakma, hidrolik baskı, ön delgili uygulama; satış, kiralama ve geri alım.</p></article>
+      <article class="card rv" style="--d:1">
+        <svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6"><circle cx="14" cy="26" r="8"/><circle cx="38" cy="26" r="8"/><path d="M26 4v44" stroke-dasharray="4 4"/></svg>
+        <h3>Fore kazık</h3><p>Farklı çaplarda betonarme fore kazık imalatı; temel kazıkları ve kazıklı perde sistemleri.</p></article>
+      <article class="card rv" style="--d:2">
+        <svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M12 4v44M12 14l30 14M12 30l30 14"/><path d="M38 24l6 6M38 40l6 6"/></svg>
+        <h3>Ankrajlı iksa</h3><p>Öngermeli zemin ankrajları, kuşak kirişleri ve destek sistemleriyle derin kazı güvenliği.</p></article>
+      <article class="card rv">
+        <svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M26 4v20"/><path d="M26 24c-12 6-16 14-16 22h32c0-8-4-16-16-22z"/></svg>
+        <h3>Jet grout</h3><p>Yüksek basınçlı enjeksiyonla zemin iyileştirme, geçirimsizlik perdesi ve taban tıkacı.</p></article>
+      <article class="card rv" style="--d:1">
+        <svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M10 4v44M22 4v36M34 4v44M46 4v30"/></svg>
+        <h3>Mini kazık</h3><p>Dar alanlarda ve mevcut yapı güçlendirmelerinde küçük çaplı kazık uygulamaları.</p></article>
+      <article class="card rv" style="--d:2">
+        <svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M4 12h12l6 28h8l6-28h12"/><path d="M4 46h44" stroke-dasharray="4 4"/></svg>
+        <h3>Kazı ve hafriyat</h3><p>İksa ile eş zamanlı kademeli kazı, hafriyat nakli ve susuzlaştırma (drenaj) işleri.</p></article>
+      <article class="card rv" style="--d:3">
+        <svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M8 44V8h24l12 12v24z"/><path d="M16 34l8-10 6 6 6-8"/></svg>
+        <h3>Proje ve danışmanlık</h3><p>Zemin verilerine göre iksa sistemi seçimi, statik hesap ve uygulama projelerinin hazırlanması.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section id="surec">
+  <div class="wrap">
+    <div class="rv"><div class="eyebrow">Çalışma sürecimiz</div><h2>Keşiften teslime<br>dört adım</h2></div>
+    <div class="steps" id="steps">
+      <div class="step rv"><div class="dot"><span>1</span></div><h3>Keşif ve zemin analizi</h3><p>Sahayı yerinde inceliyor, zemin etüdü ve çevre yapı koşullarını değerlendiriyoruz.</p></div>
+      <div class="step rv" style="--d:1"><div class="dot"><span>2</span></div><h3>Projelendirme ve teklif</h3><p>En uygun profil, boy ve çakma yöntemini belirleyip net, kalem kalem teklif sunuyoruz.</p></div>
+      <div class="step rv" style="--d:2"><div class="dot"><span>3</span></div><h3>Uygulama</h3><p>Kendi makine parkımız ve deneyimli operatörlerimizle iş programına sadık imalat.</p></div>
+      <div class="step rv" style="--d:3"><div class="dot"><span>4</span></div><h3>Söküm ve teslim</h3><p>İş bitiminde palplanşların sökümü, saha temizliği ve as-built dokümantasyonu.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AREAS ================= -->
+<section class="areas" id="alanlar">
+  <div class="wrap">
+    <div class="head-row" style="margin-bottom:0">
+      <div class="rv"><div class="eyebrow">Uygulama alanları</div><h2>Palplanş nerede<br>kullanılır?</h2></div>
+      <p class="lead rv" style="--d:1">Temel çukurundan liman rıhtımına; suyun ve zeminin kontrol altına alınması gereken her projede.</p>
+    </div>
+    <div class="area-grid" id="areas"></div>
+  </div>
+</section>
+
+<!-- ================= WHY ================= -->
+<section id="neden">
+  <div class="wrap why-grid">
+    <div class="rv left">
+      <div class="eyebrow">Neden Han Grup</div>
+      <h2>Sahada güven,<br>teslimde söz</h2>
+      <p class="lead">Derin kazı; hata payı olmayan bir iştir. Her projeye mühendislik hesabı, doğru ekipman ve iş güvenliği kültürüyle yaklaşıyor; verdiğimiz termin ve bütçeye sadık kalıyoruz.</p>
+      <a href="#iletisim" class="btn ghost" style="margin-top:30px">Bizimle çalışın</a>
+    </div>
+    <div class="why-list">
+      <div class="why rv"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 3l12 5v8c0 8-5 13-12 15C10 29 5 24 5 16V8z"/><path d="M11 17l4 4 8-9"/></svg><h3>İş güvenliği önce</h3><p>Her şantiyede risk analizi, eğitimli ekip ve düzenli denetim.</p></div>
+      <div class="why rv" style="--d:1"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="17" cy="17" r="13"/><path d="M17 9v8l6 4"/></svg><h3>Zamanında teslim</h3><p>Gerçekçi iş programı ve yedekli ekipman planlaması.</p></div>
+      <div class="why rv"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 26h28M6 26V14h9v12M15 26V8h7l6 8v10"/></svg><h3>Kendi makine parkı</h3><p>Vibro çekiçler, hidrolik presler ve delgi makineleri bünyemizde.</p></div>
+      <div class="why rv" style="--d:1"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M5 29V5h16l8 8v16z"/><path d="M11 15h12M11 21h12"/></svg><h3>Şeffaf teklif</h3><p>Sürpriz kalemler yok; metraj ve birim fiyat baştan net.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq" id="sss">
+  <div class="wrap faq-grid">
+    <div class="rv"><div class="eyebrow">Sık sorulan sorular</div><h2>Merak<br>edilenler</h2><p class="lead" style="color:#55657a">Aradığınız yanıtı bulamadıysanız bize ulaşın; projenize özel bilgi verelim.</p></div>
+    <div class="rv" style="--d:1">
+      <details open><summary>Palplanş hangi durumlarda tercih edilmelidir?</summary><p>Yeraltı su seviyesinin yüksek olduğu, kazı çukurunun kuru tutulması gereken, şantiye alanının dar ve sürenin kısıtlı olduğu projelerde palplanş çoğu zaman en hızlı ve ekonomik çözümdür.</p></details>
+      <details><summary>Palplanş kiralamak mı, satın almak mı daha avantajlı?</summary><p>Geçici iksalarda profiller iş bitiminde söküldüğü için kiralama genellikle daha ekonomiktir. Kalıcı perde ve rıhtım yapılarında ise satın alma tercih edilir. Proje süresine göre her iki seçeneği de karşılaştırmalı olarak sunuyoruz.</p></details>
+      <details><summary>Çakım sırasında komşu binalar zarar görür mü?</summary><p>Titreşime hassas bölgelerde yüksek frekanslı vibro çekiçler veya titreşimsiz hidrolik baskı yöntemi kullanılır. Yöntem seçimi keşif aşamasında çevre yapıların durumu değerlendirilerek yapılır.</p></details>
+      <details><summary>Sert zeminde palplanş çakılabilir mi?</summary><p>Evet. Sıkı ve sert zeminlerde burgu ile ön delgi yapılarak profilin proje kotuna hasar görmeden inmesi sağlanır.</p></details>
+      <details><summary>Teklif için hangi bilgilere ihtiyacınız var?</summary><p>Zemin etüt raporu, kazı derinliği, kazı çevre uzunluğu ve proje konumu ilk teklif için yeterlidir. Eksik veriler için ücretsiz keşif yapıyoruz.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact" id="iletisim">
+  <div class="wrap contact-grid">
+    <div class="rv left">
+      <div class="eyebrow">İletişim</div>
+      <h2>Projenizi<br>konuşalım</h2>
+      <p class="lead">Kazı derinliğini ve konumu paylaşın; en kısa sürede keşif planlayıp teklifimizi iletelim.</p>
+      <div class="info">
+        <a data-tel><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2z"/></svg><span><small>Telefon</small><b data-f="phone"></b></span></a>
+        <a data-mail><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 6 9-6"/></svg><span><small>E-posta</small><b data-f="email"></b></span></a>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.800 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span><small>Adres</small><b data-f="address"></b></span></div>
+      </div>
+    </div>
+    <form id="form" class="rv right" novalidate>
+      <h3>Teklif formu</h3>
+      <label>Ad Soyad<input name="ad" required autocomplete="name"></label>
+      <label>Telefon<input name="tel" type="tel" required autocomplete="tel"></label>
+      <label class="full">Hizmet
+        <select name="hizmet">
+          <option>Palplanş çakma / söküm</option><option>Palplanş kiralama / satış</option><option>Fore kazık</option><option>Ankrajlı iksa</option><option>Jet grout / zemin iyileştirme</option><option>Diğer</option>
+        </select></label>
+      <label>Proje konumu<input name="konum" placeholder="İl / ilçe"></label>
+      <label>Kazı derinliği (m)<input name="derinlik" inputmode="decimal"></label>
+      <label class="full">Mesajınız<textarea name="mesaj"></textarea></label>
+      <button class="btn" type="submit">WhatsApp ile gönder <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <p class="note" id="note">Form, bilgilerinizi hazır bir mesaj olarak WhatsApp'ta açar.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#top" class="logo"><svg viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" stroke="#f59e0b" stroke-width="2"/><path d="M5 29h7l4-12h14l4 12h7" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/></svg><span><b>HAN GRUP</b><small>İnşaat</small></span></a>
+        <p>Palplanş, fore kazık, ankrajlı iksa ve zemin iyileştirme alanlarında anahtar teslim derin kazı çözümleri.</p>
+      </div>
+      <div><h4>Hizmetler</h4><ul><li><a href="#palplans">Palplanş çakma &amp; söküm</a></li><li><a href="#palplans">Palplanş kiralama</a></li><li><a href="#hizmetler">Fore kazık</a></li><li><a href="#hizmetler">Ankrajlı iksa</a></li><li><a href="#hizmetler">Jet grout</a></li></ul></div>
+      <div><h4>İletişim</h4><ul><li data-f="phone"></li><li data-f="email"></li><li data-f="address"></li></ul></div>
+    </div>
+    <div class="copy"><span>© <span id="yr"></span> Han Grup İnşaat. Tüm hakları saklıdır.</span><span>Palplanş · İksa · Zemin Mühendisliği</span></div>
+  </div>
+</footer>
+
+<a class="fab" data-wa aria-label="WhatsApp ile yazın" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.600 15.100L2 22l5.100-1.300A10 10 0 1012 2zm5.800 14.200c-.250.700-1.400 1.300-2 1.400-.500.100-1.200.100-1.900-.100a17 17 0 01-1.700-.600c-3-1.300-5-4.300-5.100-4.500-.200-.200-1.200-1.600-1.200-3.100s.800-2.200 1-2.500c.300-.300.600-.300.800-.300h.600c.200 0 .450-.100.700.500l.900 2.200c.100.200.100.400 0 .600l-.300.500-.500.500c-.150.200-.300.350-.100.650.200.300.800 1.300 1.700 2.100 1.150 1 2.100 1.350 2.400 1.500.300.150.500.100.650-.050l.900-1.100c.200-.300.400-.250.650-.150l2.100 1c.300.150.500.200.550.350.100.100.100.700-.150 1.400z"/></svg></a>
+<button class="top" id="toTop" aria-label="Yukarı çık">↑</button>
+
+<script>
+/* ====== FİRMA BİLGİLERİ — yalnızca burayı düzenleyin ====== */
+const FIRMA = {
+  phone:   "0 (5XX) XXX XX XX",          // görünen telefon
+  phoneRaw:"905XXXXXXXXX",               // ülke koduyla, boşluksuz (tel: ve WhatsApp için)
+  email:   "info@firmaniz.com",
+  address: "Adres bilginizi buraya yazın"
+};
+
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+/* contact fields */
+$$("[data-f]").forEach(e => e.textContent = FIRMA[e.dataset.f]);
+$("[data-tel]").href = "tel:+" + FIRMA.phoneRaw;
+$("[data-mail]").href = "mailto:" + FIRMA.email;
+$("[data-wa]").href = "https://wa.me/" + FIRMA.phoneRaw;
+$("#yr").textContent = new Date().getFullYear();
+
+/* hero piles */
+const NS = "http://www.w3.org/2000/svg", piles = $("#piles");
+for (let i = 0; i < 14; i++) {
+  const g = document.createElementNS(NS, "g");
+  g.setAttribute("class", "pile"); g.style.setProperty("--i", i);
+  const x = 20 + i * 40, hi = i % 2 === 0;
+  g.innerHTML = `<rect x="${x}" y="70" width="40" height="440" fill="url(#${hi ? "steel" : "steel2"})"/>
+    <rect x="${x + (hi ? 6 : 0)}" y="70" width="${hi ? 28 : 40}" height="440" fill="rgba(255,255,255,${hi ? .1 : 0})"/>
+    <path d="M${x} 70v440" stroke="#1d2a3a" stroke-width="2"/>
+    <circle cx="${x + 20}" cy="92" r="5" fill="#0b1420"/>
+    <rect x="${x}" y="70" width="40" height="5" fill="#f59e0b" opacity=".85"/>`;
+  piles.appendChild(g);
+}
+
+/* marquee */
+const words = ["Palplanş çakma", "Palplanş söküm", "Palplanş kiralama", "Fore kazık", "Ankrajlı iksa", "Jet grout", "Mini kazık", "Derin kazı", "Zemin iyileştirme"];
+$("#marq").innerHTML = [...words, ...words].map(w => `<span>${w}</span>`).join("");
+
+/* application areas */
+const areas = [
+  ["Derin temel kazıları", "Bina ve AVM bodrum kazılarında toprak ve suyu tutan geçici iksa perdeleri."],
+  ["Liman ve rıhtım yapıları", "Rıhtım duvarları, iskeleler ve kıyı koruma yapılarında kalıcı çelik perdeler."],
+  ["Dere ıslahı ve taşkın koruma", "Dere yatağı düzenlemeleri, şev stabilitesi ve taşkın duvarları."],
+  ["Altyapı ve kanal kazıları", "Kanalizasyon, kolektör ve boru hattı kazılarında hızlı kurulup sökülen iksa."],
+  ["Köprü ayağı batardoları", "Su içinde kuru çalışma alanı oluşturan batardo (cofferdam) imalatları."],
+  ["Arıtma ve terfi tesisleri", "Yüksek yeraltı suyu altında derin havuz ve yapı kazıları."]
+];
+$("#areas").innerHTML = areas.map(([t, p], i) => `<article class="area rv" style="--d:${i % 3}" tabindex="0">
+  <span class="n">0${i + 1}</span>
+  <svg class="bgp" viewBox="0 0 400 160" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" preserveAspectRatio="none"><path d="M0 130h30l20-90h60l20 90h50l20-90h60l20 90h50l20-90h60l20 90h30"/></svg>
+  <h3>${t}</h3><p>${p}</p></article>`).join("");
+
+/* header + back-to-top + active link */
+const hdr = $("#hdr"), toTop = $("#toTop");
+const onScroll = () => { const y = scrollY; hdr.classList.toggle("scrolled", y > 30); toTop.classList.toggle("show", y > 700); };
+addEventListener("scroll", onScroll, { passive: true }); onScroll();
+toTop.onclick = () => scrollTo({ top: 0, behavior: "smooth" });
+
+const burger = $("#burger"), menu = $("#menu");
+const setMenu = o => { menu.classList.toggle("open", o); burger.setAttribute("aria-expanded", o); document.body.style.overflow = o ? "hidden" : ""; };
+burger.onclick = () => setMenu(!menu.classList.contains("open"));
+$$("a", menu).forEach(a => a.addEventListener("click", () => setMenu(false)));
+
+const links = $$('.menu a[href^="#"]:not(.btn)');
+const spy = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id));
+}), { rootMargin: "-45% 0px -50% 0px" });
+$$("section[id]").forEach(s => spy.observe(s));
+
+/* reveal + counters */
+const fmt = n => n.toLocaleString("tr-TR");
+const count = el => {
+  const end = +el.dataset.count, t0 = performance.now(), dur = 1800;
+  const tick = t => { const p = Math.min((t - t0) / dur, 1); el.textContent = fmt(Math.round(end * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+};
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add("in");
+  $$("[data-count]", e.target).forEach(count);
+  io.unobserve(e.target);
+}), { threshold: .15 });
+$$(".rv, .profile-line, .steps").forEach(e => io.observe(e));
+
+/* form -> WhatsApp */
+$("#form").addEventListener("submit", ev => {
+  ev.preventDefault();
+  const f = ev.target, note = $("#note");
+  if (!f.ad.value.trim() || !f.tel.value.trim()) { note.textContent = "Lütfen ad soyad ve telefon alanlarını doldurun."; note.style.color = "#ffb938"; (f.ad.value.trim() ? f.tel : f.ad).focus(); return; }
+  const msg = `Merhaba, teklif almak istiyorum.\nAd Soyad: ${f.ad.value}\nTelefon: ${f.tel.value}\nHizmet: ${f.hizmet.value}\nKonum: ${f.konum.value || "-"}\nKazı derinliği: ${f.derinlik.value || "-"} m\nMesaj: ${f.mesaj.value || "-"}`;
+  open("https://wa.me/" + FIRMA.phoneRaw + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
+  note.textContent = "Teşekkürler! WhatsApp penceresi açıldı; mesajı göndererek talebinizi tamamlayın."; note.style.color = "";
+});
+</script>
+</body>
+</html>
