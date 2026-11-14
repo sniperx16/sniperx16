@@ -3,758 +3,287 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Han Grup Yazılım İnşaat | Altyapı, Palplanş İksa ve Arıtma Tesisleri</title>
+<title>Han Grup Yazılım İnşaat</title>
 <meta name="description" content="Han Grup Yazılım İnşaat; palplanş iksa sistemleri, içme suyu isale hatları, kanalizasyon ve yağmursuyu şebekeleri, kanal hattı görüntüleme ile atık su ve içme suyu arıtma tesisleri inşaatı.">
-<meta name="theme-color" content="#0b1420">
+<meta name="theme-color" content="#16202c">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="tr_TR">
 <meta property="og:title" content="Han Grup Yazılım İnşaat | Altyapı, Palplanş İksa ve Arıtma Tesisleri">
 <meta property="og:description" content="Palplanş iksa, su ve kanalizasyon hatları, arıtma tesisleri: altyapı projelerinde keşiften devreye almaya tek elden çözüm.">
 <meta property="og:image" content="assets/img/hero-batardo.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b1420'/%3E%3Cpath d='M4 20h5l3-8h8l3 8h5' fill='none' stroke='%23f59e0b' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
-<style>
-@font-face{font-family:"Barlow Condensed";font-weight:500;font-display:swap;src:url(assets/fonts/barlow-condensed-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-@font-face{font-family:"Barlow Condensed";font-weight:500;font-display:swap;src:url(assets/fonts/barlow-condensed-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:"Barlow Condensed";font-weight:600;font-display:swap;src:url(assets/fonts/barlow-condensed-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-@font-face{font-family:"Barlow Condensed";font-weight:600;font-display:swap;src:url(assets/fonts/barlow-condensed-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:"Barlow Condensed";font-weight:700;font-display:swap;src:url(assets/fonts/barlow-condensed-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-@font-face{font-family:"Barlow Condensed";font-weight:700;font-display:swap;src:url(assets/fonts/barlow-condensed-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:"Manrope";font-weight:400;font-display:swap;src:url(assets/fonts/manrope-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-@font-face{font-family:"Manrope";font-weight:400;font-display:swap;src:url(assets/fonts/manrope-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:"Manrope";font-weight:500;font-display:swap;src:url(assets/fonts/manrope-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-@font-face{font-family:"Manrope";font-weight:500;font-display:swap;src:url(assets/fonts/manrope-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:"Manrope";font-weight:600;font-display:swap;src:url(assets/fonts/manrope-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-@font-face{font-family:"Manrope";font-weight:600;font-display:swap;src:url(assets/fonts/manrope-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-@font-face{font-family:"Manrope";font-weight:700;font-display:swap;src:url(assets/fonts/manrope-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-@font-face{font-family:"Manrope";font-weight:700;font-display:swap;src:url(assets/fonts/manrope-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-:root{
-  --bg:#0b1420; --bg-2:#101c2c; --bg-3:#16263a;
-  --line:rgba(255,255,255,.09);
-  --text:#e8eef5; --muted:#93a4b8;
-  --accent:#f59e0b; --accent-2:#ffb938;
-  --steel:#7d93ab; --paper:#f4f6f9; --ink:#0f1b2a;
-  --head:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
-  --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --wrap:1200px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:84px;overflow-x:clip}
-body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-img,svg{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-ul{list-style:none}
-.wrap{width:min(var(--wrap),100% - 40px);margin-inline:auto}
-h1,h2,h3{font-family:var(--head);font-weight:700;line-height:1.02;letter-spacing:.005em;text-transform:uppercase}
-h2{font-size:clamp(2.2rem,5vw,3.6rem)}
-h3{font-size:1.5rem;letter-spacing:.02em}
-section{padding:clamp(72px,10vw,128px) 0;position:relative}
-.eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:var(--head);font-weight:600;font-size:1rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
-.eyebrow::before{content:"";width:34px;height:2px;background:var(--accent)}
-.hero .lead{color:#c6d2df}
-.lead{color:var(--muted);font-size:1.08rem;max-width:62ch;margin-top:18px}
-.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--head);font-weight:600;font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 28px;border:2px solid var(--accent);background:var(--accent);color:#14100a;cursor:pointer;transition:transform .25s,background .25s,color .25s,box-shadow .25s;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
-.btn:hover{transform:translateY(-3px);background:var(--accent-2);border-color:var(--accent-2)}
-.btn.ghost{background:transparent;color:var(--text);border-color:rgba(255,255,255,.3)}
-.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
-.btn svg{width:18px;height:18px;transition:transform .25s}
-.btn:hover svg{transform:translateX(4px)}
-
-/* ---------- Header ---------- */
-header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,box-shadow .3s,padding .3s;padding:18px 0}
-header.scrolled{background:rgba(11,20,32,.92);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line);padding:10px 0}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:24px}
-.logo{display:flex;align-items:center;gap:12px}
-.logo svg{width:46px;height:46px;flex:none}
-.logo b{font-family:var(--head);font-size:1.7rem;letter-spacing:.06em;line-height:1;display:block}
-.logo small{font-family:var(--head);font-size:.78rem;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;display:block;margin-top:3px;white-space:nowrap}
-.menu{display:flex;align-items:center;gap:30px}
-.menu a:not(.btn){font-weight:600;font-size:.93rem;color:#c9d5e2;position:relative;padding:6px 0}
-.menu a:not(.btn)::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .3s}
-.menu a:not(.btn):hover::after,.menu a.active::after{transform:scaleX(1);transform-origin:left}
-.menu a.active{color:#fff}
-.menu .btn{padding:10px 20px;font-size:1rem}
-.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;position:relative}
-.burger span{position:absolute;left:10px;right:10px;height:2px;background:#fff;transition:transform .3s,opacity .3s,top .3s}
-.burger span:nth-child(1){top:14px}.burger span:nth-child(2){top:21px}.burger span:nth-child(3){top:28px}
-.burger[aria-expanded=true] span:nth-child(1){top:21px;transform:rotate(45deg)}
-.burger[aria-expanded=true] span:nth-child(2){opacity:0}
-.burger[aria-expanded=true] span:nth-child(3){top:21px;transform:rotate(-45deg)}
-
-/* ---------- Hero ---------- */
-.hero{min-height:100svh;display:flex;align-items:center;padding:110px 0 0;overflow:hidden;position:relative;
-  background:radial-gradient(1100px 600px at 85% 10%,rgba(245,158,11,.13),transparent 60%),linear-gradient(180deg,#0b1420 0%,#0e1a2a 100%)}
-.slides{position:absolute;inset:0;overflow:hidden}
-.slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.8s ease}
-.slides img.on{opacity:1;animation:kb 8s linear forwards}
-@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.14)}}
-.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(11,20,32,.95) 0%,rgba(11,20,32,.78) 42%,rgba(11,20,32,.28) 100%),linear-gradient(0deg,rgba(11,20,32,.9) 0%,transparent 35%)}
-.hero-grid{z-index:2;padding-bottom:84px}
-.slide-nav{position:absolute;left:0;right:0;bottom:30px;z-index:2;display:flex;justify-content:flex-end;align-items:center;gap:18px}
-.slide-nav .cap{font-family:var(--head);letter-spacing:.2em;text-transform:uppercase;font-size:.95rem;color:#fff}
-.dots{display:flex;gap:8px}
-.dots button{width:34px;height:4px;border:0;background:rgba(255,255,255,.3);cursor:pointer;transition:background .3s,width .3s;padding:0}
-.dots button.on{background:var(--accent);width:56px}
-.hero-grid{display:grid;grid-template-columns:minmax(0,760px);gap:40px;align-items:center;position:relative}
-.hero h1{font-size:clamp(3rem,7.4vw,6.2rem)}
-.hero h1 .ln{display:block;overflow:hidden}
-.hero h1 .ln>span{display:block;transform:translateY(105%);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
-.hero h1 .ln:nth-child(2)>span{animation-delay:.12s}
-.hero h1 .ln:nth-child(3)>span{animation-delay:.24s}
-.hero h1 em{font-style:normal;color:var(--accent)}
-@keyframes rise{to{transform:none}}
-.fade{opacity:0;animation:fadeup .9s .5s forwards}
-.fade.d2{animation-delay:.7s}.fade.d3{animation-delay:.9s}
-@keyframes fadeup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-.hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
-.hero-tags{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:38px;color:var(--muted);font-size:.9rem;font-weight:600}
-.hero-tags li{display:flex;align-items:center;gap:9px}
-.hero-tags li::before{content:"";width:8px;height:8px;background:var(--accent);transform:rotate(45deg)}
-
-/* ---------- Marquee ---------- */
-.marquee{background:var(--accent);color:#17120a;overflow:hidden;padding:14px 0;transform:rotate(-1.2deg) scale(1.03);position:relative;z-index:3}
-.marquee div{display:flex;gap:44px;width:max-content;animation:marq 34s linear infinite;font-family:var(--head);font-weight:700;font-size:1.35rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
-.marquee span::after{content:"◆";margin-left:44px;font-size:.8em;opacity:.55}
-@keyframes marq{to{transform:translateX(-50%)}}
-
-/* ---------- Stats ---------- */
-.stats{padding:76px 0 0}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--bg-2)}
-.stat{padding:34px 28px;border-right:1px solid var(--line);position:relative;overflow:hidden}
-.stat:last-child{border-right:0}
-.stat::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .5s}
-.stat:hover::after{transform:scaleX(1)}
-.stat b{white-space:nowrap;font-family:var(--head);font-size:clamp(2.2rem,3.6vw,3.3rem);line-height:1;display:block;color:#fff}
-.stat b i{font-style:normal;color:var(--accent)}
-.stat>span{color:var(--muted);font-weight:600;font-size:.92rem}
-
-/* ---------- Palplanş feature ---------- */
-.feature{background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%)}
-.profile-line{width:100%;height:60px;margin:0 0 46px;color:var(--accent);opacity:.9}
-.profile-line path{stroke-dasharray:3200;stroke-dashoffset:3200;transition:stroke-dashoffset 3s ease}
-.profile-line.in path{stroke-dashoffset:0}
-.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-.checks{margin-top:30px;display:grid;gap:14px}
-.checks li{display:flex;gap:14px;align-items:flex-start;color:#cfdae6}
-.checks svg{flex:none;width:24px;height:24px;color:var(--accent);margin-top:2px}
-.methods{display:grid;gap:16px}
-.method{background:var(--bg-3);border:1px solid var(--line);padding:26px 28px 26px 92px;position:relative;transition:transform .35s,border-color .35s,background .35s}
-.method:hover{transform:translateX(10px);border-color:rgba(245,158,11,.55);background:#1a2d44}
-.method .no{position:absolute;left:26px;top:22px;font-family:var(--head);font-weight:700;font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--accent)}
-.method p{color:var(--muted);font-size:.95rem;margin-top:6px}
-.types{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:64px}
-.type{border:1px solid var(--line);padding:28px;background:rgba(255,255,255,.02)}
-.type svg{height:54px;width:100%;color:var(--steel);margin-bottom:20px;transition:color .3s}
-.type:hover svg{color:var(--accent)}
-.type p{color:var(--muted);font-size:.93rem;margin-top:8px}
-
-/* ---------- Services ---------- */
-.services{background:var(--paper);color:var(--ink)}
-.services .lead{color:#55657a}
-.head-row{display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;margin-bottom:52px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.card{background:#fff;padding:32px 26px 30px;position:relative;overflow:hidden;border:1px solid #e1e6ed;transition:transform .35s,box-shadow .35s;isolation:isolate}
-.card::before{content:"";position:absolute;inset:0;background:var(--ink);transform:translateY(101%);transition:transform .45s cubic-bezier(.2,.8,.2,1);z-index:-1}
-.card:hover{transform:translateY(-8px);box-shadow:0 26px 50px -24px rgba(15,27,42,.5)}
-.card:hover::before{transform:none}
-.card:hover h3{color:#fff}.card:hover p{color:#a9b8c9}
-.card .ico{width:52px;height:52px;color:var(--accent);margin-bottom:22px}
-.card h3{transition:color .3s}
-.card p{color:#5b6b7f;font-size:.93rem;margin-top:10px;transition:color .3s}
-.card.main{grid-column:span 2;background:var(--ink);color:#fff;border-color:var(--ink)}
-.card.main::before{background:var(--accent)}
-.card.main p{color:#a9b8c9}
-.card.main:hover h3,.card.main:hover p{color:#17120a}
-.card.main:hover .ico{color:#17120a}
-.card.main .tag{position:absolute;top:22px;right:22px;font-family:var(--head);letter-spacing:.18em;font-size:.82rem;text-transform:uppercase;background:var(--accent);color:#17120a;padding:4px 12px;font-weight:700}
-.card.main:hover .tag{background:#17120a;color:var(--accent)}
-
-/* ---------- Process ---------- */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;position:relative}
-.steps::before{content:"";position:absolute;top:27px;left:0;height:2px;width:100%;background:var(--line)}
-.steps::after{content:"";position:absolute;top:27px;left:0;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 2.2s ease .2s}
-.steps.in::after{transform:scaleX(1)}
-.step{padding-right:28px;position:relative;z-index:1}
-.step .dot{width:56px;height:56px;display:grid;place-items:center;background:var(--bg);border:2px solid var(--accent);font-family:var(--head);font-weight:700;font-size:1.5rem;color:var(--accent);transform:rotate(45deg);margin:0 0 34px 8px}
-.step .dot span{transform:rotate(-45deg)}
-.step p{color:var(--muted);font-size:.94rem;margin-top:8px}
-
-/* ---------- Areas ---------- */
-.areas{background:var(--bg-2)}
-.area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}
-.area{position:relative;min-height:250px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border:1px solid var(--line);background:linear-gradient(160deg,#1b2f47,#0f1b2a)}
-.area svg.bgp{position:absolute;inset:auto -10% 0 -10%;width:120%;height:70%;color:rgba(255,255,255,.07);transition:transform .6s,color .4s}
-.area:hover svg.bgp{transform:translateY(-14px);color:rgba(245,158,11,.3)}
-.area .n{position:absolute;top:22px;left:28px;font-family:var(--head);color:var(--accent);letter-spacing:.2em;font-weight:600}
-.area h3,.area p{position:relative}
-.area p{color:var(--muted);font-size:.92rem;margin-top:6px;max-height:0;opacity:0;overflow:hidden;transition:max-height .5s,opacity .4s}
-.area:hover p,.area:focus-within p{max-height:120px;opacity:1}
-
-/* ---------- Why ---------- */
-.why-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
-.why-list{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.why{padding:26px;border:1px solid var(--line);background:var(--bg-2);transition:border-color .3s,transform .3s}
-.why:hover{border-color:var(--accent);transform:translateY(-5px)}
-.why svg{width:34px;height:34px;color:var(--accent);margin-bottom:14px}
-.why p{color:var(--muted);font-size:.92rem;margin-top:6px}
-
-/* ---------- FAQ ---------- */
-.faq{background:var(--paper);color:var(--ink)}
-.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px}
-details{border-bottom:1px solid #d5dce6}
-summary{list-style:none;cursor:pointer;padding:22px 44px 22px 0;font-weight:700;font-size:1.05rem;position:relative}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-family:var(--head);font-size:2rem;color:var(--accent);transition:transform .3s}
-details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
-details p{padding:0 0 24px;color:#55657a;max-width:64ch}
-
-/* ---------- CTA + Contact ---------- */
-.contact{background:linear-gradient(180deg,var(--bg-2),var(--bg))}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px}
-.info{display:grid;gap:18px;margin-top:36px}
-.info a,.info div{display:flex;gap:16px;align-items:center;padding:18px 20px;border:1px solid var(--line);background:rgba(255,255,255,.02);transition:border-color .3s,transform .3s}
-.info a:hover{border-color:var(--accent);transform:translateX(6px)}
-.info svg{width:26px;height:26px;color:var(--accent);flex:none}
-.info small{display:block;color:var(--muted);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
-.info b{font-weight:600}
-form{background:var(--bg-3);border:1px solid var(--line);padding:clamp(24px,4vw,40px);display:grid;gap:16px;grid-template-columns:1fr 1fr}
-form h3{grid-column:1/-1;margin-bottom:6px}
-label{display:grid;gap:7px;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-label.full{grid-column:1/-1}
-input,select,textarea{font:inherit;font-size:1rem;letter-spacing:0;text-transform:none;color:var(--text);background:var(--bg);border:1px solid var(--line);padding:13px 14px;outline:0;transition:border-color .25s,box-shadow .25s;width:100%;border-radius:0}
-input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(245,158,11,.18)}
-textarea{min-height:120px;resize:vertical}
-form .btn{grid-column:1/-1;justify-content:center}
-form .note{grid-column:1/-1;font-size:.82rem;color:var(--muted)}
-
-/* ---------- Footer ---------- */
-footer{border-top:1px solid var(--line);padding:56px 0 28px;background:#080f18}
-.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
-.foot p{color:var(--muted);font-size:.92rem;margin-top:16px;max-width:42ch}
-.foot h4{font-family:var(--head);letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-size:1rem;margin-bottom:14px}
-.foot li{margin-bottom:8px;color:#b4c2d2;font-size:.93rem}
-.foot li a:hover{color:var(--accent)}
-.copy{margin-top:44px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.fab{position:fixed;right:20px;bottom:20px;z-index:40;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .3s}
-.fab:hover{transform:scale(1.1)}
-.fab svg{width:30px;height:30px;color:#fff}
-.top{position:fixed;right:24px;bottom:158px;z-index:40;width:48px;height:48px;background:var(--bg-3);border:1px solid var(--line);color:#fff;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(10px)}
-.top.show{opacity:1;pointer-events:auto;transform:none}
-.top:hover{border-color:var(--accent);color:var(--accent)}
-
-/* ---------- Photos ---------- */
-.collage{position:relative;padding:0 56px 70px 0}
-.collage img{object-fit:cover;width:100%}
-.collage .c1{aspect-ratio:4/4.4;box-shadow:0 30px 60px -30px #000}
-.collage .c2{position:absolute;right:0;bottom:0;width:46%;aspect-ratio:1;border:8px solid var(--bg);box-shadow:0 20px 40px -20px #000}
-.collage .badge{position:absolute;left:-14px;top:34px;background:var(--accent);color:#17120a;padding:16px 22px;font-family:var(--head);text-transform:uppercase;line-height:1.05;animation:float 5s ease-in-out infinite}
-.collage .badge b{display:block;font-size:1.7rem}.collage .badge span{letter-spacing:.16em;font-weight:600}
-@keyframes float{50%{transform:translateY(-10px)}}
-.methods{grid-template-columns:repeat(2,1fr);margin-top:64px}
-.band{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:18px;margin-top:64px}
-.band figure,.card figure,.gal .g,.area{overflow:hidden}
-.band figure{position:relative;height:320px}
-.band img,.card figure img,.gal img,.area>img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.8,.2,1),filter .5s}
-.band figure:hover img,.card:hover figure img,.gal .g:hover img,.area:hover>img{transform:scale(1.08)}
-.band figcaption{position:absolute;left:0;bottom:0;background:var(--accent);color:#17120a;font-family:var(--head);font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:8px 16px}
-.types{margin-top:18px}
-.card{padding:0}
-.card figure{height:190px}
-.card.main figure{height:250px}
-.card .cb{padding:26px 26px 30px}
-.card .ico{width:44px;height:44px;margin-bottom:16px}
-.area{min-height:330px;background:#0f1b2a}
-.area>img{position:absolute;inset:0;filter:saturate(.85)}
-.area::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,15,24,.95) 0%,rgba(8,15,24,.35) 55%,rgba(8,15,24,.25) 100%);transition:background .4s}
-.area:hover::after{background:linear-gradient(0deg,rgba(8,15,24,.97) 0%,rgba(8,15,24,.7) 60%,rgba(245,158,11,.25) 100%)}
-.area .n,.area h3,.area p{z-index:1}
-.area p{color:#c6d2df}
-.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:230px;grid-auto-flow:dense;gap:14px}
-.gal .g{position:relative;border:0;padding:0;cursor:zoom-in;background:var(--bg-2);display:block}
-.gal .g.w{grid-column:span 2}.gal .g.t{grid-row:span 2}
-.gal .g span{position:absolute;inset:auto 0 0 0;padding:34px 16px 14px;text-align:left;color:#fff;font-family:var(--head);font-size:1.15rem;letter-spacing:.08em;text-transform:uppercase;background:linear-gradient(0deg,rgba(8,15,24,.9),transparent);transform:translateY(100%);transition:transform .4s}
-.gal .g:hover span,.gal .g:focus-visible span{transform:none}
-.lb{position:fixed;inset:0;z-index:100;background:rgba(5,9,15,.94);display:grid;place-items:center;align-content:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .3s;padding:20px}
-.lb.open{opacity:1;pointer-events:auto}
-.lb img{max-width:min(1200px,94vw);max-height:80vh;cursor:pointer;box-shadow:0 30px 80px #000}
-.lb p{font-family:var(--head);letter-spacing:.16em;text-transform:uppercase;color:#fff}
-.lb button{position:absolute;top:16px;right:22px;background:none;border:0;color:#fff;font-size:2.6rem;cursor:pointer;line-height:1}
-.why-img{margin-top:40px;width:100%;height:240px;object-fit:cover}
-.cta-band{background:linear-gradient(rgba(11,20,32,.82),rgba(11,20,32,.82)),url(assets/img/palplans-ust.jpg) center/cover fixed;text-align:center;padding:clamp(80px,11vw,140px) 0}
-.cta-band h2 em{font-style:normal;color:var(--accent)}
-.cta-band .btn{margin-top:34px}
-.credits{margin-top:40px;border:0;color:var(--muted);font-size:.8rem}
-.credits summary{padding:0;font-size:.84rem;font-weight:600;color:#b4c2d2;display:inline-block}
-.credits summary::after{display:none}
-.credits p{padding:10px 0 0;color:var(--muted);max-width:none}
-.credits a{text-decoration:underline}
-.copy{margin-top:20px!important}
-
-/* ---------- Add-ons ---------- */
-.pre{position:fixed;inset:0;z-index:200;background:var(--bg);display:grid;place-items:center;align-content:center;gap:18px;transition:opacity .6s,visibility .6s}
-.pre.done{opacity:0;visibility:hidden}
-.pre svg{width:74px;height:74px;animation:float 1.6s ease-in-out infinite}
-.pre b{font-family:var(--head);font-size:1.8rem;letter-spacing:.3em}
-.pre i{width:180px;height:3px;background:rgba(255,255,255,.12);position:relative;overflow:hidden}
-.pre i::after{content:"";position:absolute;inset:0;background:var(--accent);animation:load 1.1s ease-in-out infinite}
-@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
-.prog{position:fixed;top:0;left:0;right:0;height:3px;background:var(--accent);z-index:60;transform:scaleX(0);transform-origin:left}
-.fab.call{bottom:88px;background:var(--accent)}
-.fab.call svg{color:#17120a;width:26px;height:26px}
-.fab:not(.call)::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25d366;animation:ring 2.2s ease-out infinite}
-@keyframes ring{from{transform:scale(1);opacity:.8}to{transform:scale(1.7);opacity:0}}
-form .btn{order:1}form .note{order:2}
-.kvkk{display:flex!important;align-items:flex-start;gap:10px;text-transform:none;letter-spacing:0;font-weight:500;font-size:.86rem}
-.kvkk input{width:18px;height:18px;flex:none;margin-top:2px;accent-color:var(--accent)}
-.map{margin-top:64px;height:360px;border:1px solid var(--line);background:var(--bg-3) radial-gradient(circle at 50% 40%,rgba(245,158,11,.12),transparent 60%)}
-.map iframe{width:100%;height:100%;border:0;filter:grayscale(.3) contrast(1.05)}
-.map-ph{height:100%;display:grid;place-items:center;align-content:center;gap:8px;color:var(--muted);text-align:center;padding:20px}
-.map-ph svg{width:44px;height:44px;color:var(--accent)}
-.map-ph b{font-family:var(--head);font-size:1.4rem;letter-spacing:.12em;text-transform:uppercase;color:#fff}
-
-/* ---------- Reveal ---------- */
-.rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--d,0) * 90ms)}
-.rv.left{transform:translateX(-40px)}.rv.right{transform:translateX(40px)}
-.rv.in{opacity:1;transform:none}
-
-@media (max-width:1020px){
-  .hero-grid,.feature-grid,.why-grid,.faq-grid,.contact-grid{grid-template-columns:1fr;gap:44px}
-  .cards{grid-template-columns:repeat(2,1fr)}
-  .gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:190px}
-  .band{grid-template-columns:1fr 1fr}.band figure:first-child{grid-column:span 2}
-  .cta-band{background-attachment:scroll}
-  .slide-nav .cap{display:none}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .steps{grid-template-columns:1fr 1fr;row-gap:40px}.steps::before,.steps::after{display:none}
-  .area-grid,.types{grid-template-columns:1fr 1fr}
-  .foot{grid-template-columns:1fr 1fr}
-  .burger{display:block}
-  header.scrolled{backdrop-filter:none;background:rgba(11,20,32,.97)}
-  .menu{position:fixed;inset:0;background:#080f18;flex-direction:column;justify-content:center;gap:26px;transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);z-index:-1}
-  .menu.open{transform:none}
-  .menu a:not(.btn){font-family:var(--head);font-size:1.9rem;text-transform:uppercase;letter-spacing:.08em}
-  .area p{max-height:none;opacity:1}
-}
-@media (max-width:620px){
-  .cards,.area-grid,.types,.why-list,.steps,.foot,.methods{grid-template-columns:1fr}
-  .collage{padding:0 30px 50px 0}.collage .badge{left:-8px}
-  .band figure{height:220px}
-  .card.main{grid-column:auto}
-  form{grid-template-columns:1fr}
-  .hero{padding-top:110px}
-  .method{padding-left:78px}.method .no{left:20px}
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-  .rv{opacity:1;transform:none}
-}
-</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2316202c'/%3E%3Cpath d='M4 21h5l3-9h8l3 9h5' fill='none' stroke='%23f08a1c' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-<div class="pre" id="pre" aria-hidden="true"><svg viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" stroke="#f59e0b" stroke-width="2"/><path d="M5 29h7l4-12h14l4 12h7" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/></svg><b>HAN GRUP</b><i></i></div>
-<div class="prog" id="prog" aria-hidden="true"></div>
+
+<div class="topbar">
+  <div class="wrap">
+    <ul>
+      <li><a data-mail><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></svg><span data-f="email"></span></a></li>
+      <li><a data-tel><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2z"/></svg><span data-f="phone"></span></a></li>
+    </ul>
+    <a class="wa" data-wa target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 01-13.500 7.800L3 21l1.300-4.300A9 9 0 1121 12z"/></svg>WhatsApp'tan yazın</a>
+  </div>
+</div>
 
 <header id="hdr">
   <div class="wrap nav">
-    <a href="#top" class="logo" aria-label="Han Grup Yazılım İnşaat ana sayfa">
-      <svg viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" stroke="#f59e0b" stroke-width="2"/><path d="M5 29h7l4-12h14l4 12h7" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/><path d="M5 36h36" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3 3"/></svg>
+    <a href="#anasayfa" class="logo" aria-label="Han Grup Yazılım İnşaat ana sayfa">
+      <svg viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="3" fill="#16202c"/><path d="M6 31h8l4-14h12l4 14h8" stroke="#f08a1c" stroke-width="3.4" stroke-linejoin="round"/><path d="M6 38h36" stroke="#fff" stroke-width="2" stroke-dasharray="3 3"/></svg>
       <span><b>HAN GRUP</b><small>Yazılım · İnşaat</small></span>
     </a>
-    <nav class="menu" id="menu">
-      <a href="#palplans">Palplanş</a>
-      <a href="#hizmetler">Hizmetler</a>
-      <a href="#alanlar">Projeler</a>
-      <a href="#galeri">Galeri</a>
-      <a href="#neden">Kurumsal</a>
-      <a href="#sss">S.S.S.</a>
-      <a href="#iletisim" class="btn">Teklif Al</a>
-    </nav>
+    <ul class="menu" id="menu">
+      <li><a href="#anasayfa" data-nav="anasayfa">Anasayfa</a></li>
+      <li><a href="#kurumsal" data-nav="kurumsal">Kurumsal</a></li>
+      <li><a href="#faaliyet-alanlari" data-nav="faaliyet-alanlari">Faaliyet Alanları <svg class="caret" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3l4 4 4-4"/></svg></a>
+        <div class="drop" id="drop"></div></li>
+      <li><a href="#galeri" data-nav="galeri">Galeri</a></li>
+      <li><a href="#iletisim" data-nav="iletisim">İletişim</a></li>
+    </ul>
+    <a href="#iletisim" class="btn">Teklif Al</a>
     <button class="burger" id="burger" aria-label="Menü" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<main id="top">
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <div class="slides" id="slides" aria-hidden="true">
-    <img src="assets/img/hero-batardo.jpg" alt="" class="on" fetchpriority="high">
-    <img src="assets/img/isale-hatti.jpg" alt="" loading="lazy">
-    <img src="assets/img/aritma-tesis.jpg" alt="" loading="lazy">
-    <img src="assets/img/kanalizasyon-hendek.jpg" alt="" loading="lazy">
-  </div>
-  <div class="wrap hero-grid">
-    <div>
-      <div class="eyebrow fade">Altyapı · Palplanş İksa · Arıtma Tesisleri</div>
-      <h1>
-        <span class="ln"><span>Altyapıyı</span></span>
-        <span class="ln"><span><em>temelden</em></span></span>
-        <span class="ln"><span>kuruyoruz</span></span>
-      </h1>
-      <p class="lead fade d2">Han Grup Yazılım İnşaat; palplanş iksa sistemlerinden içme suyu isale hatlarına, kanalizasyon ve yağmursuyu şebekelerinden arıtma tesislerine kadar altyapı projelerinizi keşiften devreye almaya tek elden yürütür.</p>
-      <div class="cta fade d3">
-        <a href="#iletisim" class="btn">Ücretsiz Keşif İste <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a href="#hizmetler" class="btn ghost">Hizmetlerimiz</a>
-      </div>
-      <ul class="hero-tags fade d3">
-        <li>Palplanş iksa sistemleri</li>
-        <li>Su ve kanalizasyon hatları</li>
-        <li>Arıtma tesisleri</li>
-      </ul>
+<main>
+<!-- =====================================================  ANASAYFA  -->
+<div class="view on" id="v-anasayfa">
+  <section class="hero" id="hero" aria-label="Öne çıkanlar">
+    <div class="ctrl">
+      <button id="prev" aria-label="Önceki"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2L4 8l6 6"/></svg></button>
+      <span class="count"><b id="cur">01</b> / <span id="tot">04</span></span>
+      <button id="next" aria-label="Sonraki"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2l6 6-6 6"/></svg></button>
     </div>
-  </div>
-  <div class="wrap slide-nav fade d3">
-    <span class="cap" id="cap">Palplanş iksa</span>
-    <div class="dots" id="dots"></div>
-  </div>
-</section>
+  </section>
 
-<div class="marquee" aria-hidden="true"><div id="marq"></div></div>
-
-<!-- ================= STATS ================= -->
-<!-- NOT: Aşağıdaki rakamlar örnek değerlerdir; data-count değerlerini firmanızın gerçek verileriyle güncelleyin. -->
-<section class="stats">
-  <div class="wrap stats-grid">
-    <div class="stat rv"><b><span data-count="15">0</span><i>+</i></b><span>Yıllık deneyim</span></div>
-    <div class="stat rv" style="--d:1"><b><span data-count="250">0</span><i>+</i></b><span>Tamamlanan proje</span></div>
-    <div class="stat rv" style="--d:2"><b><span data-count="300">0</span><i> km</i></b><span>Km altyapı hattı</span></div>
-    <div class="stat rv" style="--d:3"><b><span data-count="25">0</span><i>+</i></b><span>Arıtma ve terfi tesisi</span></div>
+  <div class="quick">
+    <div class="wrap"><div class="grid">
+      <a href="#faaliyet-alanlari" data-target="s-palplans">
+        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 30h8l4-14h16l4 14h8"/><path d="M4 40h40" stroke-dasharray="4 4"/><path d="M14 6v6M24 6v6M34 6v6"/></svg>
+        <h3>Palplanş iksa</h3><p>Çakma, söküm, kiralama ve satış. Derin kazılarda toprak ve suyu tutan çelik perdeler.</p>
+        <span class="more">İncele <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 7h10M8 3l4 4-4 4"/></svg></span>
+      </a>
+      <a href="#faaliyet-alanlari" data-target="s-isale">
+        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 16h26c6 0 10 4 10 10v18"/><path d="M4 28h16c4 0 8 3 8 8v8"/><path d="M4 12v20"/></svg>
+        <h3>Su ve kanalizasyon hatları</h3><p>İçme suyu isale hatları, kanalizasyon ve yağmursuyu şebekeleri, kanal görüntüleme.</p>
+        <span class="more">İncele <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 7h10M8 3l4 4-4 4"/></svg></span>
+      </a>
+      <a href="#faaliyet-alanlari" data-target="s-atiksu">
+        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><circle cx="24" cy="26" r="16"/><path d="M24 10v32M8 26h32"/><path d="M24 4v6"/></svg>
+        <h3>Arıtma tesisleri</h3><p>Atık su ve içme suyu arıtma tesisleri, terfi istasyonları ve su depoları.</p>
+        <span class="more">İncele <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 7h10M8 3l4 4-4 4"/></svg></span>
+      </a>
+    </div></div>
   </div>
-</section>
 
-<!-- ================= PALPLANŞ ================= -->
-<section class="feature" id="palplans">
-  <div class="wrap">
-    <svg class="profile-line" viewBox="0 0 1200 60" preserveAspectRatio="none" fill="none" aria-hidden="true">
-      <path d="M0 48h30l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h60l18-36h54l18 36h30" stroke="currentColor" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
-    </svg>
-    <div class="feature-grid">
-      <div class="collage rv left">
-        <img class="c1" src="assets/img/palplans-perde.jpg" alt="Çakılmış çelik palplanş perde" loading="lazy">
-        <img class="c2" src="assets/img/kilit-detay.jpg" alt="Palplanş kilit detayı" loading="lazy">
-        <div class="badge"><b>Sızdırmaz</b><span>kilit sistemi</span></div>
+  <section class="sec">
+    <div class="wrap about">
+      <div class="pics rv">
+        <img class="p1" src="assets/img/palplans-perde.jpg" alt="Çakılmış çelik palplanş perde" loading="lazy">
+        <img class="p2" src="assets/img/isale-hatti.jpg" alt="İsale hattı imalatı" loading="lazy">
+        <div class="tag"><small>Uzmanlık</small>Altyapı ve iksa</div>
       </div>
-      <div class="rv right">
-        <div class="eyebrow">Öne çıkan uzmanlığımız</div>
-        <h2>Palplanş iksa<br>sistemleri</h2>
-        <p class="lead">Palplanş; birbirine kilitlenen çelik profillerin zemine çakılmasıyla oluşturulan, toprak ve suyu aynı anda tutan perde sistemidir. Derin kanal ve isale hattı kazılarında, arıtma tesisi temel çukurlarında ve yüksek yeraltı suyunun olduğu her sahada en hızlı ve ekonomik iksa çözümüdür.</p>
-        <ul class="checks">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg><span><b>Hızlı imalat:</b> priz süresi beklenmez, çakılan perde aynı gün yük alır.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg><span><b>Su geçirimsizlik:</b> kilitli birleşimler yeraltı suyunu kazı çukurundan uzak tutar.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg><span><b>Geri kazanım:</b> geçici işlerde profiller sökülür ve yeniden kullanılır; maliyet düşer.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12l5 5L20 6"/></svg><span><b>Dar alanda çalışma:</b> komşu yapılara yakın, sınırlı parsellerde uygulanabilir.</span></li>
-        </ul>
-        <a href="#iletisim" class="btn" style="margin-top:34px">Palplanş Teklifi Al <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <div class="rv" style="--d:1">
+        <div class="kicker">Biz kimiz</div>
+        <h2>Altyapı inşaatında mühendislik ve uygulama tek çatı altında</h2>
+        <p style="margin-top:16px">Han Grup Yazılım İnşaat; palplanş iksa sistemlerinden içme suyu isale hatlarına, kanalizasyon ve yağmursuyu şebekelerinden arıtma tesislerine uzanan altyapı işlerinde yüklenici olarak hizmet verir. Projeyi fizibilite aşamasından alır, uygular ve çalışır halde teslim eder.</p>
+        <ul class="ticks" id="ticks"></ul>
+        <a href="#kurumsal" class="btn dark">Kurumsal <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
       </div>
     </div>
-    <div class="methods">
-        <div class="method rv"><span class="no">01</span><h3>Vibrasyonlu çakma</h3><p>Ekskavatöre monte veya vinç askılı vibro çekiçlerle, kumlu ve gevşek zeminlerde yüksek üretim hızıyla palplanş çakımı.</p></div>
-        <div class="method rv" style="--d:1"><span class="no">02</span><h3>Hidrolik baskı (sessiz çakma)</h3><p>Titreşime ve gürültüye hassas kent içi projelerde, komşu yapıları etkilemeden hidrolik presle sürme yöntemi.</p></div>
-        <div class="method rv" style="--d:2"><span class="no">03</span><h3>Ön delgili çakma</h3><p>Sert ve sıkı zeminlerde burgu ile ön delgi yapılarak profilin proje kotuna hasarsız indirilmesi.</p></div>
-        <div class="method rv" style="--d:3"><span class="no">04</span><h3>Söküm ve kiralama</h3><p>İş bitiminde profillerin sökülmesi; proje süresine göre palplanş kiralama, satış ve geri alım seçenekleri.</p></div>
-    </div>
+  </section>
 
-    <div class="band">
-      <figure class="rv"><img src="assets/img/vibro-makine.jpg" alt="Palplanş çakma makinesi" loading="lazy"><figcaption>Çakma ekipmanı</figcaption></figure>
-      <figure class="rv" style="--d:1"><img src="assets/img/palplans-ust.jpg" alt="Kazı kenarında palplanş perde" loading="lazy"><figcaption>Kazı kenarı perdesi</figcaption></figure>
-      <figure class="rv" style="--d:2"><img src="assets/img/dere-islahi.jpg" alt="Su kenarında palplanş" loading="lazy"><figcaption>Su yapılarında palplanş</figcaption></figure>
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="head center rv"><div class="kicker">Faaliyet alanlarımız</div><h2>Kazıdan devreye almaya altyapının her kalemi</h2></div>
+      <div class="cards" id="homeCards"></div>
     </div>
-    <div class="types">
-      <div class="type rv">
-        <svg viewBox="0 0 300 54" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M6 46h22l16-38h52l16 38h44l16-38h52l16 38h22"/></svg>
-        <h3>U tipi profiller</h3><p>Geçici iksa ve batardolarda en yaygın tip. Tekrar kullanıma uygun, çakımı ve sökümü kolaydır.</p>
+  </section>
+
+  <section class="split" aria-label="İş aşamalarımız">
+    <div class="ph" id="stPh">
+      <img src="assets/img/derin-kazi.jpg" alt="" class="on" loading="lazy">
+      <img src="assets/img/boru-montaj.jpg" alt="" loading="lazy">
+      <img src="assets/img/aritma-havuz.jpg" alt="" loading="lazy">
+    </div>
+    <div class="tx"><div>
+      <div class="kicker">İş aşamalarımız</div>
+      <h2>Her proje üç aşamada ilerler</h2>
+      <div class="tabs" role="tablist" id="stTabs">
+        <button role="tab" aria-selected="true">1. Fizibilite</button>
+        <button role="tab" aria-selected="false">2. Uygulama</button>
+        <button role="tab" aria-selected="false">3. Devreye alma</button>
       </div>
-      <div class="type rv" style="--d:1">
-        <svg viewBox="0 0 300 54" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M6 46h40l26-38h44l26 38h16l26-38h44l26 38h40"/></svg>
-        <h3>Z tipi profiller</h3><p>Yüksek atalet momenti ile derin kazılar, rıhtım duvarları ve kalıcı perdeler için tercih edilir.</p>
+      <div class="pane on"><h3>Fizibilite ve projelendirme</h3><p>Sahayı yerinde inceler; zemin, yeraltı suyu ve mevcut hat verilerine göre uygun sistemi seçeriz. Metraj, iş programı ve uygulama projeleri bu aşamada hazırlanır, teklif kalem kalem sunulur.</p></div>
+      <div class="pane"><h3>Uygulama</h3><p>Kazı ve iksa, boru serimi, betonarme ve montaj işleri deneyimli saha ekibiyle yürütülür. Her şantiyede iş sağlığı ve güvenliği kuralları ile iş programı birlikte takip edilir.</p></div>
+      <div class="pane"><h3>Devreye alma ve teslim</h3><p>Basınç, sızdırmazlık ve performans testleri yapılır; sistem çalışır halde teslim edilir. İşletme personeline eğitim verilir, as-built projeler eksiksiz sunulur.</p></div>
+    </div></div>
+  </section>
+
+  <!-- NOT: Rakamlar örnek değerlerdir; data-count değerlerini gerçek verilerinizle güncelleyin. -->
+  <section class="stats" id="stats">
+    <div class="wrap grid">
+      <div><b><span data-count="15">15</span><i>+</i></b><span>Yıllık deneyim</span></div>
+      <div><b><span data-count="250">250</span><i>+</i></b><span>Tamamlanan proje</span></div>
+      <div><b><span data-count="300">300</span><i> km</i></b><span>Altyapı hattı</span></div>
+      <div><b><span data-count="25">25</span><i>+</i></b><span>Arıtma ve terfi tesisi</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="head rv"><div class="kicker">Galeri</div><h2>Örnek uygulamalar</h2></div>
+      <div class="gal" id="homeGal"></div>
+      <p style="margin-top:34px;text-align:center"><a href="#galeri" class="btn dark">Tüm görseller</a></p>
+    </div>
+  </section>
+</div>
+
+<!-- =====================================================  KURUMSAL  -->
+<div class="view" id="v-kurumsal">
+  <section class="banner"><img src="assets/img/kazi-cukuru.jpg" alt=""><div class="wrap"><h1>Kurumsal</h1><div class="crumb"><a href="#anasayfa">Anasayfa</a><span>/</span><b>Kurumsal</b></div></div></section>
+  <section class="sec">
+    <div class="wrap about">
+      <div class="rv">
+        <div class="kicker">Hakkımızda</div>
+        <h2>Altyapı işlerinde güvenilir yüklenici</h2>
+        <p style="margin-top:16px">Han Grup Yazılım İnşaat, altyapı inşaatının zorlu saha koşullarında mühendislik bilgisini uygulama deneyimiyle birleştirir. Palplanş iksa sistemleri, içme suyu isale hatları, kanalizasyon ve yağmursuyu şebekeleri, kanal hattı görüntüleme, atık su ve içme suyu arıtma tesisleri başlıca çalışma alanlarımızdır.</p>
+        <p style="margin-top:14px">Kamu kurumları, belediyeler ve özel sektör yatırımcıları için yürüttüğümüz işlerde hedefimiz aynıdır: işi sözleşmedeki sürede, bütçede ve kalitede, kazasız tamamlamak.</p>
+        <p style="margin-top:28px"><a href="#iletisim" class="btn">Bize ulaşın</a></p>
       </div>
-      <div class="type rv" style="--d:2">
-        <svg viewBox="0 0 300 54" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M6 27h288M40 14v26M110 14v26M180 14v26M250 14v26"/></svg>
-        <h3>Kuşak ve destek sistemleri</h3><p>Çelik kuşak kirişleri, boru destekler ve ankrajlarla perdenin proje yüklerine göre desteklenmesi.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= SERVICES ================= -->
-<section class="services" id="hizmetler">
-  <div class="wrap">
-    <div class="head-row">
-      <div class="rv"><div class="eyebrow">Hizmetlerimiz</div><h2>Altyapının her<br>aşamasında</h2></div>
-      <p class="lead rv" style="--d:1">Kazı ve iksadan boru hattına, arıtma tesisinden devreye almaya kadar altyapı projenizin tüm kalemlerini tek çatı altında yürütüyoruz.</p>
-    </div>
-    <div class="cards">
-      <article class="card main rv"><span class="tag">Ana faaliyet</span>
-        <figure><img src="assets/img/palplans-ust.jpg" alt="Palplanş iksa sistemleri" loading="lazy"></figure>
-        <div class="cb"><svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M4 30h8l5-14h18l5 14h8"/><path d="M14 4v8M26 4v8M38 4v8M4 44h44" stroke-dasharray="4 4"/></svg>
-        <h3>Palplanş iksa sistemleri</h3><p>U ve Z tipi çelik palplanşlarla geçici ve kalıcı iksa perdeleri. Vibro çakma, hidrolik baskı ve ön delgili uygulama; satış, kiralama ve söküm. Gerekli sahalarda fore kazık ve ankrajlı iksa ile desteklenir.</p></div></article>
-      <article class="card rv">
-        <figure><img src="assets/img/isale-hatti.jpg" alt="İçme suyu isale hatları" loading="lazy"></figure>
-        <div class="cb"><svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M4 18h28c6 0 10 4 10 10v20"/><path d="M4 32h16c4 0 6 2 6 6v10"/></svg>
-        <h3>İçme suyu isale hatları</h3><p>Çelik, HDPE ve diğer boru malzemeleriyle içme suyu iletim ve isale hattı imalatı, birleştirme ve basınç testleri.</p></div></article>
-      <article class="card rv" style="--d:1">
-        <figure><img src="assets/img/kanalizasyon-hendek.jpg" alt="Yağmursuyu ve kanalizasyon" loading="lazy"></figure>
-        <div class="cb"><svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M6 12h40M6 20h40"/><path d="M14 20v24M38 20v24M14 44h24"/></svg>
-        <h3>Yağmursuyu ve kanalizasyon</h3><p>Derin kanal kazıları, boru serimi, rögar ve bağlantı imalatlarıyla yağmursuyu ve atık su şebekeleri.</p></div></article>
-      <article class="card rv" style="--d:2">
-        <figure><img src="assets/img/boru-ici.jpg" alt="Kanal hattı görüntüleme" loading="lazy"></figure>
-        <div class="cb"><svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M4 26s9-14 22-14 22 14 22 14-9 14-22 14S4 26 4 26z"/><circle cx="26" cy="26" r="6"/></svg>
-        <h3>Kanal hattı görüntüleme</h3><p>Kanalizasyon ve yağmursuyu hatlarının kamerayla incelenmesi; tıkanıklık, kırık ve kaçak tespiti, temizlik.</p></div></article>
-      <article class="card rv">
-        <figure><img src="assets/img/aritma-havuz.jpg" alt="Atık su arıtma tesisleri" loading="lazy"></figure>
-        <div class="cb"><svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M8 18h36v26H8z"/><path d="M8 32c6-5 10 4 18 0s12 4 18 0M26 4v14"/></svg>
-        <h3>Atık su arıtma tesisleri</h3><p>Arıtma tesisi yapı, havuz ve boru işleri; mekanik montaj, devreye alma ve işletme eğitimi.</p></div></article>
-      <article class="card rv" style="--d:1">
-        <figure><img src="assets/img/aritma-tesis.jpg" alt="İçme suyu arıtma tesisleri" loading="lazy"></figure>
-        <div class="cb"><svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M26 4C16 18 12 24 12 32a14 14 0 0028 0c0-8-4-14-14-28z"/><path d="M19 34a7 7 0 007 7"/></svg>
-        <h3>İçme suyu arıtma tesisleri</h3><p>Şebekeye verilecek suyun arıtılacağı tesislerin inşaatı, ekipman montajı ve performans testleri.</p></div></article>
-      <article class="card rv" style="--d:2">
-        <figure><img src="assets/img/terfi.jpg" alt="Terfi istasyonları ve su depoları" loading="lazy"></figure>
-        <div class="cb"><svg class="ico" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M10 8h32v16H10z"/><path d="M16 24l-4 24M36 24l4 24M26 24v24M13 38h26"/></svg>
-        <h3>Terfi istasyonları ve su depoları</h3><p>Pompa istasyonları, köy depoları ve betonarme su depolarının yapımı.</p></div></article>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PROCESS ================= -->
-<section id="surec">
-  <div class="wrap">
-    <div class="rv"><div class="eyebrow">Çalışma sürecimiz</div><h2>Keşiften devreye<br>almaya dört adım</h2></div>
-    <div class="steps" id="steps">
-      <div class="step rv"><div class="dot"><span>1</span></div><h3>Keşif ve fizibilite</h3><p>Sahayı yerinde inceliyor; zemin, yeraltı suyu ve mevcut hat koşullarını değerlendirerek uygun sistemi seçiyoruz.</p></div>
-      <div class="step rv" style="--d:1"><div class="dot"><span>2</span></div><h3>Proje ve teklif</h3><p>Uygulama ve as-built projelerini hazırlıyor, metrajı çıkarıp net, kalem kalem teklif sunuyoruz.</p></div>
-      <div class="step rv" style="--d:2"><div class="dot"><span>3</span></div><h3>Uygulama</h3><p>Deneyimli saha ekibiyle iş programına ve iş güvenliği kurallarına uygun imalat.</p></div>
-      <div class="step rv" style="--d:3"><div class="dot"><span>4</span></div><h3>Devreye alma ve teslim</h3><p>Test ve performans kontrolleri, işletme eğitimi, saha temizliği ve as-built dokümantasyonu.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= AREAS ================= -->
-<section class="areas" id="alanlar">
-  <div class="wrap">
-    <div class="head-row" style="margin-bottom:0">
-      <div class="rv"><div class="eyebrow">Proje türleri</div><h2>Hangi projelerde<br>çalışıyoruz?</h2></div>
-      <p class="lead rv" style="--d:1">Şehir altyapısından arıtma tesislerine; suyun toplandığı, taşındığı ve arıtıldığı her noktada.</p>
-    </div>
-    <div class="area-grid" id="areas"></div>
-  </div>
-</section>
-
-<!-- ================= GALLERY ================= -->
-<section id="galeri">
-  <div class="wrap">
-    <div class="head-row">
-      <div class="rv"><div class="eyebrow">Galeri</div><h2>Örnek<br>uygulamalar</h2></div>
-      <p class="lead rv" style="--d:1">Palplanş perdeler, boru hatları, kanal imalatları ve arıtma tesislerinden temsili görüntüler. Büyütmek için görsele tıklayın.</p>
-    </div>
-    <div class="gal" id="gal"></div>
-  </div>
-</section>
-
-<!-- ================= WHY ================= -->
-<section id="neden">
-  <div class="wrap why-grid">
-    <div class="rv left">
-      <div class="eyebrow">Neden Han Grup</div>
-      <h2>Sahada güven,<br>teslimde söz</h2>
-      <p class="lead">Altyapı işleri; zeminin, suyun ve zamanın aynı anda yönetilmesini gerektirir. Her projeye mühendislik hesabı, doğru ekipman ve iş güvenliği kültürüyle yaklaşıyor; verdiğimiz termin ve bütçeye sadık kalıyoruz.</p>
-      <a href="#iletisim" class="btn ghost" style="margin-top:30px">Bizimle çalışın</a>
-      <img class="why-img" src="assets/img/boru-montaj.jpg" alt="Boru montajı" loading="lazy">
-    </div>
-    <div class="why-list">
-      <div class="why rv"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 3l12 5v8c0 8-5 13-12 15C10 29 5 24 5 16V8z"/><path d="M11 17l4 4 8-9"/></svg><h3>İş güvenliği önce</h3><p>Her şantiyede risk analizi, eğitimli ekip ve düzenli denetim.</p></div>
-      <div class="why rv" style="--d:1"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="17" cy="17" r="13"/><path d="M17 9v8l6 4"/></svg><h3>Zamanında teslim</h3><p>Gerçekçi iş programı ve yedekli ekipman planlaması.</p></div>
-      <div class="why rv"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 26h28M6 26V14h9v12M15 26V8h7l6 8v10"/></svg><h3>Tek elden çözüm</h3><p>Palplanş iksadan boru hattına, arıtma tesisine kadar tek muhatap.</p></div>
-      <div class="why rv" style="--d:1"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M5 29V5h16l8 8v16z"/><path d="M11 15h12M11 21h12"/></svg><h3>Şeffaf teklif</h3><p>Sürpriz kalemler yok; metraj ve birim fiyat baştan net.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FAQ ================= -->
-<section class="faq" id="sss">
-  <div class="wrap faq-grid">
-    <div class="rv"><div class="eyebrow">Sık sorulan sorular</div><h2>Merak<br>edilenler</h2><p class="lead" style="color:#55657a">Aradığınız yanıtı bulamadıysanız bize ulaşın; projenize özel bilgi verelim.</p></div>
-    <div class="rv" style="--d:1">
-      <details open><summary>Hangi işleri üstleniyorsunuz?</summary><p>Palplanş iksa sistemleri, içme suyu isale hatları, yağmursuyu ve kanalizasyon şebekeleri, kanal hattı görüntüleme, atık su ve içme suyu arıtma tesisleri ile terfi istasyonu ve su deposu yapımı.</p></details>
-      <details><summary>Palplanş hangi durumlarda tercih edilmelidir?</summary><p>Yeraltı su seviyesinin yüksek olduğu, kazı çukurunun kuru tutulması gereken, şantiye alanının dar ve sürenin kısıtlı olduğu projelerde palplanş çoğu zaman en hızlı ve ekonomik çözümdür.</p></details>
-      <details><summary>Palplanş kiralamak mı, satın almak mı daha avantajlı?</summary><p>Geçici iksalarda profiller iş bitiminde söküldüğü için kiralama genellikle daha ekonomiktir. Kalıcı perde ve rıhtım yapılarında ise satın alma tercih edilir. Proje süresine göre her iki seçeneği karşılaştırmalı sunuyoruz.</p></details>
-      <details><summary>Çakım sırasında komşu binalar zarar görür mü?</summary><p>Titreşime hassas bölgelerde yüksek frekanslı vibro çekiçler veya titreşimsiz hidrolik baskı yöntemi kullanılır. Yöntem, keşif aşamasında çevre yapıların durumu değerlendirilerek seçilir.</p></details>
-      <details><summary>Kanal hattı görüntüleme neden yapılır?</summary><p>Kamerayla hat içi incelemesi; tıkanıklık, kırık, kaçak ve yanlış bağlantıları kazı yapmadan tespit etmeyi sağlar. Böylece onarım ve temizlik işleri doğru noktada planlanır.</p></details>
-      <details><summary>Teklif için hangi bilgilere ihtiyacınız var?</summary><p>Proje türü, konum, hat uzunluğu veya kazı derinliği ve varsa zemin etüt raporu ilk teklif için yeterlidir. Eksik veriler için ücretsiz keşif yapıyoruz.</p></details>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CTA BAND ================= -->
-<section class="cta-band">
-  <div class="wrap rv">
-    <h2>Altyapı projeniz için<br><em>doğru çözümü</em> birlikte belirleyelim</h2>
-    <a href="#iletisim" class="btn">Hemen Teklif Al <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-  </div>
-</section>
-
-<!-- ================= CONTACT ================= -->
-<section class="contact" id="iletisim">
-  <div class="wrap contact-grid">
-    <div class="rv left">
-      <div class="eyebrow">İletişim</div>
-      <h2>Projenizi<br>konuşalım</h2>
-      <p class="lead">Projenin türünü ve konumunu paylaşın; en kısa sürede keşif planlayıp teklifimizi iletelim.</p>
-      <div class="info">
-        <a data-tel><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2z"/></svg><span><small>Telefon</small><b data-f="phone"></b></span></a>
-        <a data-mail><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 6 9-6"/></svg><span><small>E-posta</small><b data-f="email"></b></span></a>
-        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.800 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span><small>Adres</small><b data-f="address"></b></span></div>
+      <div class="pics rv" style="--d:1">
+        <img class="p1" src="assets/img/isale-hatti.jpg" alt="İsale hattı şantiyesi" loading="lazy">
+        <img class="p2" src="assets/img/aritma-havuz.jpg" alt="Arıtma tesisi havuzu" loading="lazy">
       </div>
     </div>
-    <form id="form" class="rv right" novalidate>
-      <h3>Teklif formu</h3>
-      <label>Ad Soyad<input name="ad" required autocomplete="name"></label>
-      <label>Telefon<input name="tel" type="tel" required autocomplete="tel"></label>
-      <label class="full">Hizmet
-        <select name="hizmet">
-          <option>Palplanş iksa (çakma / söküm / kiralama)</option><option>İçme suyu isale hattı</option><option>Yağmursuyu ve kanalizasyon</option><option>Kanal hattı görüntüleme</option><option>Atık su arıtma tesisi</option><option>İçme suyu arıtma tesisi</option><option>Terfi istasyonu / su deposu</option><option>Diğer</option>
-        </select></label>
-      <label>Proje konumu<input name="konum" placeholder="İl / ilçe"></label>
-      <label>Derinlik / hat uzunluğu<input name="derinlik" placeholder="Örn. 6 m / 2 km"></label>
-      <label class="full">Mesajınız<textarea name="mesaj"></textarea></label>
-      <button class="btn" type="submit">WhatsApp ile gönder <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-      <label class="full kvkk"><input type="checkbox" name="kvkk"> <span>Bilgilerimin teklif hazırlanması amacıyla işlenmesini kabul ediyorum (KVKK).</span></label>
-      <p class="note" id="note">Form, bilgilerinizi hazır bir mesaj olarak WhatsApp'ta açar.</p>
-    </form>
-  </div>
-  <div class="wrap"><div class="map rv" id="map"><div class="map-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.800 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><b>Konum haritası</b><span>Adres girildiğinde Google Haritalar burada görünür.</span></div></div></div>
-</section>
+  </section>
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="mv">
+        <div class="box rv"><svg class="ic" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="21" cy="21" r="16"/><circle cx="21" cy="21" r="8"/><circle cx="21" cy="21" r="1.5" fill="currentColor"/></svg><h3>Misyonumuz</h3><p>Altyapı inşaatının zorlu koşullarında; güçlü teknik kadro, doğru ekipman ve disiplinli saha yönetimiyle kalıcı değer üretmek.</p></div>
+        <div class="box rv" style="--d:1"><svg class="ic" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 21s7-12 18-12 18 12 18 12-7 12-18 12S3 21 3 21z"/><circle cx="21" cy="21" r="5"/></svg><h3>Vizyonumuz</h3><p>Palplanş iksa ve su altyapısı alanında ilk akla gelen, nesiller boyu sürecek seçkin bir kuruluş olmak.</p></div>
+      </div>
+      <div class="head center rv" style="margin-top:72px"><div class="kicker">Politikalarımız</div><h2>İşimizi hangi ilkelerle yapıyoruz</h2></div>
+      <div class="three">
+        <div class="box rv"><svg class="ic" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M21 4l14 6v10c0 9-6 15-14 18-8-3-14-9-14-18V10z"/><path d="M14 21l5 5 9-10"/></svg><h3>İş sağlığı ve güvenliği</h3><p>Her şantiyede risk analizi yapılır, ekip eğitilir ve denetlenir. Hedefimiz sıfır iş kazasıdır.</p></div>
+        <div class="box rv" style="--d:1"><svg class="ic" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M21 38V20"/><path d="M21 24c-8 0-13-5-13-14 8 0 13 5 13 14zM21 20c0-7 4-11 12-11 0 7-4 11-12 11z"/></svg><h3>Çevre</h3><p>Doğal kaynakları verimli kullanır, kazı ve atık yönetimini mevzuata uygun yürütür, sahayı temiz teslim ederiz.</p></div>
+        <div class="box rv" style="--d:2"><svg class="ic" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><circle cx="21" cy="16" r="11"/><path d="M14 25l-3 13 10-5 10 5-3-13"/></svg><h3>Kalite ve iş prensibi</h3><p>İmalatlar proje ve şartnameye göre kontrol edilir. Müşteri bilgileri gizli tutulur, taahhüt edilen süre ve bütçeye uyulur.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="head center rv"><div class="kicker">Çalışma sürecimiz</div><h2>Keşiften devreye almaya dört adım</h2></div>
+      <div class="steps">
+        <div class="step rv"><h3>Keşif ve fizibilite</h3><p>Saha, zemin ve mevcut hat koşulları yerinde incelenir.</p></div>
+        <div class="step rv" style="--d:1"><h3>Proje ve teklif</h3><p>Uygulama projeleri ve metraj hazırlanır, net teklif sunulur.</p></div>
+        <div class="step rv" style="--d:2"><h3>Uygulama</h3><p>İş programına ve güvenlik kurallarına uygun imalat yapılır.</p></div>
+        <div class="step rv" style="--d:3"><h3>Devreye alma</h3><p>Testler, eğitim ve as-built dokümanlarıyla teslim edilir.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- =====================================================  FAALİYET ALANLARI  -->
+<div class="view" id="v-faaliyet-alanlari">
+  <section class="banner"><img src="assets/img/hero-batardo.jpg" alt=""><div class="wrap"><h1>Faaliyet Alanları</h1><div class="crumb"><a href="#anasayfa">Anasayfa</a><span>/</span><b>Faaliyet Alanları</b></div></div></section>
+  <section class="sec" style="padding-top:20px">
+    <div class="wrap" id="rows"></div>
+  </section>
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="head center rv"><div class="kicker">Palplanş uygulama yöntemleri</div><h2>Zemine ve çevreye göre doğru yöntem</h2></div>
+      <div class="sub">
+        <div class="box rv"><h3>Vibrasyonlu çakma</h3><p>Ekskavatöre monte veya vinç askılı vibro çekiçlerle, kumlu ve gevşek zeminlerde hızlı çakım.</p></div>
+        <div class="box rv" style="--d:1"><h3>Hidrolik baskı</h3><p>Titreşime ve gürültüye hassas kent içi işlerde, komşu yapıları etkilemeden sessiz sürme.</p></div>
+        <div class="box rv" style="--d:2"><h3>Ön delgili çakma</h3><p>Sert zeminlerde burgu ile ön delgi yapılarak profilin proje kotuna hasarsız indirilmesi.</p></div>
+        <div class="box rv" style="--d:3"><h3>Söküm, kiralama, satış</h3><p>İş bitiminde söküm; proje süresine göre U ve Z tipi palplanş kiralama, satış ve geri alım.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="head center rv"><div class="kicker">Sık sorulan sorular</div><h2>Merak edilenler</h2></div>
+      <div class="faq" id="faq"></div>
+    </div>
+  </section>
+</div>
+
+<!-- =====================================================  GALERİ  -->
+<div class="view" id="v-galeri">
+  <section class="banner"><img src="assets/img/palplans-perde.jpg" alt=""><div class="wrap"><h1>Galeri</h1><div class="crumb"><a href="#anasayfa">Anasayfa</a><span>/</span><b>Galeri</b></div></div></section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="filters" id="filters"></div>
+      <div class="gal" id="gal"></div>
+      <p class="note">Görseller temsilidir; kaynakları sayfanın altında listelenmiştir.</p>
+    </div>
+  </section>
+</div>
+
+<!-- =====================================================  İLETİŞİM  -->
+<div class="view" id="v-iletisim">
+  <section class="banner"><img src="assets/img/kanalizasyon-hendek.jpg" alt=""><div class="wrap"><h1>İletişim</h1><div class="crumb"><a href="#anasayfa">Anasayfa</a><span>/</span><b>İletişim</b></div></div></section>
+  <section class="sec soft">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <div class="kicker">Bize ulaşın</div>
+          <h2>Projenizi konuşalım</h2>
+          <p style="margin:14px 0 26px">Projenin türünü ve konumunu paylaşın; keşif planlayıp teklifimizi iletelim.</p>
+          <div class="info">
+            <a data-tel><span class="ib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2z"/></svg></span><span><small>Telefon</small><b data-f="phone"></b></span></a>
+            <a data-mail><span class="ib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></svg></span><span><small>E-posta</small><b data-f="email"></b></span></a>
+            <div><span class="ib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.800 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span><small>Adres</small><b data-f="address"></b></span></div>
+          </div>
+        </div>
+        <form id="form" novalidate>
+          <h3>Teklif formu</h3>
+          <label for="f-ad">Ad Soyad<input id="f-ad" name="ad" autocomplete="name"></label>
+          <label for="f-tel">Telefon<input id="f-tel" name="tel" type="tel" autocomplete="tel"></label>
+          <label class="full" for="f-hizmet">Hizmet<select id="f-hizmet" name="hizmet"></select></label>
+          <label for="f-konum">Proje konumu<input id="f-konum" name="konum" placeholder="İl / ilçe"></label>
+          <label for="f-olcu">Derinlik / hat uzunluğu<input id="f-olcu" name="olcu" placeholder="Örn. 6 m / 2 km"></label>
+          <label class="full" for="f-mesaj">Mesajınız<textarea id="f-mesaj" name="mesaj"></textarea></label>
+          <label class="full kvkk" for="f-kvkk"><input id="f-kvkk" type="checkbox" name="kvkk"><span>Bilgilerimin teklif hazırlanması amacıyla işlenmesini kabul ediyorum (KVKK).</span></label>
+          <button class="btn" type="submit">WhatsApp ile gönder</button>
+          <p class="msg" id="msg">Form, bilgilerinizi hazır bir mesaj olarak WhatsApp'ta açar.</p>
+        </form>
+      </div>
+      <div class="map" id="map"><div class="map-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.800 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><b>Konum haritası</b><span>Adres girildiğinde Google Haritalar burada görünür.</span></div></div>
+    </div>
+  </section>
+</div>
 </main>
+
+<section class="cta">
+  <div class="wrap">
+    <div><h2>Altyapı projeniz için teklif alın</h2><p>Keşif ücretsizdir; metraj ve birim fiyatları baştan net veririz.</p></div>
+    <a href="#iletisim" class="btn dark">Teklif formu <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+  </div>
+</section>
 
 <footer>
   <div class="wrap">
     <div class="foot">
       <div>
-        <a href="#top" class="logo"><svg viewBox="0 0 46 46" fill="none"><rect x="1" y="1" width="44" height="44" stroke="#f59e0b" stroke-width="2"/><path d="M5 29h7l4-12h14l4 12h7" stroke="#fff" stroke-width="3.2" stroke-linejoin="round"/></svg><span><b>HAN GRUP</b><small>Yazılım · İnşaat</small></span></a>
+        <a href="#anasayfa" class="logo"><svg viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="3" fill="#223042"/><path d="M6 31h8l4-14h12l4 14h8" stroke="#f08a1c" stroke-width="3.4" stroke-linejoin="round"/><path d="M6 38h36" stroke="#fff" stroke-width="2" stroke-dasharray="3 3"/></svg><span><b>HAN GRUP</b><small>Yazılım · İnşaat</small></span></a>
         <p>Palplanş iksa, içme suyu ve kanalizasyon hatları, arıtma tesisleri: altyapı projelerinde keşiften devreye almaya tek elden çözüm.</p>
       </div>
-      <div><h4>Hizmetler</h4><ul><li><a href="#palplans">Palplanş iksa</a></li><li><a href="#hizmetler">İçme suyu isale hatları</a></li><li><a href="#hizmetler">Kanalizasyon ve yağmursuyu</a></li><li><a href="#hizmetler">Kanal hattı görüntüleme</a></li><li><a href="#hizmetler">Arıtma tesisleri</a></li></ul></div>
+      <div><h4>Kurumsal</h4><ul><li><a href="#anasayfa">Anasayfa</a></li><li><a href="#kurumsal">Hakkımızda</a></li><li><a href="#faaliyet-alanlari">Faaliyet alanları</a></li><li><a href="#galeri">Galeri</a></li><li><a href="#iletisim">İletişim</a></li></ul></div>
+      <div><h4>Faaliyet alanları</h4><ul id="footSvc"></ul></div>
       <div><h4>İletişim</h4><ul><li data-f="phone"></li><li data-f="email"></li><li data-f="address"></li></ul></div>
     </div>
-    <details class="credits"><summary>Görsel kaynakları</summary><p>Sitedeki fotoğraflar temsilidir ve Wikimedia Commons üzerinden serbest lisanslarla kullanılmıştır: Vogler (CC BY-SA 4.0) · Federal Waterways Engineering and Research Institute (CC BY 2.0) · ACBahn (CC BY-SA 3.0) · C. Löser (CC BY 3.0 DE) · Tigerente (CC BY-SA 4.0) · Fons Heijnsbroek (CC0) · MHM55 (CC BY-SA 4.0) · Michal Klajban (CC BY-SA 3.0) · ermell (CC BY-SA 4.0) · Fletcher (CC BY 4.0) · Alf van Beem (CC0) · Störfix (CC BY-SA 3.0) · Raimond Spekking (CC BY-SA 4.0) · Tomas Castelazo (CC BY-SA 3.0/4.0) · Rasbak (CC BY-SA 3.0) · Falk2 (CC BY-SA 4.0) · Golgeetmebaskaihsanistemem (CC BY-SA 3.0) · Vraj Acharya, WELL Labs (CC BY-SA 4.0) · Valebe (CC BY-SA 4.0) · Diegodlh (CC BY 4.0). Görseller kırpılmış ve yeniden boyutlandırılmıştır. Ayrıntılı liste: <a href="assets/img/KAYNAKLAR.md">KAYNAKLAR.md</a></p></details>
+    <details class="credits"><summary>Görsel kaynakları</summary><p>Sitedeki fotoğraflar temsilidir ve Wikimedia Commons üzerinden serbest lisanslarla kullanılmıştır: Vogler (CC BY-SA 4.0) · Federal Waterways Engineering and Research Institute (CC BY 2.0) · ACBahn (CC BY-SA 3.0) · C. Löser (CC BY 3.0 DE) · MHM55 (CC BY-SA 4.0) · Michal Klajban (CC BY-SA 3.0) · ermell (CC BY-SA 4.0) · Raimond Spekking (CC BY-SA 4.0) · Tomas Castelazo (CC BY-SA 3.0/4.0) · Falk2 (CC BY-SA 4.0) · Golgeetmebaskaihsanistemem (CC BY-SA 3.0) · Vraj Acharya, WELL Labs (CC BY-SA 4.0) · Valebe (CC BY-SA 4.0) · Diegodlh (CC BY 4.0). Görseller kırpılmış ve yeniden boyutlandırılmıştır. Ayrıntılı liste: <a href="assets/img/KAYNAKLAR.md">KAYNAKLAR.md</a></p></details>
     <div class="copy"><span>© <span id="yr"></span> Han Grup Yazılım İnşaat. Tüm hakları saklıdır.</span><span>Altyapı · Palplanş İksa · Arıtma Tesisleri</span></div>
   </div>
 </footer>
 
-<a class="fab call" data-tel2 aria-label="Hemen arayın"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2z"/></svg></a>
-<a class="fab" data-wa aria-label="WhatsApp ile yazın" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.600 15.100L2 22l5.100-1.300A10 10 0 1012 2zm5.800 14.200c-.250.700-1.400 1.300-2 1.400-.500.100-1.200.100-1.900-.100a17 17 0 01-1.700-.600c-3-1.300-5-4.300-5.100-4.500-.200-.200-1.200-1.600-1.200-3.100s.800-2.200 1-2.500c.300-.300.600-.300.800-.300h.600c.200 0 .450-.100.700.500l.900 2.200c.100.200.100.400 0 .600l-.300.500-.500.500c-.150.200-.300.350-.100.650.200.300.800 1.300 1.700 2.100 1.150 1 2.100 1.350 2.400 1.500.300.150.500.100.650-.050l.900-1.100c.200-.300.400-.250.650-.150l2.100 1c.300.150.500.200.550.350.100.100.100.700-.150 1.400z"/></svg></a>
-<div class="lb" id="lb" aria-hidden="true"><button aria-label="Kapat">×</button><img alt=""><p></p></div>
+<a class="fab call" data-tel aria-label="Hemen arayın"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M5 3h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2z"/></svg></a>
+<a class="fab" data-wa aria-label="WhatsApp ile yazın" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 01-13.500 7.800L3 21l1.300-4.300A9 9 0 1121 12z"/><path d="M9 9.500c0 3 2.500 5.500 5.500 5.500" stroke-linecap="round"/></svg></a>
+<div class="lb" id="lb"><button aria-label="Kapat">×</button><img alt=""><p></p></div>
 <button class="top" id="toTop" aria-label="Yukarı çık">↑</button>
 
-<script>
-/* ====== FİRMA BİLGİLERİ — yalnızca burayı düzenleyin ====== */
-const FIRMA = {
-  phone:   "0 (5XX) XXX XX XX",          // görünen telefon
-  phoneRaw:"905XXXXXXXXX",               // ülke koduyla, boşluksuz (tel: ve WhatsApp için)
-  email:   "info@firmaniz.com",
-  address: "Adres bilginizi buraya yazın",
-  mapQuery:""                            // Google Haritalar'da aranacak adres; doldurulunca harita görünür
-};
-
-const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
-
-/* contact fields */
-$$("[data-f]").forEach(e => e.textContent = FIRMA[e.dataset.f]);
-$("[data-tel]").href = $("[data-tel2]").href = "tel:+" + FIRMA.phoneRaw;
-
-/* preloader + scroll progress */
-const pre = $("#pre"), hidePre = () => pre.classList.add("done");
-addEventListener("load", () => setTimeout(hidePre, 500)); setTimeout(hidePre, 3000);
-addEventListener("scroll", () => { $("#prog").style.transform = `scaleX(${scrollY / (document.documentElement.scrollHeight - innerHeight)})`; }, { passive: true });
-
-/* map */
-if (FIRMA.mapQuery) $("#map").innerHTML = `<iframe title="Konum haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${encodeURIComponent(FIRMA.mapQuery)}&output=embed"></iframe>`;
-
-/* structured data (SEO) */
-const ld = document.createElement("script"); ld.type = "application/ld+json";
-ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "GeneralContractor", name: "Han Grup Yazılım İnşaat", description: document.querySelector('meta[name=description]').content, telephone: "+" + FIRMA.phoneRaw, email: FIRMA.email, address: FIRMA.address, areaServed: "TR", knowsAbout: ["Palplanş iksa", "İçme suyu isale hatları", "Kanalizasyon", "Yağmursuyu", "Atık su arıtma tesisleri", "İçme suyu arıtma tesisleri"] });
-document.head.appendChild(ld);
-$("[data-mail]").href = "mailto:" + FIRMA.email;
-$("[data-wa]").href = "https://wa.me/" + FIRMA.phoneRaw;
-$("#yr").textContent = new Date().getFullYear();
-
-/* hero slideshow */
-const slides = $$("#slides img"), caps = ["Palplanş iksa", "İçme suyu isale hatları", "Arıtma tesisleri", "Kanalizasyon ve yağmursuyu"], dots = $("#dots");
-let cur = 0, timer;
-const go = i => { slides[cur].classList.remove("on"); dots.children[cur].classList.remove("on"); cur = (i + slides.length) % slides.length;
-  slides[cur].classList.add("on"); dots.children[cur].classList.add("on"); $("#cap").textContent = caps[cur]; clearInterval(timer); timer = setInterval(() => go(cur + 1), 6000); };
-slides.forEach((_, i) => { const b = document.createElement("button"); b.setAttribute("aria-label", "Görsel " + (i + 1)); b.onclick = () => go(i); dots.appendChild(b); });
-go(0);
-
-/* gallery + lightbox */
-const gal = [["palplans-perde","Çelik palplanş perde","w"],["isale-hatti","İçme suyu isale hattı imalatı","w"],["derin-kazi","Palplanşlı derin kazı","t"],["aritma-tesis","Arıtma tesisi",""],["kanalizasyon-hendek","Kanalizasyon hendeği iksası",""],["boru-montaj","Boru montajı","w"],["cakma-makinesi","Delgi ve çakma makinesi","t"],["aritma-havuz","Havalandırma havuzu",""],["kanal-hendek","Kanal hattı imalatı",""],["terfi","Terfi istasyonu",""],["kopru-batardo","Batardo imalatı",""],["boru-ici","Boru içi kontrol","w"]];
-$("#gal").innerHTML = gal.map(([f, t, c], i) => `<button class="g ${c} rv" style="--d:${i % 4}" data-i="${i}"><img src="assets/img/${f}.jpg" alt="${t}" loading="lazy"><span>${t}</span></button>`).join("");
-const lb = $("#lb"); let li = 0;
-const show = i => { li = (i + gal.length) % gal.length; $("img", lb).src = "assets/img/" + gal[li][0] + ".jpg"; $("p", lb).textContent = gal[li][1]; lb.classList.add("open"); };
-$("#gal").addEventListener("click", e => { const b = e.target.closest(".g"); if (b) show(+b.dataset.i); });
-lb.addEventListener("click", e => { if (e.target.tagName === "IMG") show(li + 1); else lb.classList.remove("open"); });
-addEventListener("keydown", e => { if (!lb.classList.contains("open")) return; if (e.key === "Escape") lb.classList.remove("open"); if (e.key === "ArrowRight") show(li + 1); if (e.key === "ArrowLeft") show(li - 1); });
-
-/* marquee */
-const words = ["Palplanş iksa", "İçme suyu isale hatları", "Kanalizasyon", "Yağmursuyu", "Atık su arıtma", "İçme suyu arıtma", "Kanal görüntüleme", "Terfi istasyonları", "Derin kazı"];
-$("#marq").innerHTML = [...words, ...words].map(w => `<span>${w}</span>`).join("");
-
-/* application areas */
-const areas = [
-  ["İçme suyu iletim ve isale hatları", "isale-hatti", "Kaynaktan depoya, depodan şebekeye uzanan iletim hatlarının kazı, boru serimi ve test işleri."],
-  ["Kanalizasyon ve yağmursuyu şebekeleri", "kanalizasyon-hendek", "Mahalle ve cadde bazında derin kanal kazısı, boru ve rögar imalatları, evsel bağlantılar."],
-  ["Atık su arıtma tesisleri", "aritma-havuz", "Havalandırma ve çöktürme havuzları, boru ve mekanik montaj, devreye alma."],
-  ["İçme suyu arıtma tesisleri", "aritma-tesis", "Kimyasal ve fiziksel arıtma üniteleri, filtre ve depo yapıları."],
-  ["Terfi istasyonları ve su depoları", "terfi", "Pompa istasyonları, köy depoları ve betonarme depo imalatları."],
-  ["Derin kazı ve palplanş iksa", "hero-batardo", "Su altında ve yüksek yeraltı suyunda güvenli kazı için palplanş perde ve batardolar."]
-];
-$("#areas").innerHTML = areas.map(([t, im, p], i) => `<article class="area rv" style="--d:${i % 3}" tabindex="0">
-  <span class="n">0${i + 1}</span>
-  <img src="assets/img/${im}.jpg" alt="${t}" loading="lazy">
-  <h3>${t}</h3><p>${p}</p></article>`).join("");
-
-/* header + back-to-top + active link */
-const hdr = $("#hdr"), toTop = $("#toTop");
-const onScroll = () => { const y = scrollY; hdr.classList.toggle("scrolled", y > 30); toTop.classList.toggle("show", y > 700); };
-addEventListener("scroll", onScroll, { passive: true }); onScroll();
-toTop.onclick = () => scrollTo({ top: 0, behavior: "smooth" });
-
-const burger = $("#burger"), menu = $("#menu");
-const setMenu = o => { menu.classList.toggle("open", o); burger.setAttribute("aria-expanded", o); document.body.style.overflow = o ? "hidden" : ""; };
-burger.onclick = () => setMenu(!menu.classList.contains("open"));
-$$("a", menu).forEach(a => a.addEventListener("click", () => setMenu(false)));
-
-const links = $$('.menu a[href^="#"]:not(.btn)');
-const spy = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === "#" + e.target.id));
-}), { rootMargin: "-45% 0px -50% 0px" });
-$$("section[id]").forEach(s => spy.observe(s));
-
-/* reveal + counters */
-const fmt = n => n.toLocaleString("tr-TR");
-const count = el => {
-  const end = +el.dataset.count, t0 = performance.now(), dur = 1800;
-  const tick = t => { const p = Math.min((t - t0) / dur, 1); el.textContent = fmt(Math.round(end * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(tick); };
-  requestAnimationFrame(tick);
-};
-const io = new IntersectionObserver(es => es.forEach(e => {
-  if (!e.isIntersecting) return;
-  e.target.classList.add("in");
-  $$("[data-count]", e.target).forEach(count);
-  io.unobserve(e.target);
-}), { threshold: .15 });
-$$(".rv, .profile-line, .steps").forEach(e => io.observe(e));
-
-/* form -> WhatsApp */
-$("#form").addEventListener("submit", ev => {
-  ev.preventDefault();
-  const f = ev.target, note = $("#note");
-  if (!f.kvkk.checked) { note.textContent = "Devam etmek için KVKK onay kutusunu işaretleyin."; note.style.color = "#ffb938"; return; }
-  if (!f.ad.value.trim() || !f.tel.value.trim()) { note.textContent = "Lütfen ad soyad ve telefon alanlarını doldurun."; note.style.color = "#ffb938"; (f.ad.value.trim() ? f.tel : f.ad).focus(); return; }
-  const msg = `Merhaba, teklif almak istiyorum.\nAd Soyad: ${f.ad.value}\nTelefon: ${f.tel.value}\nHizmet: ${f.hizmet.value}\nKonum: ${f.konum.value || "-"}\nDerinlik / uzunluk: ${f.derinlik.value || "-"}\nMesaj: ${f.mesaj.value || "-"}`;
-  open("https://wa.me/" + FIRMA.phoneRaw + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
-  note.textContent = "Teşekkürler! WhatsApp penceresi açıldı; mesajı göndererek talebinizi tamamlayın."; note.style.color = "";
-});
-</script>
+<script src="assets/site.js"></script>
 </body>
 </html>
