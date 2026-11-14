@@ -48,9 +48,15 @@ cam_mod    = 8.6;                       // kamera modülü kare kenarı
 oled_win   = 28;                        // SH1107 1.5" görünür pencere (1.3" için ~30x15)
 spk_d      = 28;                        // hoparlör çapı (28/36/40 mm olabilir)
 bb_L = 47; bb_W = 35;                   // 170'lik mini breadboard
+// Raspberry Pi 5 (robotun kendi beyni) — resmi ölçüler; ÖLÇ ile doğrulayın
+pi_L = 85; pi_W = 56; pi_hole_in = 3.5; pi_hole_dx = 58; pi_hole_dy = 49;
+pi_usbc_x = 11.2;                        // USB-C güç portu, kart köşesinden (ÖLÇ)
+pi_standoff_h = 5;
+pi_x0 = 30;                              // kart 180° döndürülmüş: USB-C kenarı arka duvara bakar
 
 // ---------- Ana ölçüler ----------
-base_W = 100; base_D = 80; base_H = 50; base_r = 9;
+base_W = 140; base_D = 96; base_H = 62; base_r = 10;
+pi_y0 = base_D/2 - wall - 2;             // USB-C kenarının dünya Y konumu
 head_W = 68;  head_D = 42; head_H = 56; head_r = 8;
 disc_d = 70;  disc_t = 3;
 yoke_t = 4;   yoke_gap = 4;              // baş yan yüzü ile kol arası boşluk
@@ -107,24 +113,29 @@ module base() {
             for (x=[-1,1]) translate([x*sv_hole_pitch/2, 0, 0]) cylinder(d=2.0, h=wall+2);
         }
         // kablo yay yarığı (pan +/-60 derece)
-        translate([0,0,base_H-wall-1]) arc_slot(cable_r, 8, 30, 150, wall+2);
+        translate([0,0,base_H-wall-1]) arc_slot(cable_r, 12, 35, 145, wall+2);
         // ön: OLED penceresi (sol) + hoparlör ızgarası (sağ)
-        translate([-22, -base_D/2-1, base_H*0.55-oled_win/2])
+        translate([-35-oled_win/2, -base_D/2-1, base_H*0.55-oled_win/2])
             cube([oled_win, wall+2, oled_win]);
-        translate([22, -base_D/2+wall+1, base_H*0.5]) rotate([90,0,0])
+        translate([35, -base_D/2+wall+1, base_H*0.5]) rotate([90,0,0])
             for (i=[-2:2], j=[-2:2]) if (i*i+j*j <= 5)
                 translate([i*4.5, j*4.5, 0]) cylinder(d=2.6, h=wall+2, $fn=16);
-        // arka: USB-C güç girişi
-        translate([0, base_D/2-wall-1, 8]) cube([14, wall+2, 8], center=true);
+        // arka: Raspberry Pi USB-C güç portu (adaptör doğrudan takılır)
+        translate([pi_x0 - pi_usbc_x, base_D/2 - wall/2, pi_standoff_h + 3.2]) cube([14, wall+2, 10], center=true);
+        // arka: servo/ses için 5V DC jak (5.5x2.1 panel jak, M8)
+        translate([50, base_D/2 + 1, 42]) rotate([90,0,0]) cylinder(d=8.2, h=wall+2);   // Pi ve breadboard üstünde, boş bölgede
+        // üst arka köşelerde havalandırma (Pi fanı için)
+        for (sx=[-1,1], i=[0:3]) translate([sx*(base_W/2-22), base_D/2-wall-6-i*5, base_H-wall-1])
+            cube([22, 2.5, wall+2], center=false);
         // yan havalandırma
-        for (s=[-1,1], i=[0:4])
-            translate([s*(base_W/2), -12+i*6, 14]) cube([wall*3, 2.5, 18], center=true);
+        for (s=[-1,1], i=[0:7])
+            translate([s*(base_W/2), -24+i*7, 22]) cube([wall*3, 3, 26], center=true);
     }
     // iç: hoparlör tutucu halka (ön duvar arkası)
-    translate([22, -base_D/2+wall, base_H*0.5]) rotate([-90,0,0])
+    translate([35, -base_D/2+wall, base_H*0.5]) rotate([-90,0,0])
         difference() { cylinder(d=spk_d+4, h=4); translate([0,0,-1]) cylinder(d=spk_d+tol*2, h=6); }
     // iç: OLED modül çerçevesi
-    translate([-22+oled_win/2, -base_D/2+wall, base_H*0.55]) difference() {
+    translate([-35, -base_D/2+wall, base_H*0.55]) difference() {
         translate([-(oled_win+8)/2, 0, -(oled_win+8)/2]) cube([oled_win+8, 3, oled_win+8]);
         translate([-(oled_win+2)/2, -1, -(oled_win+2)/2]) cube([oled_win+2, 5, oled_win+2]);
     }
@@ -137,10 +148,14 @@ module bottom() {
             translate([x*(base_W/2-wall-4), y*(base_D/2-wall-4), -1]) {
                 cylinder(d=3.2, h=5); cylinder(d=6, h=1.6);   // havşa
             }
-        // breadboard konum işareti (arka sol, servodan uzak)
-        translate([-base_W/2+wall+4, base_D/2-wall-4-bb_W, 2.0]) cube([bb_L, bb_W, 1]);
+        // breadboard konum işareti (sağ arka, Pi'nin yanında)
+        translate([pi_x0 + 2, -10, 2.0]) cube([bb_W, bb_L, 1]);   // köşe kolonlarıyla çakışmaz
     }
-    // kaymaz ayak yuvaları
+    // Raspberry Pi 5 ayakları (M2.5 kılavuzsuz vida için 2.2 delik)
+    for (lx=[pi_hole_in, pi_hole_in+pi_hole_dx], ly=[pi_hole_in, pi_hole_in+pi_hole_dy])
+        translate([pi_x0 - lx, pi_y0 - ly, 2.4 - 0.01]) difference() {
+            cylinder(d=6, h=pi_standoff_h); cylinder(d=2.2, h=pi_standoff_h+1);
+        }
 }
 
 // ========================= DÖNER TABLA + ÇATAL =========================
@@ -174,7 +189,7 @@ module turntable() {
         translate([0,0,-0.01]) cylinder(d=horn_d+tol*2, h=horn_t);
         cylinder(d=3.2, h=10);
         // kablo deliği (arka)
-        rotate(90) translate([cable_r,0,-1]) cylinder(d=9, h=10);
+        rotate(90) translate([cable_r,0,-1]) cylinder(d=12, h=10);
         // sol kol: M3 mil vidası
         translate([-yoke_x_out-1, 0, tilt_axis_h]) rotate([0,90,0]) cylinder(d=3.4, h=yoke_t+2);
         tilt_servo_cut();
@@ -240,7 +255,7 @@ module head_back() {
         // havalandırma
         for (i=[-3:3]) translate([i*6, -1, 4]) cube([2.5, 5, 18], center=true);
         // kablo çıkışı (alt)
-        translate([0, -1, -(head_H/2-wall-8)]) rotate([-90,0,0]) cylinder(d=9, h=5);
+        translate([0, -1, -(head_H/2-wall-9)]) rotate([-90,0,0]) cylinder(d=12, h=5);
     }
 }
 
@@ -279,6 +294,9 @@ module pan_ring() {                // diski taşıyan halka; gövde üstüne yap
 // ============================== ÇIKTI ================================
 module assembly() {
     color("ivory") base();
+    color("tan") translate([0,0,-2.4]) bottom();
+    // Pi 5 hacmi (önizleme)
+    color("green", 0.6) translate([pi_x0 - pi_L, pi_y0 - pi_W, pi_standoff_h]) cube([pi_L, pi_W, 20]);
     color("silver") translate([0,0,base_H]) pan_ring();
     translate([-sv_shaft_off, 0, base_H - sv_tab_z]) servo_model();
     rotate(PAN_ANGLE) translate([0,0,disc_z0]) {

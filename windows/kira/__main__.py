@@ -25,10 +25,11 @@ from kira.security import secrets
 
 def build(settings: Settings) -> tuple[Assistant, OllamaProvider, AnthropicProvider, Connectivity]:
     memory = MemoryStore(settings.db_path, require_consent=settings.memory.require_consent_for_sensitive)
-    local = OllamaProvider(settings.local_ai)
+    local = OllamaProvider(settings.local_ai, label="local")
+    pc = OllamaProvider(settings.pc_ai, label="pc") if settings.pc_ai.enabled else None
     cloud = AnthropicProvider(settings.cloud_ai)
     conn = Connectivity()
-    router = HybridRouter(local, cloud, conn, allow_cloud_images=settings.cloud_ai.allow_images)
+    router = HybridRouter(local, cloud, conn, allow_cloud_images=settings.cloud_ai.allow_images, pc=pc)
     return Assistant(settings, memory, router), local, cloud, conn
 
 
@@ -48,6 +49,10 @@ def cmd_chat(settings: Settings) -> int:
         print(f"KIRA{tag}: {reply.text}\n")
 
 
+def router_pc_ok(settings: Settings) -> bool:
+    return OllamaProvider(settings.pc_ai, label="pc").available()
+
+
 def cmd_status(settings: Settings) -> int:
     _, local, cloud, conn = build(settings)
     print(f"Veri klasörü : {settings.data_dir}")
@@ -56,6 +61,8 @@ def cmd_status(settings: Settings) -> int:
         print(f"Yerel AI     : çalışıyor ({', '.join(local.installed_models()) or 'model yok'})")
     else:
         print("Yerel AI     : ulaşılamıyor (Ollama kurulu ve açık mı?)")
+    if settings.pc_ai.enabled:
+        print(f"PC AI        : {settings.pc_ai.base_url} ({'erişilebilir' if router_pc_ok(settings) else 'ulaşılamıyor'})")
     print(f"Bulut AI     : {settings.cloud_ai.provider} / {settings.cloud_ai.model}, "
           f"anahtar {secrets.mask(secrets.get_secret('anthropic'))}")
     return 0

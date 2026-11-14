@@ -15,17 +15,19 @@
 | İnternet olmadan da çalışsın | 3 çalışma modu (aşağıda). Robot PC'siz bile "canlı" kalır |
 | PC'ye erişimi olsun | PC açıksa KIRA onu "ek beyin" ve "eller" olarak kullanır (sohbet, hafıza, Windows işlemleri) |
 
-## 2. Üç çalışma modu (dürüst sınırlarla)
+## 2. Üç çalışma modu (v0.2: robotun kendi beyni — Raspberry Pi 5)
 
-| Mod | Ne zaman | KIRA neler yapabilir | Neler yapamaz |
-|---|---|---|---|
-| **A. Tek başına** | PC kapalı, internet yok | Canlı yüz ve ifadeler; hareket/insan görünce başını çevirip bakma; boşta etrafa bakınma, uyuklama; dokunma tuşlarıyla etkileşim; saat; zamanlayıcı; PC'den önceden alınmış hatırlatmalar; **önceden kaydedilmiş Türkçe cümleler** ve karakter sesleri; "Hey KIRA" ile uyanma *(Phase: model eğitimi gerekli)* | **Serbest Türkçe sohbet yok.** ESP32-S3'ler dil modeli çalıştıramaz; Espressif'in cihaz üstü komut tanıması (MultiNet) Türkçeyi desteklemiyor. Sınırlı sayıda Türkçe komut için özel küçük model **araştırma maddesidir** |
-| **B. Ev ağı** | PC açık, internet yok | Mod A + **tam Türkçe sohbet** (Ollama), konuşma tanıma ve sesli cevap, uzun süreli hafıza, gelişmiş görüntü analizi, Windows işlemleri | Bulut gerektiren karmaşık görevler (yerel modelle, daha sınırlı yapılır) |
-| **C. Tam** | PC açık, internet var | Mod B + bulut AI ile karmaşık muhakeme ve detaylı görsel analiz | — |
+> v0.2 değişikliği: Kullanıcı isteğiyle **internet ve PC kapalıyken de sohbet** için gövdeye Raspberry Pi 5 (8 GB) eklendi. Gövde 140×96×62 mm'ye büyütüldü; Pi'nin USB-C güç portu arka duvardan doğrudan erişilir.
 
-Modlar arası geçiş otomatiktir; KIRA hangi modda olduğunu yüz ifadesi/durum ekranıyla ve sorulduğunda sözlü olarak söyler.
+| Mod | Ne zaman | KIRA ne yapar |
+|---|---|---|
+| **A. Tek başına** | PC kapalı, internet yok | Pi 5 üzerinde: "Hey KIRA" uyanma, Türkçe konuşma tanıma, küçük yerel dil modeliyle **serbest sohbet**, Türkçe sesli cevap, hafıza, yüz ifadeleri, baş takibi |
+| **B. Ev ağı** | PC açık | A + karmaşık sorular PC'deki daha büyük modele gider, Windows işlemleri |
+| **C. Tam** | İnternet var | B + bulut AI |
 
-> **Gelecek seçeneği:** PC'siz tam sohbet istenirse gövdeye bir **Raspberry Pi 5 (8 GB)** eklenebilir (küçük yerel dil modeli, yavaş ama çalışır). İlk sürümde gerekli değildir.
+Yönlendirme sırası (kodda uygulandı, `windows/kira/ai/router.py`): basit sohbet **robot → PC → bulut**, karmaşık iş **bulut → PC → robot**.
+
+**Dürüst beklenti (Pi 5'te ölçülecek):** küçük modeller (3B civarı) kısa sohbette makul ama büyük modeller kadar akıllı değildir; cevap başlangıcı birkaç saniye sürebilir. Görüntü hakkında soru Pi'de yavaştır, PC/bulut tercih edilir.
 
 ## 3. Donanım dağılımı
 
@@ -58,8 +60,9 @@ Modlar arası geçiş otomatiktir; KIRA hangi modda olduğunu yüz ifadesi/durum
 | Parça | Adet | Neden | Not |
 |---|---|---|---|
 | **MG90S mikro servo** (metal dişli) | 2 | Pan ve tilt | SG90 da olur ama dişlisi çabuk aşınır |
-| **USB-C 5V güç girişi** (USB-C breakout / PD tetikleyici 5V) | 1 | Gövdeye tek kablo ile güç | |
-| **5V 3A USB adaptör** | 1 | Servo + Wi-Fi + ses tepe akımı | Bilgisayar USB portu servolara yetmez |
+| **Raspberry Pi 5 (8 GB)** + resmi aktif soğutucu + microSD (32 GB+) | 1 | Robotun kendi beyni (internetsiz sohbet) | |
+| **Resmi Raspberry Pi 27W USB-C adaptör** | 1 | Pi gücü | |
+| **5V 3A adaptör + 5.5×2.1 panel DC jak** | 1 | Servo, ses, ekranlar | Pi ile GND ortak |
 | **1000 µF 10V elektrolitik kondansatör** | 1 | Servo çekişinde voltaj düşmesini önler | Breadboard 5V-GND arasına |
 | **Silikon kablo** (26-28 AWG, 8 renk) veya ince çok damarlı kablo | 1 m | Boyundan geçen kablo demeti | Jumper kablolar hareketle çıkar |
 | M2 vida (6-8 mm) ×10, M3 vida (12 mm) ×6 | — | Montaj | |

@@ -26,8 +26,22 @@ def default_data_dir() -> Path:
 
 @dataclass(frozen=True)
 class LocalAISettings:
+    """Robotun içindeki beyin (Raspberry Pi 5 üzerinde Ollama). Varsayılanlar
+    Pi 5 için küçük modellerdir; Türkçe kalite/hız gerçek cihazda ölçülecek."""
+
     enabled: bool = True
     base_url: str = "http://127.0.0.1:11434"
+    chat_model: str = "qwen2.5:3b"
+    vision_model: str = ""  # Pi'de görüntü sorusu yavaş; PC/bulut tercih edilir
+    timeout_s: float = 90.0
+
+
+@dataclass(frozen=True)
+class PCAISettings(LocalAISettings):
+    """Ev ağındaki Windows PC'nin Ollama'sı (isteğe bağlı, daha büyük modeller)."""
+
+    enabled: bool = False
+    base_url: str = "http://kira-pc.local:11434"
     chat_model: str = "qwen2.5:7b"
     vision_model: str = "qwen2.5vl:7b"
     timeout_s: float = 60.0
@@ -59,6 +73,7 @@ class Settings:
     data_dir: Path = field(default_factory=default_data_dir)
     user_name: str = ""
     local_ai: LocalAISettings = field(default_factory=LocalAISettings)
+    pc_ai: PCAISettings = field(default_factory=PCAISettings)
     cloud_ai: CloudAISettings = field(default_factory=CloudAISettings)
     memory: MemorySettings = field(default_factory=MemorySettings)
 

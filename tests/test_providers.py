@@ -24,7 +24,8 @@ def make_request(images=(), complex_task=False):
 # ---- Ollama ----
 def ollama_with(handler):
     client = httpx.Client(transport=httpx.MockTransport(handler), base_url="http://ollama")
-    return OllamaProvider(LocalAISettings(), client=client)
+    settings = LocalAISettings(chat_model="qwen2.5:7b", vision_model="qwen2.5vl:7b")
+    return OllamaProvider(settings, client=client)
 
 
 def test_ollama_text_and_vision_model_selection():
@@ -149,3 +150,11 @@ def test_anthropic_real_sdk_serialization():
 
 def _to_httpx2(httpx2, resp):
     return httpx2.Response(resp.status_code, content=resp.content, headers=dict(resp.headers))
+
+
+def test_robot_default_has_no_vision_and_pc_label():
+    from kira.core.config import PCAISettings
+    p = OllamaProvider(LocalAISettings())
+    assert p.supports_images is False and p.name == "local:qwen2.5:3b"
+    pc = OllamaProvider(PCAISettings(), label="pc")
+    assert pc.supports_images and pc.name.startswith("pc:")

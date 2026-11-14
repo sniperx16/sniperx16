@@ -1,6 +1,8 @@
-"""Yerel AI: Ollama (http://127.0.0.1:11434).
+"""Yerel AI: Ollama.
 
-İnternet gerektirmez. Görüntülü istekler `vision_model` ile çalışır.
+İki yerde kullanılır: robotun içindeki Raspberry Pi (label="local") ve
+ev ağındaki PC (label="pc"). İnternet gerektirmez. Görüntülü istekler
+`vision_model` ile çalışır; boş bırakılırsa görüntü desteklenmez.
 """
 
 from __future__ import annotations
@@ -15,11 +17,12 @@ from kira.core.config import LocalAISettings
 
 class OllamaProvider:
     is_local = True
-    supports_images = True
 
-    def __init__(self, settings: LocalAISettings, client: httpx.Client | None = None):
+    def __init__(self, settings: LocalAISettings, client: httpx.Client | None = None, *, label: str = "local"):
         self.settings = settings
-        self.name = f"local:{settings.chat_model}"
+        self.label = label
+        self.supports_images = bool(settings.vision_model)
+        self.name = f"{label}:{settings.chat_model}"
         self._client = client or httpx.Client(base_url=settings.base_url, timeout=settings.timeout_s)
 
     def available(self) -> bool:
@@ -53,7 +56,7 @@ class OllamaProvider:
                 json={"model": model, "messages": messages, "stream": False},
             )
         except httpx.ConnectError as exc:
-            raise ProviderUnavailable("Ollama çalışmıyor (127.0.0.1:11434)") from exc
+            raise ProviderUnavailable(f"Ollama çalışmıyor ({self.settings.base_url})") from exc
         except httpx.HTTPError as exc:
             raise ProviderError(f"Ollama isteği başarısız: {exc}") from exc
         if resp.status_code == 404:
@@ -66,4 +69,4 @@ class OllamaProvider:
         text = (data.get("message") or {}).get("content", "").strip()
         if not text:
             raise ProviderError("Ollama boş cevap döndürdü")
-        return ChatResponse(text=text, engine=f"local:{model}", stop_reason=data.get("done_reason"))
+        return ChatResponse(text=text, engine=f"{self.label}:{model}", stop_reason=data.get("done_reason"))

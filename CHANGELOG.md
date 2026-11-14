@@ -4,6 +4,10 @@ Tüm önemli değişiklikler bu dosyada belgelenir.
 
 ## [Unreleased]
 
+### Değişti — 2026-11-14 · KIRA PRO v0.2: internetsiz ve PC'siz sohbet
+- Gövdeye Raspberry Pi 5 eklendi (`kira_pro.scad`: 140×96×62 gövde, Pi ayakları, arka USB-C ve DC jak delikleri, havalandırma, 12 mm kablo geçişleri).
+- `router.py`: üç katmanlı yönlendirme — robotun beyni (Pi) → PC → bulut; `config.py`: `pc_ai` ayarı, Pi için küçük model varsayılanı. 56 test.
+
 ### Eklendi — 2026-11-14 · KIRA PRO tasarımı (v0.1 taslak)
 - `docs/KIRA_PRO_DESIGN.md`: pan/tilt başlı yeni tasarım; 3 çalışma modu (tek başına / ev ağı / tam), iki kartlı mimari (T-Display-S3 ana kontrolcü + yüz, XIAO Sense göz-kulak), önerilen pin planı, güç dağıtımı, eksik parça listesi, kişilik motoru, baskı ve montaj rehberi.
 - `hardware/kira_pro/kira_pro.scad`: parametrik OpenSCAD modeli (gövde, alt kapak, pan halkası, döner tabla + çatal, baş, arka kapak, kayar kamera kapağı) ve `stl/` altında dışa aktarılmış 8 parça, önizleme görselleri.

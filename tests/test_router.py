@@ -76,7 +76,7 @@ def test_complex_goes_cloud_first():
 def test_offline_complex_falls_back_to_local_with_note():
     local, cloud = FakeProvider("local", True), FakeProvider("cloud", False)
     r = HybridRouter(local, cloud, FakeNet(up=False)).chat(req(complex_task=True))
-    assert r.route is Route.LOCAL and r.fell_back and "yerel" in r.note
+    assert r.route is Route.LOCAL and r.fell_back and "kendi beynimle" in r.note
     assert cloud.calls == 0
 
 
@@ -108,3 +108,32 @@ def test_all_fail():
     cloud = FakeProvider("cloud", False, error=ProviderError("y"))
     with pytest.raises(NoEngineAvailable):
         HybridRouter(local, cloud, FakeNet()).chat(req())
+
+
+def test_simple_order_robot_then_pc_then_cloud():
+    local, pc, cloud = FakeProvider("local", True), FakeProvider("pc", True), FakeProvider("cloud", False)
+    router = HybridRouter(local, cloud, FakeNet(), pc=pc)
+    assert [r for r, _ in router.choose(req())] == [Route.LOCAL, Route.PC, Route.CLOUD]
+    assert [r for r, _ in router.choose(req(complex_task=True))] == [Route.CLOUD, Route.PC, Route.LOCAL]
+
+
+def test_complex_offline_uses_pc_before_robot_brain():
+    local, pc, cloud = FakeProvider("local", True), FakeProvider("pc", True), FakeProvider("cloud", False)
+    r = HybridRouter(local, cloud, FakeNet(up=False), pc=pc).chat(req(complex_task=True))
+    assert r.route is Route.PC and r.note == ""
+
+
+def test_no_pc_no_internet_robot_still_talks():
+    local = FakeProvider("local", True)
+    pc = FakeProvider("pc", True, ok=False)
+    cloud = FakeProvider("cloud", False)
+    r = HybridRouter(local, cloud, FakeNet(up=False), pc=pc).chat(req())
+    assert r.route is Route.LOCAL and r.response.text == "local cevap"
+
+
+def test_images_skip_providers_without_vision():
+    local = FakeProvider("local", True)
+    local.supports_images = False
+    pc = FakeProvider("pc", True)
+    router = HybridRouter(local, None, FakeNet(up=False), pc=pc)
+    assert router.chat(req(images=(ImageInput(b"x"),))).route is Route.PC

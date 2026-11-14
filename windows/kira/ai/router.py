@@ -3,9 +3,10 @@
 Sıra:
 1. Kural tabanlı hızlı komutlar (AI çağrısı yok): saat, tarih, hatırla, unut,
    hafızayı göster, kamera/ses komutları.
-2. Basit sohbet -> yerel AI (Ollama). Yerel yoksa bulut.
-3. Karmaşık soru / uzun görev -> bulut AI. Bulut yoksa (internet kesik vb.)
-   yerel AI ile devam edilir ve kullanıcıya söylenir.
+2. Basit sohbet -> robotun kendi beyni (Raspberry Pi üzerinde Ollama) ->
+   PC (açıksa) -> bulut. İnternet ve PC olmadan da sohbet sürer.
+3. Karmaşık soru / uzun görev -> bulut -> PC -> robotun kendi beyni.
+   Daha zayıf motora düşülürse kullanıcıya söylenir.
 4. Görüntülü soru -> yerel görsel model; ayarlarda izin verilmişse ve
    detay isteniyorsa bulut.
 """
@@ -24,7 +25,8 @@ from kira.security.sensitive import tr_lower
 
 class Route(str, Enum):
     RULE = "rule"
-    LOCAL = "local"
+    LOCAL = "local"   # robotun içindeki beyin (Raspberry Pi) — internet ve PC gerektirmez
+    PC = "pc"         # ev ağındaki Windows PC'nin daha büyük yerel modeli (isteğe bağlı)
     CLOUD = "cloud"
 
 
@@ -123,8 +125,10 @@ class HybridRouter:
         connectivity: Connectivity | None = None,
         *,
         allow_cloud_images: bool = False,
+        pc: ChatProvider | None = None,
     ):
         self.local = local
+        self.pc = pc
         self.cloud = cloud
         self.connectivity = connectivity or Connectivity()
         self.allow_cloud_images = allow_cloud_images
@@ -141,16 +145,18 @@ class HybridRouter:
 
     def choose(self, request: ChatRequest) -> list[tuple[Route, ChatProvider]]:
         """Denenecek sağlayıcıları öncelik sırasıyla döndürür."""
-        order: list[tuple[Route, ChatProvider]] = []
-        cloud_ok = self._cloud_ok(request)
-        local_ok = self._local_ok()
-        prefer_cloud = request.complex_task
-        if prefer_cloud and cloud_ok:
-            order.append((Route.CLOUD, self.cloud))
-        if local_ok:
-            order.append((Route.LOCAL, self.local))
-        if not prefer_cloud and cloud_ok:
-            order.append((Route.CLOUD, self.cloud))
+        has_images = any(m.images for m in request.messages)
+        tiers: list[tuple[Route, ChatProvider | None, bool]] = [
+            (Route.LOCAL, self.local, self._local_ok()),
+            (Route.PC, self.pc, self.pc is not None and self.pc.available()),
+            (Route.CLOUD, self.cloud, self._cloud_ok(request)),
+        ]
+        if request.complex_task:
+            # Karmaşık: en güçlü motordan başla, sonra PC, en son robotun kendi beyni.
+            tiers.reverse()
+        order = [(route, p) for route, p, ok in tiers if ok]
+        if has_images:
+            order = [(r, p) for r, p in order if p.supports_images]
         return order
 
     def _why_unavailable(self, request: ChatRequest) -> str:
@@ -159,6 +165,8 @@ class HybridRouter:
             reasons.append("yerel AI ayarlı değil")
         else:
             reasons.append("yerel AI'a (Ollama) ulaşılamıyor")
+        if self.pc is not None:
+            reasons.append("PC'ye ulaşılamıyor")
         if self.cloud is None:
             reasons.append("bulut AI ayarlı değil")
         elif not self.cloud.available():
@@ -182,9 +190,9 @@ class HybridRouter:
                 if route is Route.CLOUD and isinstance(exc, ProviderUnavailable) and exc.retryable:
                     self.connectivity.mark_offline()
                 continue
-            fell_back = i > 0 or (request.complex_task and route is Route.LOCAL)
+            fell_back = i > 0 or (request.complex_task and route is not Route.CLOUD)
             note = ""
-            if fell_back and route is Route.LOCAL and request.complex_task:
-                note = "Bulut AI'a ulaşamadım, yerel modelle cevaplıyorum; cevap daha sınırlı olabilir."
+            if request.complex_task and route is Route.LOCAL:
+                note = "Şu an sadece kendi beynimle düşünüyorum; cevabım daha sınırlı olabilir."
             return RoutedResponse(resp, route, fell_back=fell_back, note=note)
         raise NoEngineAvailable("Tüm AI motorları başarısız oldu: " + " | ".join(errors))
