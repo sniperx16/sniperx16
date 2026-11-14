@@ -24,3 +24,9 @@ Olasılık / Etki: D = Düşük, O = Orta, Y = Yüksek
 | R-18 | Orijinal tasarımın lisansı türev yayınlamaya izin vermeyebilir | O | O | MakerWorld lisansını kontrol et; değiştirilmiş STL'leri lisans izin vermiyorsa yalnızca kişisel kullan |
 | R-19 | Sense kartının "v24" sürümünde pin/kamera farkı | D | O | Seeed sürüm notları + kart üzerindeki etiket kontrolü |
 | R-20 | SH1107 modülü 5 V mantık/besleme toleransı bilinmiyor | O | O | Modül etiketine göre; şüphede 3V3 ile besle |
+| R-21 | **KIRA PRO:** servo çekişinde 5V hattı düşer → ESP32 reset, ses cızırtısı | O | O | 5V 3A adaptör, 1000 µF kondansatör, servolar yavaş rampalı hareket |
+| R-22 | Boyun kablosu sürekli dönmeden kopar / temassızlık | O | O | Silikon çok damarlı kablo, servis halkası, pan ±60° yazılım sınırı |
+| R-23 | PC'siz (Mod A) serbest Türkçe konuşma tanıma mümkün değil | **Y** | O | Beklenti net: Mod A'da ifade, hareket, kayıtlı cümleler; sohbet PC (Ollama) ile. Gelecek: Raspberry Pi 5 seçeneği |
+| R-24 | Harici 5V verilirken USB'den programlama → geri besleme | O | Y | Programlamadan önce harici gücü ayır; kartların 5V koruma diyotu doğrulanacak |
+| R-25 | 3D model ölçüleri gerçek parçalara uymaz | O | D | Parametrik model, önce küçük test parçaları, ölçüm tablosu |
+| R-26 | T-Display-S3 pin önerisi kart revizyonuyla çelişir | O | O | LILYGO pin şeması + kart baskısıyla karşılaştırmadan bağlama |
