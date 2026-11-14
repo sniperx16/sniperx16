@@ -12,24 +12,15 @@
 <meta property="og:description" content="Palplanş iksa, su ve kanalizasyon hatları, arıtma tesisleri: altyapı projelerinde keşiften devreye almaya tek elden çözüm.">
 <meta property="og:image" content="assets/img/hero-batardo.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2316202c'/%3E%3Cpath d='M4 21h5l3-9h8l3 9h5' fill='none' stroke='%23f08a1c' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/app.css">
 </head>
 <body>
 
-<div class="topbar">
-  <div class="wrap">
-    <ul>
-      <li><a data-mail><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></svg><span data-f="email"></span></a></li>
-      <li><a data-tel><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2z"/></svg><span data-f="phone"></span></a></li>
-    </ul>
-    <a class="wa" data-wa target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 01-13.500 7.800L3 21l1.300-4.300A9 9 0 1121 12z"/></svg>WhatsApp'tan yazın</a>
-  </div>
-</div>
-
+<div class="curtain" id="curtain" aria-hidden="true"></div>
 <header id="hdr">
   <div class="wrap nav">
     <a href="#anasayfa" class="logo" aria-label="Han Grup Yazılım İnşaat ana sayfa">
-      <svg viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="3" fill="#16202c"/><path d="M6 31h8l4-14h12l4 14h8" stroke="#f08a1c" stroke-width="3.4" stroke-linejoin="round"/><path d="M6 38h36" stroke="#fff" stroke-width="2" stroke-dasharray="3 3"/></svg>
+      <svg viewBox="0 0 48 48" fill="none"><rect x="1.500" y="1.500" width="45" height="45" stroke="currentColor" stroke-width="2"/><path d="M7 31h8l4-14h10l4 14h8" stroke="#f08a1c" stroke-width="3.4" stroke-linejoin="round"/><path d="M7 38h34" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/></svg>
       <span><b>HAN GRUP</b><small>Yazılım · İnşaat</small></span>
     </a>
     <ul class="menu" id="menu">
@@ -40,8 +31,11 @@
       <li><a href="#galeri" data-nav="galeri">Galeri</a></li>
       <li><a href="#iletisim" data-nav="iletisim">İletişim</a></li>
     </ul>
-    <a href="#iletisim" class="btn">Teklif Al</a>
-    <button class="burger" id="burger" aria-label="Menü" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    <div class="nav-r">
+      <a class="tel" data-tel><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2z"/></svg><span data-f="phone"></span></a>
+      <a href="#iletisim" class="btn">Teklif Al</a>
+      <button class="burger" id="burger" aria-label="Menü" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </header>
 
@@ -49,54 +43,57 @@
 <!-- =====================================================  ANASAYFA  -->
 <div class="view on" id="v-anasayfa">
   <section class="hero" id="hero" aria-label="Öne çıkanlar">
-    <div class="ctrl">
-      <button id="prev" aria-label="Önceki"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2L4 8l6 6"/></svg></button>
-      <span class="count"><b id="cur">01</b> / <span id="tot">04</span></span>
-      <button id="next" aria-label="Sonraki"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2l6 6-6 6"/></svg></button>
-    </div>
+    <div class="hero-tabs wrap" id="heroTabs"></div>
   </section>
 
-  <div class="quick">
-    <div class="wrap"><div class="grid">
-      <a href="#faaliyet-alanlari" data-target="s-palplans">
-        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 30h8l4-14h16l4 14h8"/><path d="M4 40h40" stroke-dasharray="4 4"/><path d="M14 6v6M24 6v6M34 6v6"/></svg>
-        <h3>Palplanş iksa</h3><p>Çakma, söküm, kiralama ve satış. Derin kazılarda toprak ve suyu tutan çelik perdeler.</p>
-        <span class="more">İncele <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 7h10M8 3l4 4-4 4"/></svg></span>
-      </a>
-      <a href="#faaliyet-alanlari" data-target="s-isale">
-        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M4 16h26c6 0 10 4 10 10v18"/><path d="M4 28h16c4 0 8 3 8 8v8"/><path d="M4 12v20"/></svg>
-        <h3>Su ve kanalizasyon hatları</h3><p>İçme suyu isale hatları, kanalizasyon ve yağmursuyu şebekeleri, kanal görüntüleme.</p>
-        <span class="more">İncele <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 7h10M8 3l4 4-4 4"/></svg></span>
-      </a>
-      <a href="#faaliyet-alanlari" data-target="s-atiksu">
-        <svg class="ic" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><circle cx="24" cy="26" r="16"/><path d="M24 10v32M8 26h32"/><path d="M24 4v6"/></svg>
-        <h3>Arıtma tesisleri</h3><p>Atık su ve içme suyu arıtma tesisleri, terfi istasyonları ve su depoları.</p>
-        <span class="more">İncele <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 7h10M8 3l4 4-4 4"/></svg></span>
-      </a>
-    </div></div>
-  </div>
-
-  <section class="sec">
-    <div class="wrap about">
-      <div class="pics rv">
-        <img class="p1" src="assets/img/palplans-perde.jpg" alt="Çakılmış çelik palplanş perde" loading="lazy">
-        <img class="p2" src="assets/img/isale-hatti.jpg" alt="İsale hattı imalatı" loading="lazy">
-        <div class="tag"><small>Uzmanlık</small>Altyapı ve iksa</div>
-      </div>
-      <div class="rv" style="--d:1">
-        <div class="kicker">Biz kimiz</div>
-        <h2>Altyapı inşaatında mühendislik ve uygulama tek çatı altında</h2>
-        <p style="margin-top:16px">Han Grup Yazılım İnşaat; palplanş iksa sistemlerinden içme suyu isale hatlarına, kanalizasyon ve yağmursuyu şebekelerinden arıtma tesislerine uzanan altyapı işlerinde yüklenici olarak hizmet verir. Projeyi fizibilite aşamasından alır, uygular ve çalışır halde teslim eder.</p>
-        <ul class="ticks" id="ticks"></ul>
-        <a href="#kurumsal" class="btn dark">Kurumsal <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec soft">
+  <section class="sec intro">
     <div class="wrap">
-      <div class="head center rv"><div class="kicker">Faaliyet alanlarımız</div><h2>Kazıdan devreye almaya altyapının her kalemi</h2></div>
-      <div class="cards" id="homeCards"></div>
+      <div class="intro-grid">
+        <div class="rv"><div class="kicker">Biz kimiz</div></div>
+        <div>
+          <p class="statement" id="statement">Han Grup Yazılım İnşaat; palplanş iksa sistemlerinden içme suyu isale hatlarına, kanalizasyon şebekelerinden arıtma tesislerine uzanan altyapı işlerini fizibiliteden devreye almaya tek çatı altında yürütür.</p>
+          <a href="#kurumsal" class="link rv">Kurumsal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <!-- NOT: Rakamlar örnek değerlerdir; data-count değerlerini gerçek verilerinizle güncelleyin. -->
+      <div class="nums" id="stats">
+        <div class="rv"><b><span data-count="15">15</span><i>+</i></b><span>Yıllık deneyim</span></div>
+        <div class="rv" style="--d:1"><b><span data-count="250">250</span><i>+</i></b><span>Tamamlanan proje</span></div>
+        <div class="rv" style="--d:2"><b><span data-count="300">300</span><i>km</i></b><span>Altyapı hattı</span></div>
+        <div class="rv" style="--d:3"><b><span data-count="25">25</span><i>+</i></b><span>Arıtma ve terfi tesisi</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec dark fields">
+    <div class="wrap">
+      <div class="head-row">
+        <div class="rv"><div class="kicker">Faaliyet alanlarımız</div><h2>Kazıdan devreye almaya<br>altyapının her kalemi</h2></div>
+        <a href="#faaliyet-alanlari" class="link light rv">Tüm faaliyet alanları <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+    <div class="panels rv" id="panels"></div>
+  </section>
+
+  <div class="ticker" aria-hidden="true"><div id="ticker"></div></div>
+
+  <section class="sec spot">
+    <div class="wrap spot-grid">
+      <div class="spot-pic">
+        <div class="mask"><img src="assets/img/palplans-perde.jpg" alt="Çakılmış çelik palplanş perde" loading="lazy" data-par="0.12"></div>
+        <div class="mask small"><img src="assets/img/kilit-detay.jpg" alt="Palplanş kilit detayı" loading="lazy"></div>
+      </div>
+      <div>
+        <div class="rv"><div class="kicker">Öne çıkan uzmanlığımız</div><h2>Palplanş iksa sistemleri</h2>
+        <p class="lead">Birbirine kilitlenen çelik profiller zemine çakılarak toprağı ve suyu aynı anda tutan bir perde oluşturur. Yüksek yeraltı suyunda, dar sahada ve kısa sürede güvenli kazı sağlar.</p></div>
+        <ol class="methods">
+          <li class="rv"><span>01</span><div><h3>Vibrasyonlu çakma</h3><p>Kumlu ve gevşek zeminlerde vibro çekiçlerle hızlı çakım.</p></div></li>
+          <li class="rv"><span>02</span><div><h3>Hidrolik baskı</h3><p>Kent içinde komşu yapıları etkilemeyen sessiz, titreşimsiz sürme.</p></div></li>
+          <li class="rv"><span>03</span><div><h3>Ön delgili çakma</h3><p>Sert zeminlerde burgu ile ön delgi yapılarak hasarsız uygulama.</p></div></li>
+          <li class="rv"><span>04</span><div><h3>Söküm, kiralama, satış</h3><p>U ve Z tipi palplanşta kiralama, satış, geri alım ve söküm.</p></div></li>
+        </ol>
+        <a href="#faaliyet-alanlari" data-target="s-palplans" class="btn rv">Palplanş hizmetleri</a>
+      </div>
     </div>
   </section>
 
@@ -120,22 +117,16 @@
     </div></div>
   </section>
 
-  <!-- NOT: Rakamlar örnek değerlerdir; data-count değerlerini gerçek verilerinizle güncelleyin. -->
-  <section class="stats" id="stats">
-    <div class="wrap grid">
-      <div><b><span data-count="15">15</span><i>+</i></b><span>Yıllık deneyim</span></div>
-      <div><b><span data-count="250">250</span><i>+</i></b><span>Tamamlanan proje</span></div>
-      <div><b><span data-count="300">300</span><i> km</i></b><span>Altyapı hattı</span></div>
-      <div><b><span data-count="25">25</span><i>+</i></b><span>Arıtma ve terfi tesisi</span></div>
+  <section class="sec reel">
+    <div class="wrap head-row">
+      <div class="rv"><div class="kicker">Galeri</div><h2>Örnek uygulamalar</h2></div>
+      <div class="reel-ctrl rv">
+        <button id="rPrev" aria-label="Önceki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button id="rNext" aria-label="Sonraki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
     </div>
-  </section>
-
-  <section class="sec">
-    <div class="wrap">
-      <div class="head rv"><div class="kicker">Galeri</div><h2>Örnek uygulamalar</h2></div>
-      <div class="gal" id="homeGal"></div>
-      <p style="margin-top:34px;text-align:center"><a href="#galeri" class="btn dark">Tüm görseller</a></p>
-    </div>
+    <div class="track" id="track"></div>
+    <div class="wrap"><a href="#galeri" class="link rv" style="margin-top:34px">Tüm görseller <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
   </section>
 </div>
 
@@ -257,9 +248,12 @@
 </main>
 
 <section class="cta">
+  <img src="assets/img/kanalizasyon-hendek.jpg" alt="" loading="lazy" data-par="0.15">
   <div class="wrap">
-    <div><h2>Altyapı projeniz için teklif alın</h2><p>Keşif ücretsizdir; metraj ve birim fiyatları baştan net veririz.</p></div>
-    <a href="#iletisim" class="btn dark">Teklif formu <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+    <div class="kicker">Teklif</div>
+    <h2>Altyapı projenizi birlikte planlayalım</h2>
+    <p>Keşif ücretsizdir; metraj ve birim fiyatları baştan net veririz.</p>
+    <a href="#iletisim" class="btn">Teklif formu <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
   </div>
 </section>
 
@@ -267,7 +261,7 @@
   <div class="wrap">
     <div class="foot">
       <div>
-        <a href="#anasayfa" class="logo"><svg viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="3" fill="#223042"/><path d="M6 31h8l4-14h12l4 14h8" stroke="#f08a1c" stroke-width="3.4" stroke-linejoin="round"/><path d="M6 38h36" stroke="#fff" stroke-width="2" stroke-dasharray="3 3"/></svg><span><b>HAN GRUP</b><small>Yazılım · İnşaat</small></span></a>
+        <a href="#anasayfa" class="logo"><svg viewBox="0 0 48 48" fill="none"><rect x="1.500" y="1.500" width="45" height="45" stroke="currentColor" stroke-width="2"/><path d="M7 31h8l4-14h10l4 14h8" stroke="#f08a1c" stroke-width="3.4" stroke-linejoin="round"/><path d="M7 38h34" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/></svg><span><b>HAN GRUP</b><small>Yazılım · İnşaat</small></span></a>
         <p>Palplanş iksa, içme suyu ve kanalizasyon hatları, arıtma tesisleri: altyapı projelerinde keşiften devreye almaya tek elden çözüm.</p>
       </div>
       <div><h4>Kurumsal</h4><ul><li><a href="#anasayfa">Anasayfa</a></li><li><a href="#kurumsal">Hakkımızda</a></li><li><a href="#faaliyet-alanlari">Faaliyet alanları</a></li><li><a href="#galeri">Galeri</a></li><li><a href="#iletisim">İletişim</a></li></ul></div>
@@ -279,11 +273,11 @@
   </div>
 </footer>
 
-<a class="fab call" data-tel aria-label="Hemen arayın"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M5 3h4l2 5-3 2a12 12 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2z"/></svg></a>
 <a class="fab" data-wa aria-label="WhatsApp ile yazın" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 01-13.500 7.800L3 21l1.300-4.300A9 9 0 1121 12z"/><path d="M9 9.500c0 3 2.500 5.500 5.500 5.500" stroke-linecap="round"/></svg></a>
 <div class="lb" id="lb"><button aria-label="Kapat">×</button><img alt=""><p></p></div>
 <button class="top" id="toTop" aria-label="Yukarı çık">↑</button>
 
-<script src="assets/site.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
 </body>
 </html>
