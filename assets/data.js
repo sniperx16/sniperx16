@@ -4,8 +4,9 @@ const FIRMA = {
   phone:   "0539 579 00 05",          // görünen telefon
   phoneRaw:"905395790005",               // ülke koduyla, boşluksuz (arama ve WhatsApp için)
   email:   "han.grupinsaat16@gmail.com",
-  address: "Adres bilginizi buraya yazın",
-  mapQuery:""                            // Google Haritalar'da aranacak adres; doldurulunca harita görünür
+  address: "İstiklal Mah., Evliya Sokak, 16450 Gürsu / Bursa",
+  mapQuery:"HAN GRUP YAZILIM İNŞAAT, İstiklal, Evliya Sokak, 16450 Gürsu/Bursa",   // haritada aranacak adres
+  mapLink: "https://maps.app.goo.gl/MutekGELJhAWVHfw7"                                 // yol tarifi bağlantısı
 };
 
 /* ====== FAALİYET ALANLARI ====== */

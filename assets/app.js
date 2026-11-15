@@ -31,6 +31,7 @@ $$("[data-mail]").forEach(e => e.href = "mailto:" + FIRMA.email);
 $$("[data-wa]").forEach(e => e.href = "https://wa.me/" + FIRMA.phoneRaw);
 $("#yr").textContent = new Date().getFullYear();
 if (FIRMA.mapQuery) $("#map").innerHTML = `<iframe title="Konum haritası" loading="lazy" src="https://www.google.com/maps?q=${encodeURIComponent(FIRMA.mapQuery)}&output=embed"></iframe>`;
+if (FIRMA.mapLink) $("#map").insertAdjacentHTML("afterend", `<a class="link" style="margin-top:26px" href="${FIRMA.mapLink}" target="_blank" rel="noopener">Yol tarifi al <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`);
 const ld = document.createElement("script"); ld.type = "application/ld+json";
 ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "GeneralContractor", name: "Han Grup Yazılım İnşaat", telephone: "+" + FIRMA.phoneRaw, email: FIRMA.email, address: FIRMA.address, areaServed: "TR", knowsAbout: SVC.map(s => s.t) });
 document.head.appendChild(ld);
