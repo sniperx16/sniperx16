@@ -1,9 +1,9 @@
 
 /* ====== FİRMA BİLGİLERİ — yalnızca burayı düzenleyin ====== */
 const FIRMA = {
-  phone:   "0 (5XX) XXX XX XX",          // görünen telefon
-  phoneRaw:"905XXXXXXXXX",               // ülke koduyla, boşluksuz (arama ve WhatsApp için)
-  email:   "info@firmaniz.com",
+  phone:   "0539 579 00 05",          // görünen telefon
+  phoneRaw:"905395790005",               // ülke koduyla, boşluksuz (arama ve WhatsApp için)
+  email:   "han.grupinsaat16@gmail.com",
   address: "Adres bilginizi buraya yazın",
   mapQuery:""                            // Google Haritalar'da aranacak adres; doldurulunca harita görünür
 };
