@@ -24,13 +24,21 @@ const tk = ["Palplanş iksa", "İsale hatları", "Kanalizasyon", "Arıtma tesisl
 $("#ticker").innerHTML = [...tk, ...tk].map(t => `<span>${t}</span>`).join("");
 const st = $("#statement"); st.innerHTML = st.textContent.trim().split(/\s+/).map(w => `<span class="w">${w}</span>`).join(" ");
 
+/* ---- rakamlar (yalnızca doğrulanabilir) ---- */
+$("#stats").innerHTML = STATS.map(([n, ek, t], i) => `<div class="rv" style="--d:${i}"><b><span data-count="${n}">${n}</span>${ek ? `<i>${ek}</i>` : ""}</b><span>${t}</span></div>`).join("");
+
 /* ---- firma bilgileri ---- */
 $$("[data-f]").forEach(e => e.textContent = FIRMA[e.dataset.f]);
 $$("[data-tel]").forEach(e => e.href = "tel:+" + FIRMA.phoneRaw);
 $$("[data-mail]").forEach(e => e.href = "mailto:" + FIRMA.email);
 $$("[data-wa]").forEach(e => e.href = "https://wa.me/" + FIRMA.phoneRaw);
 $("#yr").textContent = new Date().getFullYear();
-if (FIRMA.mapQuery) $("#map").innerHTML = `<iframe title="Konum haritası" loading="lazy" src="https://www.google.com/maps?q=${encodeURIComponent(FIRMA.mapQuery)}&output=embed"></iframe>`;
+if (FIRMA.mapQuery) {
+  $("#map").innerHTML = `<div class="map-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.800 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><b>${FIRMA.address}</b><span>Haritayı yüklediğinizde Google'ın çerezleri ve sunucuları devreye girer. <a href="#cerez" style="text-decoration:underline">Çerez Politikası</a></span><button class="btn dark" id="mapBtn" type="button">Haritayı yükle</button></div>`;
+  $("#mapBtn").onclick = () => { $("#map").innerHTML = `<iframe title="Konum haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${encodeURIComponent(FIRMA.mapQuery)}&output=embed"></iframe>`; };
+}
+/* ---- şirket bilgileri (alt bilgi) ---- */
+$("#coInfo").innerHTML = [["Unvan", FIRMA.unvan], ["Vergi dairesi", FIRMA.vergiDairesi], ["Vergi no", FIRMA.vergiNo], ["MERSİS no", FIRMA.mersisNo], ["Ticaret sicil no", FIRMA.ticaretSicilNo]].filter(x => x[1]).map(([k, v]) => `<span><b>${k}:</b> ${v}</span>`).join("");
 if (FIRMA.mapLink) $("#map").insertAdjacentHTML("afterend", `<a class="link" style="margin-top:26px" href="${FIRMA.mapLink}" target="_blank" rel="noopener">Yol tarifi al <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`);
 const ld = document.createElement("script"); ld.type = "application/ld+json";
 ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "GeneralContractor", name: "Han Grup Yazılım İnşaat", telephone: "+" + FIRMA.phoneRaw, email: FIRMA.email, address: FIRMA.address, areaServed: "TR", knowsAbout: SVC.map(s => s.t) });
@@ -62,7 +70,8 @@ $("#rPrev").onclick = () => track.scrollBy({ left: -stepW(), behavior: "smooth" 
 $("#rNext").onclick = () => track.scrollBy({ left: stepW(), behavior: "smooth" });
 
 /* ---- sayfa geçişleri ---- */
-const VIEWS = ["anasayfa", "kurumsal", "faaliyet-alanlari", "galeri", "iletisim"];
+const VIEWS = ["anasayfa", "kurumsal", "faaliyet-alanlari", "galeri", "iletisim", "yasal"];
+const LEGAL = ["kvkk", "gizlilik", "cerez", "kullanim"];
 let pendingTarget = null, first = true;
 const hdr = $("#hdr"), menu = $("#menu"), burger = $("#burger"), curtain = $("#curtain");
 const setMenu = o => { menu.classList.toggle("open", o); hdr.classList.toggle("open", o); burger.setAttribute("aria-expanded", o); document.body.style.overflow = o ? "hidden" : ""; };
@@ -77,7 +86,9 @@ function swap(name) {
   observe(); onScroll();
 }
 function route() {
-  const name = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "anasayfa";
+  const hash = location.hash.slice(1);
+  if (LEGAL.includes(hash)) pendingTarget = hash;
+  const name = LEGAL.includes(hash) ? "yasal" : VIEWS.includes(hash) ? hash : "anasayfa";
   setMenu(false);
   const same = $("#v-" + name).classList.contains("on");
   if (first || same || matchMedia("(prefers-reduced-motion:reduce)").matches) { first = false; return swap(name); }
@@ -132,7 +143,7 @@ addEventListener("keydown", e => { if (!lb.classList.contains("open")) return; i
 $("#form").addEventListener("submit", ev => {
   ev.preventDefault(); const f = ev.target, m = $("#msg"), warn = t => { m.textContent = t; m.style.color = "#c2410c"; };
   if (!f.ad.value.trim() || !f.tel.value.trim()) return warn("Lütfen ad soyad ve telefon alanlarını doldurun.");
-  if (!f.kvkk.checked) return warn("Devam etmek için KVKK onay kutusunu işaretleyin.");
+  if (!f.kvkk.checked) return warn("Devam etmek için Aydınlatma Metni onay kutusunu işaretleyin.");
   const text = `Merhaba, teklif almak istiyorum.\nAd Soyad: ${f.ad.value}\nTelefon: ${f.tel.value}\nHizmet: ${f.hizmet.value}\nKonum: ${f.konum.value || "-"}\nDerinlik / uzunluk: ${f.olcu.value || "-"}\nMesaj: ${f.mesaj.value || "-"}`;
   const a = document.createElement("a"); a.href = "https://wa.me/" + FIRMA.phoneRaw + "?text=" + encodeURIComponent(text); a.target = "_blank"; a.rel = "noopener"; a.click();
   m.textContent = "WhatsApp açıldı; mesajı göndererek talebinizi tamamlayın."; m.style.color = "";

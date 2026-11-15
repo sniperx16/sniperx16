@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Han Grup Yazılım İnşaat</title>
 <meta name="description" content="Han Grup Yazılım İnşaat; palplanş iksa sistemleri, içme suyu isale hatları, kanalizasyon ve yağmursuyu şebekeleri, kanal hattı görüntüleme ile atık su ve içme suyu arıtma tesisleri inşaatı.">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#0f1d33">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="tr_TR">
@@ -54,13 +55,7 @@
           <a href="#kurumsal" class="link rv">Kurumsal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
-      <!-- NOT: Rakamlar örnek değerlerdir; data-count değerlerini gerçek verilerinizle güncelleyin. -->
-      <div class="nums" id="stats">
-        <div class="rv"><b><span data-count="15">15</span><i>+</i></b><span>Yıllık deneyim</span></div>
-        <div class="rv" style="--d:1"><b><span data-count="250">250</span><i>+</i></b><span>Tamamlanan proje</span></div>
-        <div class="rv" style="--d:2"><b><span data-count="300">300</span><i>km</i></b><span>Altyapı hattı</span></div>
-        <div class="rv" style="--d:3"><b><span data-count="25">25</span><i>+</i></b><span>Arıtma ve terfi tesisi</span></div>
-      </div>
+            <div class="nums" id="stats"></div>
     </div>
   </section>
 
@@ -111,7 +106,7 @@
         <button role="tab" aria-selected="false">3. Devreye alma</button>
       </div>
       <div class="pane on"><h3>Fizibilite ve projelendirme</h3><p>Sahayı yerinde inceler; zemin, yeraltı suyu ve mevcut hat verilerine göre uygun sistemi seçeriz. Metraj, iş programı ve uygulama projeleri bu aşamada hazırlanır, teklif kalem kalem sunulur.</p></div>
-      <div class="pane"><h3>Uygulama</h3><p>Kazı ve iksa, boru serimi, betonarme ve montaj işleri deneyimli saha ekibiyle yürütülür. Her şantiyede iş sağlığı ve güvenliği kuralları ile iş programı birlikte takip edilir.</p></div>
+      <div class="pane"><h3>Uygulama</h3><p>Kazı ve iksa, boru serimi, betonarme ve montaj işleri saha ekibiyle yürütülür. Her şantiyede iş sağlığı ve güvenliği kuralları ile iş programı birlikte takip edilir.</p></div>
       <div class="pane"><h3>Devreye alma ve teslim</h3><p>Basınç, sızdırmazlık ve performans testleri yapılır; sistem çalışır halde teslim edilir. İşletme personeline eğitim verilir, as-built projeler eksiksiz sunulur.</p></div>
     </div></div>
   </section>
@@ -138,7 +133,7 @@
         <div class="kicker">Hakkımızda</div>
         <h2>Altyapı işlerinde güvenilir yüklenici</h2>
         <p style="margin-top:16px">Han Grup Yazılım İnşaat, altyapı inşaatının zorlu saha koşullarında mühendislik bilgisini uygulama deneyimiyle birleştirir. Palplanş iksa sistemleri, içme suyu isale hatları, kanalizasyon ve yağmursuyu şebekeleri, kanal hattı görüntüleme, atık su ve içme suyu arıtma tesisleri başlıca çalışma alanlarımızdır.</p>
-        <p style="margin-top:14px">Kamu kurumları, belediyeler ve özel sektör yatırımcıları için yürüttüğümüz işlerde hedefimiz aynıdır: işi sözleşmedeki sürede, bütçede ve kalitede, kazasız tamamlamak.</p>
+        <p style="margin-top:14px">Her projede hedefimiz aynıdır: işi sözleşmedeki sürede, bütçede ve kalitede, kazasız tamamlamak.</p>
         <p style="margin-top:28px"><a href="#iletisim" class="btn">Bize ulaşın</a></p>
       </div>
       <div class="pics rv" style="--d:1">
@@ -235,12 +230,102 @@
           <label for="f-konum">Proje konumu<input id="f-konum" name="konum" placeholder="İl / ilçe"></label>
           <label for="f-olcu">Derinlik / hat uzunluğu<input id="f-olcu" name="olcu" placeholder="Örn. 6 m / 2 km"></label>
           <label class="full" for="f-mesaj">Mesajınız<textarea id="f-mesaj" name="mesaj"></textarea></label>
-          <label class="full kvkk" for="f-kvkk"><input id="f-kvkk" type="checkbox" name="kvkk"><span>Bilgilerimin teklif hazırlanması amacıyla işlenmesini kabul ediyorum (KVKK).</span></label>
+          <label class="full kvkk" for="f-kvkk"><input id="f-kvkk" type="checkbox" name="kvkk"><span><a href="#kvkk" target="_blank" rel="noopener">KVKK Aydınlatma Metni</a>'ni okudum; bilgilerimin teklif talebimi yanıtlamak amacıyla işlenmesini anladım.</span></label>
           <button class="btn" type="submit">WhatsApp ile gönder</button>
-          <p class="msg" id="msg">Form, bilgilerinizi hazır bir mesaj olarak WhatsApp'ta açar.</p>
+          <p class="msg" id="msg">Yalnızca teklif için gereken bilgiler istenir. Form verileri sunucuya kaydedilmez; hazır bir mesaj olarak WhatsApp'ta açılır.</p>
         </form>
       </div>
       <div class="map" id="map"><div class="map-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.800 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><b>Konum haritası</b><span>Adres girildiğinde Google Haritalar burada görünür.</span></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- =====================================================  YASAL BİLGİLER  -->
+<div class="view" id="v-yasal">
+  <section class="banner"><img src="assets/img/palplans-ust.jpg" alt=""><div class="wrap"><h1>Yasal Bilgiler</h1><div class="crumb"><a href="#anasayfa">Anasayfa</a><span>/</span><b>Yasal Bilgiler</b></div></div></section>
+  <section class="sec">
+    <div class="wrap legal">
+      <nav class="legal-nav" aria-label="Yasal metinler">
+        <a href="#kvkk">KVKK Aydınlatma Metni</a>
+        <a href="#gizlilik">Gizlilik Politikası</a>
+        <a href="#cerez">Çerez Politikası</a>
+        <a href="#kullanim">Kullanım Koşulları</a>
+      </nav>
+      <div class="legal-body">
+        <article id="kvkk">
+          <h2>KVKK Aydınlatma Metni</h2>
+          <p class="upd">Son güncelleme: 15 Kasım 2026</p>
+          <p>6698 sayılı Kişisel Verilerin Korunması Kanunu'nun (KVKK) 10. maddesi uyarınca, kişisel verilerinizin işlenmesine ilişkin olarak sizi bilgilendiriyoruz.</p>
+          <h3>1. Veri sorumlusu</h3>
+          <p><span data-f="unvan"></span><br>Adres: <span data-f="address"></span><br>E-posta: <span data-f="email"></span> · Telefon: <span data-f="phone"></span></p>
+          <h3>2. İşlenen kişisel veriler</h3>
+          <p>Teklif formunda ve iletişim kanallarında paylaştığınız ad soyad, telefon numarası, e-posta adresi (yazışırsanız), talep ettiğiniz hizmet, proje konumu, derinlik veya hat uzunluğu bilgisi ve mesajınızın içeriği.</p>
+          <h3>3. İşleme amaçları</h3>
+          <p>Talebinizi yanıtlamak, keşif ve teklif hazırlamak, sizinle iletişim kurmak ve hukuki yükümlülüklerimizi yerine getirmek.</p>
+          <h3>4. Toplama yöntemi ve hukuki sebep</h3>
+          <p>Verileriniz; web sitesindeki teklif formu (WhatsApp mesajı olarak), telefon, e-posta ve WhatsApp aracılığıyla elektronik ortamda toplanır. Hukuki sebepler: sözleşmenin kurulmasına yönelik talebinizin değerlendirilmesi (KVKK m.5/2-c), hukuki yükümlülüklerimizin yerine getirilmesi (m.5/2-ç) ve meşru menfaatimiz (m.5/2-f). Açık rızaya dayalı bir işleme yapılmamaktadır.</p>
+          <h3>5. Verilerin aktarılması</h3>
+          <p>Teklif formundaki bilgiler sitemiz tarafından bir sunucuya kaydedilmez. Formu gönderdiğinizde hazırlanan mesaj cihazınızdaki WhatsApp'ta açılır; mesajı göndermeniz halinde WhatsApp hizmeti üzerinden bize ulaşır. WhatsApp hizmetinin altyapısı yurt dışında bulunduğundan bu aktarım yurt dışına veri aktarımı niteliği taşıyabilir. Bunun dışında verileriniz yalnızca yasal zorunluluk halinde yetkili kamu kurum ve kuruluşlarıyla, hizmet aldığımız hukuk ve mali müşavirlik gibi taraflarla gerekli ölçüde paylaşılır.</p>
+          <h3>6. Saklama süresi</h3>
+          <p>Verileriniz, talebin sonuçlanması için gereken süre ve yasal saklama ile zamanaşımı süreleri boyunca saklanır; süre sonunda silinir, yok edilir veya anonim hale getirilir.</p>
+          <h3>7. Haklarınız (KVKK m.11)</h3>
+          <ul>
+            <li>Kişisel verilerinizin işlenip işlenmediğini öğrenme ve işlenmişse bilgi talep etme,</li>
+            <li>İşlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme,</li>
+            <li>Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme,</li>
+            <li>Eksik veya yanlış işlenmişse düzeltilmesini isteme,</li>
+            <li>Kanun'da öngörülen şartlar çerçevesinde silinmesini veya yok edilmesini isteme ve bunun aktarılan üçüncü kişilere bildirilmesini isteme,</li>
+            <li>İşlenen verilerin otomatik sistemlerle analiz edilmesi suretiyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme,</li>
+            <li>Kanuna aykırı işlenmesi nedeniyle zarara uğramanız halinde zararın giderilmesini talep etme.</li>
+          </ul>
+          <h3>8. Başvuru yöntemi</h3>
+          <p>Yukarıdaki haklarınıza ve veri silme veya yok etme taleplerinize ilişkin başvurularınızı, kimliğinizi doğrulayan bilgilerle birlikte <span data-f="email"></span> adresine e-posta ile veya yukarıdaki adrese yazılı olarak iletebilirsiniz. Başvurunuz en geç 30 gün içinde sonuçlandırılır. Başvurunun reddedilmesi, yanıtın yetersiz bulunması veya süresinde yanıt verilmemesi halinde Kişisel Verileri Koruma Kurulu'na şikâyet hakkınız saklıdır.</p>
+        </article>
+
+        <article id="gizlilik">
+          <h2>Gizlilik Politikası</h2>
+          <p class="upd">Son güncelleme: 15 Kasım 2026</p>
+          <h3>Topladığımız bilgiler</h3>
+          <p>Bu site yalnızca sizin teklif formunda, telefonda, e-postada veya WhatsApp'ta bizimle paylaştığınız bilgileri öğrenir. Site; kullanıcı hesabı, üyelik, ödeme veya haber bülteni içermez.</p>
+          <h3>Takip ve analiz</h3>
+          <p>Sitede ziyaretçi takibi, reklam veya analiz aracı kullanılmaz. Siteyi barındıran sağlayıcı, güvenlik ve teknik işleyiş amacıyla IP adresi ve erişim zamanı gibi standart sunucu kayıtlarını tutabilir.</p>
+          <h3>Üçüncü taraf hizmetler</h3>
+          <ul>
+            <li><b>Google Haritalar:</b> yalnızca iletişim sayfasında "Haritayı yükle" düğmesine tıkladığınızda yüklenir.</li>
+            <li><b>WhatsApp:</b> teklif formu veya WhatsApp düğmesiyle mesaj göndermeyi seçtiğinizde WhatsApp'a yönlendirilirsiniz.</li>
+            <li>Yazı tipleri ve görseller siteden sunulur; harici bir yazı tipi veya içerik sunucusuna bağlanılmaz.</li>
+          </ul>
+          <h3>Paylaşım ve güvenlik</h3>
+          <p>Kişisel bilgileriniz satılmaz veya pazarlama amacıyla üçüncü taraflara verilmez. Verilerin korunması için makul teknik ve idari önlemler alınır. Kişisel verilerin işlenmesine ilişkin ayrıntılar için KVKK Aydınlatma Metni'ne bakabilirsiniz.</p>
+          <h3>Değişiklikler</h3>
+          <p>Bu politika güncellenebilir; güncel sürüm her zaman bu sayfada yayımlanır.</p>
+        </article>
+
+        <article id="cerez">
+          <h2>Çerez Politikası</h2>
+          <p class="upd">Son güncelleme: 15 Kasım 2026</p>
+          <p>Çerezler, ziyaret ettiğiniz sitelerin tarayıcınıza kaydettiği küçük metin dosyalarıdır.</p>
+          <h3>Sitemizde çerez kullanımı</h3>
+          <p>Sitemiz kendi çerezlerini kullanmaz; analiz, reklam veya takip amaçlı çerez yerleştirmez. Bu nedenle çerez onay bandı gösterilmez.</p>
+          <h3>Google Haritalar</h3>
+          <p>İletişim sayfasındaki harita siz onay vermeden yüklenmez. "Haritayı yükle" düğmesine tıkladığınızda Google'ın haritası yüklenir ve Google kendi çerezlerini ve tanımlayıcılarını kullanabilir. Bu çerezler Google'ın <a href="https://policies.google.com/technologies/cookies" target="_blank" rel="noopener">çerez politikasına</a> tabidir. Haritayı yüklemeden de adresimizi ve yol tarifi bağlantısını kullanabilirsiniz.</p>
+          <h3>Çerezleri yönetme</h3>
+          <p>Çerezleri tarayıcı ayarlarınızdan silebilir veya engelleyebilirsiniz. Sitemize ileride analiz veya reklam amaçlı bir araç eklenirse, kullanılmadan önce onayınız istenecektir.</p>
+        </article>
+
+        <article id="kullanim">
+          <h2>Kullanım Koşulları</h2>
+          <p class="upd">Son güncelleme: 15 Kasım 2026</p>
+          <h3>Genel</h3>
+          <p>Bu siteyi kullanarak aşağıdaki koşulları kabul etmiş sayılırsınız. Sitedeki bilgiler genel bilgilendirme amaçlıdır ve bağlayıcı bir teklif niteliği taşımaz; fiyat ve kapsam, keşif sonrası hazırlanan yazılı teklifle belirlenir.</p>
+          <h3>Fikri mülkiyet</h3>
+          <p>Firma adı, logo ve sitedeki özgün metinler <span data-f="unvan"></span>'e aittir; izinsiz çoğaltılamaz. Sitedeki fotoğraflar temsilidir ve ilgili hak sahiplerinin lisanslarıyla kullanılmıştır; kaynak ve lisans bilgileri sayfa altındaki "Görsel kaynakları" bölümünde yer alır. Görseller firmanın kendi uygulamalarını göstermeyebilir.</p>
+          <h3>Sorumluluğun sınırı</h3>
+          <p>Sitedeki bilgilerin güncel ve doğru olması için özen gösterilir; ancak kesintisiz veya hatasız erişim garanti edilmez. Dış bağlantıların içeriğinden sorumlu değiliz.</p>
+          <h3>Uygulanacak hukuk</h3>
+          <p>Bu koşullara Türk hukuku uygulanır; uyuşmazlıklarda Bursa mahkemeleri ve icra daireleri yetkilidir.</p>
+        </article>
+      </div>
     </div>
   </section>
 </div>
@@ -251,7 +336,7 @@
   <div class="wrap">
     <div class="kicker">Teklif</div>
     <h2>Altyapı projenizi birlikte planlayalım</h2>
-    <p>Keşif ücretsizdir; metraj ve birim fiyatları baştan net veririz.</p>
+    <p>Projenizi inceler, metraj ve birim fiyatları kalem kalem belirtilen net bir teklif hazırlarız.</p>
     <a href="#iletisim" class="btn">Teklif formu <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
   </div>
 </section>
@@ -267,6 +352,8 @@
       <div><h4>Faaliyet alanları</h4><ul id="footSvc"></ul></div>
       <div><h4>İletişim</h4><ul><li data-f="phone"></li><li data-f="email"></li><li data-f="address"></li></ul></div>
     </div>
+    <p class="co" id="coInfo"></p>
+    <nav class="legal-links" aria-label="Yasal bağlantılar"><a href="#kvkk">KVKK Aydınlatma Metni</a><a href="#gizlilik">Gizlilik Politikası</a><a href="#cerez">Çerez Politikası</a><a href="#kullanim">Kullanım Koşulları</a></nav>
     <details class="credits"><summary>Görsel kaynakları</summary><p>Sitedeki fotoğraflar temsilidir ve Wikimedia Commons üzerinden serbest lisanslarla kullanılmıştır: Vogler (CC BY-SA 4.0) · Federal Waterways Engineering and Research Institute (CC BY 2.0) · ACBahn (CC BY-SA 3.0) · C. Löser (CC BY 3.0 DE) · MHM55 (CC BY-SA 4.0) · Michal Klajban (CC BY-SA 3.0) · ermell (CC BY-SA 4.0) · Raimond Spekking (CC BY-SA 4.0) · Tomas Castelazo (CC BY-SA 3.0/4.0) · Falk2 (CC BY-SA 4.0) · Golgeetmebaskaihsanistemem (CC BY-SA 3.0) · Vraj Acharya, WELL Labs (CC BY-SA 4.0) · Valebe (CC BY-SA 4.0) · Diegodlh (CC BY 4.0). Görseller kırpılmış ve yeniden boyutlandırılmıştır. Ayrıntılı liste: <a href="assets/img/KAYNAKLAR.md">KAYNAKLAR.md</a></p></details>
     <div class="copy"><span>© <span id="yr"></span> Han Grup Yazılım İnşaat Taahhüt Ltd. Şti. Tüm hakları saklıdır.</span><span>Altyapı · Palplanş İksa · Arıtma Tesisleri</span></div>
   </div>

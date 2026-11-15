@@ -395,3 +395,26 @@ footer li a:hover{color:#fff;padding-left:6px}
   .mask{clip-path:none}
   .statement .w{opacity:1}
 }
+
+/* ---------- Yasal sayfalar ---------- */
+.legal{display:grid;grid-template-columns:260px 1fr;gap:clamp(30px,5vw,80px);align-items:start}
+.legal-nav{position:sticky;top:110px;display:grid;gap:0;border-top:1px solid var(--line)}
+.legal-nav a{padding:16px 0;border-bottom:1px solid var(--line);font-weight:700;font-size:.9rem;color:var(--ink);transition:padding .3s var(--ease),color .3s}
+.legal-nav a:hover{padding-left:10px;color:var(--blue)}
+.legal-body article{padding-bottom:56px;margin-bottom:56px;border-bottom:1px solid var(--line);scroll-margin-top:100px}
+.legal-body article:last-child{border-bottom:0;margin-bottom:0}
+.legal-body h2{font-size:clamp(1.7rem,3vw,2.4rem);margin-bottom:8px}
+.legal-body h3{font-size:1.05rem;margin:28px 0 8px}
+.legal-body p,.legal-body li{max-width:75ch;font-size:.98rem}
+.legal-body p+p{margin-top:12px}
+.legal-body ul{list-style:disc;padding-left:22px;display:grid;gap:6px}
+.legal-body a{color:var(--blue);text-decoration:underline}
+.legal-body .upd{font-size:.84rem;color:var(--muted);margin-bottom:22px}
+.kvkk a{color:var(--blue);text-decoration:underline}
+footer .co{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:.84rem;margin-bottom:18px}
+footer .co:empty{display:none}
+footer .co b{color:#fff;font-weight:600}
+.legal-links{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:.84rem;font-weight:600;margin-bottom:18px}
+.legal-links a:hover{color:#fff}
+@media (max-width:960px){.legal{grid-template-columns:1fr}.legal-nav{position:static;grid-template-columns:1fr 1fr;gap:0 24px}}
+@media (max-width:640px){.legal-nav{grid-template-columns:1fr}}

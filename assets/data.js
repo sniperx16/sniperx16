@@ -6,8 +6,14 @@ const FIRMA = {
   email:   "han.grupinsaat16@gmail.com",
   address: "İstiklal Mah., Evliya Sokak, 16450 Gürsu / Bursa",
   mapQuery:"HAN GRUP YAZILIM İNŞAAT, İstiklal, Evliya Sokak, 16450 Gürsu/Bursa",   // haritada aranacak adres
-  mapLink: "https://maps.app.goo.gl/MutekGELJhAWVHfw7"                                 // yol tarifi bağlantısı
+  mapLink: "https://maps.app.goo.gl/MutekGELJhAWVHfw7",                                // yol tarifi bağlantısı
+  unvan:   "Han Grup Yazılım İnşaat Taahhüt Limited Şirketi",
+  /* Aşağıdaki resmî bilgileri doldurun; boş bırakılanlar sitede gösterilmez. */
+  vergiDairesi:"", vergiNo:"", mersisNo:"", ticaretSicilNo:""
 };
+
+/* Rakamlar: yalnızca doğrulanabilir bilgiler. Gerçek deneyim/proje sayılarınızı kanıtlayabildiğinizde buraya ekleyin: [sayı, ek, etiket] */
+const STATS = [[7,"","Faaliyet alanı"],[4,"","Palplanş uygulama yöntemi"],[3,"","Aşamada teslim: fizibilite, uygulama, devreye alma"],[2,"","Palplanş profil tipi: U ve Z"]];
 
 /* ====== FAALİYET ALANLARI ====== */
 const SVC = [
@@ -60,6 +66,6 @@ const FAQ = [
   ["Palplanş kiralamak mı, satın almak mı daha avantajlı?","Geçici iksalarda profiller iş bitiminde söküldüğü için kiralama genellikle daha ekonomiktir. Kalıcı perdelerde satın alma tercih edilir. Proje süresine göre iki seçeneği karşılaştırmalı sunuyoruz."],
   ["Çakım sırasında komşu binalar zarar görür mü?","Titreşime hassas bölgelerde yüksek frekanslı vibro çekiçler veya titreşimsiz hidrolik baskı yöntemi kullanılır. Yöntem, keşifte çevre yapıların durumu değerlendirilerek seçilir."],
   ["Kanal hattı görüntüleme neden yapılır?","Kamerayla hat içi inceleme; tıkanıklık, kırık, kaçak ve hatalı bağlantıları kazı yapmadan tespit etmeyi sağlar. Onarım ve temizlik doğru noktada planlanır."],
-  ["Teklif için hangi bilgilere ihtiyacınız var?","Proje türü, konum, hat uzunluğu veya kazı derinliği ve varsa zemin etüt raporu ilk teklif için yeterlidir. Eksik veriler için ücretsiz keşif yapıyoruz."]
+  ["Teklif için hangi bilgilere ihtiyacınız var?","Proje türü, konum, hat uzunluğu veya kazı derinliği ve varsa zemin etüt raporu ilk teklif için yeterlidir. Eksik veriler için keşif planlıyoruz."]
 ];
 
