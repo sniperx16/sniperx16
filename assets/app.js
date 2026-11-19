@@ -3,11 +3,11 @@ const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [..
 const img = n => `assets/img/${n}.jpg`;
 const ARROW = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 7h10M8 3l4 4-4 4"/></svg>';
 const CHECK = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 10l4 4 8-9"/></svg>';
-const pad = n => String(n).padStart(2, "0");
+const pad = n => String(n).padStart(2, "0");   /* 1 -> "01" (saha fotoğraf dosya adları) */
 
 /* ---- içerik üretimi ---- */
 $("#panels").innerHTML = SVC.map((s, i) => `<article class="panel${i ? "" : " on"}" tabindex="0">
-  <img src="${img(i ? s.img : "palplans-perde")}" alt="${s.t}" loading="lazy"><span class="n">${pad(i + 1)}</span><span class="v">${s.t}</span>
+  <img src="${img(i ? s.img : "saha/53")}" alt="${s.t}" loading="lazy"><span class="n">${pad(i + 1)}</span><span class="v">${s.t}</span>
   <div class="c"><h3>${s.t}</h3><p>${s.s}</p><a class="more" href="#faaliyet-alanlari" data-target="${s.id}">Detay ${ARROW}</a></div></article>`).join("");
 $("#rows").innerHTML = SVC.map((s, i) => `<article class="row" id="${s.id}">
   <figure class="rv"><img src="${img(s.img)}" alt="${s.t}" loading="lazy"><span class="no">${pad(i + 1)}</span></figure>
@@ -16,8 +16,12 @@ $("#drop").innerHTML = SVC.map(s => `<a href="#faaliyet-alanlari" data-target="$
 $("#footSvc").innerHTML = SVC.slice(0, 6).map(s => `<li><a href="#faaliyet-alanlari" data-target="${s.id}">${s.t}</a></li>`).join("");
 $("#f-hizmet").innerHTML = SVC.map(s => `<option>${s.t}</option>`).join("") + "<option>Diğer</option>";
 $("#faq").innerHTML = FAQ.map(([q, a], i) => `<details${i ? "" : " open"}><summary>${q}</summary><p>${a}</p></details>`).join("");
-const gItem = ([f, t, c], i) => `<button class="g" data-i="${i}" data-c="${c}"><img src="${img(f)}" alt="${t}" loading="lazy"><span><small>${CATS[c]}</small>${t}</span></button>`;
+const gItem = ([f, t, c], i) => `<button class="g" data-i="${i}" data-c="${c}"><img src="${img("saha/t/" + pad(f))}" alt="${t}" loading="lazy"><span><small>${CATS[c]}</small>${t}</span></button>`;
 $("#gal").innerHTML = GAL.map(gItem).join("");
+$("#vgal").innerHTML = VID.map(([f, t]) => `<button class="vc" data-v="${f}" aria-label="Videoyu oynat: ${t}"><img src="assets/video/poster/${f}.jpg" alt="${t}" loading="lazy"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></i><span>${t}</span></button>`).join("");
+$("#vgal").addEventListener("click", e => { const b = e.target.closest(".vc"); if (!b) return;
+  $$("#vgal video").forEach(v => v.pause());
+  b.outerHTML = `<div class="vc on"><video src="assets/video/${b.dataset.v}.mp4" poster="assets/video/poster/${b.dataset.v}.jpg" controls autoplay playsinline preload="metadata"></video><span>${$("span", b).textContent}</span></div>`; });
 $("#track").innerHTML = GAL.slice(0, 9).map(gItem).join("");
 $("#filters").innerHTML = Object.entries(CATS).map(([k, v]) => `<button data-c="${k}" aria-pressed="${k === "all"}">${v}</button>`).join("");
 const tk = ["Palplanş iksa", "İsale hatları", "Kanalizasyon", "Arıtma tesisleri", "Kanal görüntüleme", "Terfi istasyonları"];
@@ -134,7 +138,7 @@ $("#filters").addEventListener("click", e => { const b = e.target.closest("butto
   $$("#filters button").forEach(x => x.setAttribute("aria-pressed", x === b));
   $$("#gal .g").forEach(g => g.classList.toggle("hide", b.dataset.c !== "all" && g.dataset.c !== b.dataset.c)); });
 const lb = $("#lb"); let li = 0;
-const show = i => { li = (i + GAL.length) % GAL.length; $("img", lb).src = img(GAL[li][0]); $("p", lb).textContent = GAL[li][1]; lb.classList.add("open"); };
+const show = i => { li = (i + GAL.length) % GAL.length; $("img", lb).src = img("saha/" + pad(GAL[li][0])); $("p", lb).textContent = GAL[li][1]; lb.classList.add("open"); };
 document.addEventListener("click", e => { const g = e.target.closest(".g"); if (g) show(+g.dataset.i); });
 lb.addEventListener("click", e => { if (e.target.tagName === "IMG") show(li + 1); else lb.classList.remove("open"); });
 addEventListener("keydown", e => { if (!lb.classList.contains("open")) return; if (e.key === "Escape") lb.classList.remove("open"); if (e.key === "ArrowRight") show(li + 1); if (e.key === "ArrowLeft") show(li - 1); });

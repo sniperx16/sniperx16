@@ -225,6 +225,16 @@ footer .logo img{height:58px}
 .g span{position:absolute;inset:auto 0 0 0;padding:60px 24px 22px;text-align:left;color:#fff;font-weight:600;font-size:1.05rem;background:linear-gradient(0deg,rgba(15,29,51,.9),transparent)}
 .g span small{display:block;font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
 .g.hide{display:none}
+.vgal{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.vc{position:relative;aspect-ratio:9/16;overflow:hidden;border:0;padding:0;cursor:pointer;background:var(--ink);font:inherit;display:block;width:100%}
+.vc img,.vc video{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s var(--ease)}
+.vc video{object-fit:contain;background:#000}
+.vc:hover img{transform:scale(1.05)}
+.vc i{position:absolute;top:50%;left:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:rgba(15,29,51,.72);border:1px solid rgba(255,255,255,.5);color:#fff;display:grid;place-items:center;transition:background .3s,transform .3s}
+.vc i svg{width:28px;height:28px;margin-left:3px}
+.vc:hover i{background:var(--accent);transform:scale(1.08)}
+.vc span{position:absolute;inset:auto 0 0 0;padding:50px 16px 14px;text-align:left;color:#fff;font-weight:600;font-size:.92rem;background:linear-gradient(0deg,rgba(15,29,51,.9),transparent);pointer-events:none}
+.vc.on span{display:none}
 .note{font-size:.85rem;color:var(--muted);margin-top:24px}
 .lb{position:fixed;inset:0;z-index:100;background:rgba(8,16,30,.96);display:grid;place-items:center;align-content:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .3s;padding:20px}
 .lb.open{opacity:1;pointer-events:auto}
@@ -362,6 +372,7 @@ footer li a:hover{color:#fff;padding-left:6px}
   .about,.split,.contact,.row,.spot-grid{grid-template-columns:1fr}
   .row:nth-child(even) figure{order:0}
   .three,.gal{grid-template-columns:repeat(2,1fr)}
+  .vgal{grid-template-columns:repeat(3,1fr)}
   .steps,.sub,.nums{grid-template-columns:repeat(2,1fr)}
   .nums{row-gap:44px}
   .foot{grid-template-columns:1fr 1fr}
@@ -381,6 +392,7 @@ footer li a:hover{color:#fff;padding-left:6px}
 @media (max-width:640px){
   .wrap{width:calc(100% - 40px)}
   .three,.gal,.mv,.steps,.sub,.foot{grid-template-columns:1fr}
+  .vgal{grid-template-columns:repeat(2,1fr);gap:12px}
   form{grid-template-columns:1fr}
   .spot-pic{padding:0 36px 50px 0}
   .about .pics{padding:0 30px 40px 0}
