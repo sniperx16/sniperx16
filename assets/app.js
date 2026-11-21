@@ -38,8 +38,7 @@ $$("[data-mail]").forEach(e => e.href = "mailto:" + FIRMA.email);
 $$("[data-wa]").forEach(e => e.href = "https://wa.me/" + FIRMA.phoneRaw);
 $("#yr").textContent = new Date().getFullYear();
 if (FIRMA.mapQuery) {
-  $("#map").innerHTML = `<div class="map-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.800 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><b>${FIRMA.address}</b><span>Haritayı yüklediğinizde Google'ın çerezleri ve sunucuları devreye girer. <a href="#cerez" style="text-decoration:underline">Çerez Politikası</a></span><button class="btn dark" id="mapBtn" type="button">Haritayı yükle</button></div>`;
-  $("#mapBtn").onclick = () => { $("#map").innerHTML = `<iframe title="Konum haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${encodeURIComponent(FIRMA.mapQuery)}&output=embed"></iframe>`; };
+  $("#map").innerHTML = `<iframe title="Konum haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=${encodeURIComponent(FIRMA.mapQuery)}&output=embed"></iframe>`;
 }
 /* ---- şirket bilgileri (alt bilgi) ---- */
 $("#coInfo").innerHTML = [["Unvan", FIRMA.unvan], ["Vergi dairesi", FIRMA.vergiDairesi], ["Vergi no", FIRMA.vergiNo], ["MERSİS no", FIRMA.mersisNo], ["Ticaret sicil no", FIRMA.ticaretSicilNo]].filter(x => x[1]).map(([k, v]) => `<span><b>${k}:</b> ${v}</span>`).join("");
@@ -132,6 +131,10 @@ function onScroll() {
 addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 addEventListener("resize", onScroll);
 toTop.onclick = () => scrollTo({ top: 0, behavior: "smooth" });
+
+/* ---- sayfa başlıkları: harf harf belirme (erişilebilirlik için aria-label) ---- */
+$$(".banner h1").forEach(h => { const t = h.textContent.trim(); h.setAttribute("aria-label", t);
+  h.innerHTML = [...t].map((c, i) => `<span class="ch" style="--i:${i}" aria-hidden="true">${c === " " ? "&nbsp;" : c}</span>`).join(""); });
 
 /* ---- galeri ---- */
 $("#filters").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return;
