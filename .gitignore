@@ -1,0 +1,6 @@
+# Gizli bilgiler – asla GitHub'a gönderme
+jarvis.env
+secrets.yaml
+**/secrets.yaml
+mcp-servers.json
+*.key

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "homeassistant",
+    "url": "http://192.168.1.52:8123/api/mcp",
+    "token": "BURAYA_HOME_ASSISTANT_UZUN_OMURLU_JETON"
+  }
+]

@@ -1,0 +1,64 @@
+# =====================================================================
+#  Ev Jarvis'i – OpenJarvis ayarları  (~/.openjarvis/config.toml)
+#  openjarvis/kur.sh bu şablondan oluşturur. __HOME__ otomatik doldurulur.
+#  Başvuru: https://github.com/open-jarvis/OpenJarvis/blob/main/docs/getting-started/configuration.md
+# =====================================================================
+
+# ---- Motor: önce bulut (Claude), internet/Claude yoksa yerel (Ollama) ----
+# Varsayılan motora ulaşılamazsa OpenJarvis sağlıklı olan diğer motora
+# (burada Ollama) otomatik geçer.
+[engine]
+default = "cloud"
+
+[engine.ollama]
+host = "http://localhost:11434"
+
+# ---- Model ------------------------------------------------------------
+[intelligence]
+provider = "anthropic"
+default_model = "claude-sonnet-5-5"   # daha ucuz istersen: "claude-haiku-5-5"
+fallback_model = "qwen3:8b"           # internet yokken yerel model
+temperature = 0.4
+max_tokens = 2048
+
+# ---- Ajan ve kişilik ----------------------------------------------------
+[agent]
+default_agent = "orchestrator"        # araç (MCP) kullanabilen ajan
+max_turns = 10
+objective = "Evdeki Jarvis asistanı: evi yönetir, sorulara Türkçe cevap verir, verilen görevleri yerine getirir."
+system_prompt_path = "__HOME__/.openjarvis/jarvis-kisilik.md"
+context_from_memory = true
+
+[system_prompt]
+include_current_time = true
+timezone = "Europe/Istanbul"
+
+# ---- Araçlar: Home Assistant (MCP) ---------------------------------------
+# Sunucu listesi ayrı dosyada (jeton içerdiği için izinleri 600).
+[tools.mcp]
+enabled = true
+servers = "mcp-servers.json"
+
+# ---- API sunucusu (Home Assistant buradan Jarvis'e görev gönderir) --------
+# 0.0.0.0 ile ev ağına açılır; OPENJARVIS_API_KEY zorunludur
+# (/etc/openjarvis/env içinde, kur.sh oluşturur).
+[server]
+host = "0.0.0.0"
+port = 8000
+agent = "orchestrator"
+
+# ---- Güvenlik -----------------------------------------------------------
+[security]
+enabled = true
+mode = "redact"            # cevaplarda şifre/anahtar görünürse gizler
+scan_input = true
+scan_output = true
+secret_scanner = true
+pii_scanner = true
+
+# ---- Öğrenme kapalı (sade ve öngörülebilir başlangıç) --------------------
+[learning]
+enabled = false
+
+[learning.routing]
+policy = "heuristic"

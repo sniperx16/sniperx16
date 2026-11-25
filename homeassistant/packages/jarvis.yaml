@@ -1,0 +1,180 @@
+# =====================================================================
+#  Ev Jarvis'i – Home Assistant paketi
+#  Konum: /config/packages/jarvis.yaml
+#  configuration.yaml içine şunu ekle (bir kez):
+#
+#    homeassistant:
+#      packages: !include_dir_named packages
+#
+#  Gizli değerler /config/secrets.yaml dosyasında (bkz. secrets.yaml.ornek).
+#  ÖRNEK cihaz adlarını (binary_sensor.salon_hareket, light.salon ...)
+#  kendi cihaz adlarınla değiştir: Ayarlar → Cihazlar ve Hizmetler → Varlıklar.
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# Yardımcı anahtarlar
+# ---------------------------------------------------------------------
+input_boolean:
+  misafir_modu:
+    name: Misafir modu
+    icon: mdi:account-multiple
+  gece_modu:
+    name: Gece modu
+    icon: mdi:weather-night
+  hareket_isik_otomasyonu:
+    name: Hareketle ışık otomasyonu
+    icon: mdi:motion-sensor
+
+# ---------------------------------------------------------------------
+# Bilgisayarı uzaktan açma
+# ---------------------------------------------------------------------
+wake_on_lan:
+
+# ---------------------------------------------------------------------
+# OpenJarvis'e görev gönderme (karmaşık işler, bilgisayar, araştırma)
+# ---------------------------------------------------------------------
+rest_command:
+  jarvis_gorev:
+    url: !secret openjarvis_url
+    method: POST
+    headers:
+      Authorization: !secret openjarvis_auth
+      Content-Type: application/json
+    payload: >-
+      {"model": "claude-sonnet-5-5",
+       "messages": [{"role": "user", "content": {{ gorev | tojson }}}]}
+    timeout: 180
+
+script:
+  jarvis_gorev_ver:
+    alias: "Jarvis'e görev ver"
+    description: >-
+      Home Assistant'ın tek başına yapamadığı karmaşık görevleri (bilgisayarda
+      işlem, internette araştırma, çok adımlı planlama, uzun metin hazırlama)
+      OpenJarvis ajanına gönderir ve cevabını döndürür. Basit cihaz kontrolü
+      için KULLANMA.
+    icon: mdi:robot
+    mode: parallel
+    fields:
+      gorev:
+        name: Görev
+        description: Jarvis'in yapacağı görev, Türkçe ve açık şekilde.
+        required: true
+        selector:
+          text:
+            multiline: true
+    sequence:
+      - action: rest_command.jarvis_gorev
+        data:
+          gorev: "{{ gorev }}"
+        response_variable: yanit
+      - variables:
+          sonuc:
+            cevap: >-
+              {% if yanit.status == 200 and yanit.content is mapping %}
+              {{ yanit.content.choices[0].message.content }}
+              {% else %}
+              Jarvis'in görev sunucusuna şu an ulaşılamıyor (hata {{ yanit.status }}).
+              {% endif %}
+      - stop: Görev tamamlandı
+        response_variable: sonuc
+
+  bilgisayari_ac:
+    alias: "Bilgisayarı aç"
+    description: Evdeki Windows bilgisayarı ağ üzerinden açar (Wake-on-LAN).
+    icon: mdi:desktop-tower-monitor
+    sequence:
+      - action: wake_on_lan.send_magic_packet
+        data:
+          mac: !secret pc_mac
+
+  iyi_geceler:
+    alias: "İyi geceler"
+    description: Gece modunu açar ve tüm ışıkları kapatır.
+    icon: mdi:sleep
+    sequence:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.gece_modu
+      - action: light.turn_off
+        target:
+          entity_id: all
+
+# ---------------------------------------------------------------------
+# Otomasyonlar
+# ---------------------------------------------------------------------
+automation:
+  - id: jarvis_yeniden_basladi
+    alias: "Jarvis: sistem yeniden başladı"
+    description: Elektrik kesintisi veya güncelleme sonrası haber verir.
+    triggers:
+      - trigger: homeassistant
+        event: start
+    actions:
+      - action: persistent_notification.create
+        data:
+          title: Jarvis
+          message: "Sistem {{ now().strftime('%d.%m.%Y %H:%M') }} itibarıyla yeniden başladı."
+
+  - id: jarvis_gece_modu_sabah_kapat
+    alias: "Jarvis: sabah gece modunu kapat"
+    triggers:
+      - trigger: time
+        at: "07:00:00"
+    conditions:
+      - condition: state
+        entity_id: input_boolean.gece_modu
+        state: "on"
+    actions:
+      - action: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.gece_modu
+
+  # ÖRNEK – sensör adlarını kendi cihazlarınla değiştir
+  - id: jarvis_hareketle_isik
+    alias: "Jarvis: hareket olunca salon ışığı (akşam)"
+    mode: restart
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.salon_hareket   # ← değiştir
+        to: "on"
+    conditions:
+      - condition: state
+        entity_id: input_boolean.hareket_isik_otomasyonu
+        state: "on"
+      - condition: state
+        entity_id: sun.sun
+        state: below_horizon
+      - condition: state
+        entity_id: input_boolean.gece_modu
+        state: "off"
+    actions:
+      - action: light.turn_on
+        target:
+          entity_id: light.salon                  # ← değiştir
+      - wait_for_trigger:
+          - trigger: state
+            entity_id: binary_sensor.salon_hareket  # ← değiştir
+            to: "off"
+            for: "00:05:00"
+      - action: light.turn_off
+        target:
+          entity_id: light.salon                  # ← değiştir
+
+  # ÖRNEK – su kaçağı sensör adını değiştir
+  - id: jarvis_su_kacagi
+    alias: "Jarvis: su kaçağı uyarısı"
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.banyo_su_kacagi  # ← değiştir
+        to: "on"
+    actions:
+      - action: persistent_notification.create
+        data:
+          title: "⚠️ Su kaçağı!"
+          message: "Banyoda su kaçağı algılandı ({{ now().strftime('%H:%M') }})."
+      # Telefonuna bildirim için (Home Assistant uygulaması kuruluysa) aç:
+      # - action: notify.mobile_app_TELEFON_ADIN
+      #   data:
+      #     title: "Su kaçağı!"
+      #     message: "Banyoda su kaçağı algılandı."
