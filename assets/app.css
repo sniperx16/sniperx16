@@ -447,3 +447,6 @@ footer .co b{color:#fff;font-weight:600}
 .legal-links a:hover{color:#fff}
 @media (max-width:960px){.legal{grid-template-columns:1fr}.legal-nav{position:static;grid-template-columns:1fr 1fr;gap:0 24px}}
 @media (max-width:640px){.legal-nav{grid-template-columns:1fr}}
+
+/* width/height öznitelikleri oran korur; sınıf kuralları yine önceliklidir */
+:where(img[width][height]){height:auto}

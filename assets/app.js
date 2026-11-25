@@ -1,6 +1,6 @@
 document.documentElement.classList.add("js");
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const img = n => `assets/img/${n}.jpg`;
+const img = n => `assets/img/${n}.webp`;
 const ARROW = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 7h10M8 3l4 4-4 4"/></svg>';
 const CHECK = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 10l4 4 8-9"/></svg>';
 const pad = n => String(n).padStart(2, "0");   /* 1 -> "01" (saha fotoğraf dosya adları) */
@@ -18,10 +18,10 @@ $("#f-hizmet").innerHTML = SVC.map(s => `<option>${s.t}</option>`).join("") + "<
 $("#faq").innerHTML = FAQ.map(([q, a], i) => `<details${i ? "" : " open"}><summary>${q}</summary><p>${a}</p></details>`).join("");
 const gItem = ([f, t, c], i) => `<button class="g" data-i="${i}" data-c="${c}"><img src="${img("saha/t/" + pad(f))}" alt="${t}" loading="lazy"><span><small>${CATS[c]}</small>${t}</span></button>`;
 $("#gal").innerHTML = GAL.map(gItem).join("");
-$("#vgal").innerHTML = VID.map(([f, t]) => `<button class="vc" data-v="${f}" aria-label="Videoyu oynat: ${t}"><img src="assets/video/poster/${f}.jpg" alt="${t}" loading="lazy"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></i><span>${t}</span></button>`).join("");
+$("#vgal").innerHTML = VID.map(([f, t]) => `<button class="vc" data-v="${f}" aria-label="Videoyu oynat: ${t}"><img src="assets/video/poster/${f}.webp" alt="${t}" loading="lazy"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></i><span>${t}</span></button>`).join("");
 $("#vgal").addEventListener("click", e => { const b = e.target.closest(".vc"); if (!b) return;
   $$("#vgal video").forEach(v => v.pause());
-  b.outerHTML = `<div class="vc on"><video src="assets/video/${b.dataset.v}.mp4" poster="assets/video/poster/${b.dataset.v}.jpg" controls autoplay playsinline preload="metadata"></video><span>${$("span", b).textContent}</span></div>`; });
+  b.outerHTML = `<div class="vc on"><video src="assets/video/${b.dataset.v}.mp4" poster="assets/video/poster/${b.dataset.v}.webp" controls autoplay playsinline preload="metadata"></video><span>${$("span", b).textContent}</span></div>`; });
 $("#track").innerHTML = GAL.slice(0, 9).map(gItem).join("");
 $("#filters").innerHTML = Object.entries(CATS).map(([k, v]) => `<button data-c="${k}" aria-pressed="${k === "all"}">${v}</button>`).join("");
 const tk = ["Palplanş iksa", "İsale hatları", "Kanalizasyon", "Arıtma tesisleri", "Kanal görüntüleme", "Terfi istasyonları"];
@@ -43,16 +43,20 @@ if (FIRMA.mapQuery) {
 /* ---- şirket bilgileri (alt bilgi) ---- */
 $("#coInfo").innerHTML = [["Unvan", FIRMA.unvan], ["Vergi dairesi", FIRMA.vergiDairesi], ["Vergi no", FIRMA.vergiNo], ["MERSİS no", FIRMA.mersisNo], ["Ticaret sicil no", FIRMA.ticaretSicilNo]].filter(x => x[1]).map(([k, v]) => `<span><b>${k}:</b> ${v}</span>`).join("");
 if (FIRMA.mapLink) $("#map").insertAdjacentHTML("afterend", `<a class="link" style="margin-top:26px" href="${FIRMA.mapLink}" target="_blank" rel="noopener">Yol tarifi al <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`);
-const ld = document.createElement("script"); ld.type = "application/ld+json";
-ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "GeneralContractor", name: "Han Grup Yazılım İnşaat", telephone: "+" + FIRMA.phoneRaw, email: FIRMA.email, address: FIRMA.address, areaServed: "TR", knowsAbout: SVC.map(s => s.t) });
-document.head.appendChild(ld);
+
+/* ---- SSS için FAQPage yapılandırılmış verisi ---- */
+{ const ld = document.createElement("script"); ld.type = "application/ld+json";
+  ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQ.map(([q, ans]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: ans.replace(/<[^>]+>/g, "") } })) });
+  document.head.appendChild(ld); }
 
 /* ---- açılış slaytı ---- */
 const hero = $("#hero"), heroTabs = $("#heroTabs");
-hero.insertAdjacentHTML("afterbegin", SLIDES.map(([f, lab, h, p, id], i) => `<div class="slide${i ? "" : " on"}"><img src="${img(f)}" alt="" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}>
-  <div class="cap"><div class="wrap"><span class="lab">${lab}</span><h1>${h}</h1><p>${p}</p>
+hero.insertAdjacentHTML("afterbegin", SLIDES.map(([f, lab, h, p, id], i) => `<div class="slide${i ? "" : " on"}"><img src="${img(f)}" alt="${lab} — Han Grup Yazılım İnşaat saha görseli" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}>
+  <div class="cap"><div class="wrap"><span class="lab">${lab}</span><${i ? "h2" : "h1"}>${h}</${i ? "h2" : "h1"}><p>${p}</p>
   <div class="acts"><a class="btn" href="#faaliyet-alanlari" data-target="${id}">Detaylı bilgi ${ARROW}</a><a class="btn line" href="#iletisim">Teklif al</a></div></div></div></div>`).join(""));
 heroTabs.innerHTML = SLIDES.map((s, i) => `<button aria-label="${s[1]}"><small>${pad(i + 1)}</small><span>${s[1]}</span></button>`).join("");
+/* ---- görsellere width/height ekle (yerleşim kaymasını önler) ---- */
+$$("img[src]").forEach(i => { if (i.hasAttribute("width")) return; const d = DIM[i.getAttribute("src").split("?")[0]]; if (d) { i.setAttribute("width", d[0]); i.setAttribute("height", d[1]); } });
 const slides = $$(".slide", hero), hTabs = $$("button", heroTabs); let cur = 0, timer;
 const go = i => { slides[cur].classList.remove("on"); hTabs[cur].classList.remove("on"); cur = (i + slides.length) % slides.length;
   slides[cur].classList.add("on"); void hTabs[cur].offsetWidth; hTabs[cur].classList.add("on"); clearTimeout(timer); timer = setTimeout(() => go(cur + 1), 6500); };
@@ -79,7 +83,26 @@ let pendingTarget = null, first = true;
 const hdr = $("#hdr"), menu = $("#menu"), burger = $("#burger"), curtain = $("#curtain");
 const setMenu = o => { menu.classList.toggle("open", o); hdr.classList.toggle("open", o); burger.setAttribute("aria-expanded", o); document.body.style.overflow = o ? "hidden" : ""; };
 burger.onclick = () => setMenu(!menu.classList.contains("open"));
+/* ---- sayfa başına title / description / og:url ---- */
+const SITE = "https://hangrupinsaat.com/";
+const META = {
+  anasayfa: ["Han Grup Yazılım İnşaat | Gürsu Bursa Palplanş İksa, Kanalizasyon ve Arıtma Tesisi", null],
+  kurumsal: ["Kurumsal | Han Grup Yazılım İnşaat Gürsu Bursa", "Han Grup Yazılım İnşaat Taahhüt Ltd. Şti. hakkında: Gürsu/Bursa merkezli altyapı yüklenicisi; misyon, vizyon, iş sağlığı ve güvenliği, çevre ve kalite ilkeleri."],
+  "faaliyet-alanlari": ["Faaliyet Alanları | Palplanş İksa, Kanalizasyon, İsale Hattı, Arıtma | Han Grup", "Palplanş iksa, içme suyu isale hatları, kanalizasyon ve yağmursuyu şebekeleri, kanal hattı görüntüleme, atık su ve içme suyu arıtma tesisleri, terfi istasyonları."],
+  galeri: ["Proje Galerisi | Saha Çalışmalarımız | Han Grup Yazılım İnşaat", "Han Grup Yazılım İnşaat saha fotoğrafları ve videoları: palplanş çakma, boru hattı, kanalizasyon ve arıtma tesisi uygulamaları."],
+  iletisim: ["İletişim ve Teklif Al | Han Grup Yazılım İnşaat Gürsu Bursa", "Han Grup Yazılım İnşaat iletişim: " + FIRMA.address + ". Telefon " + FIRMA.phone + ". Altyapı projeniz için teklif alın."],
+  yasal: ["Yasal Bilgiler | KVKK, Gizlilik, Çerez | Han Grup Yazılım İnşaat", "Han Grup Yazılım İnşaat KVKK aydınlatma metni, gizlilik politikası, çerez politikası ve kullanım koşulları."]
+};
+const DEF_DESC = document.querySelector('meta[name="description"]').content;
+function setMeta(name) {
+  const [t, d] = META[name] || META.anasayfa, url = name === "anasayfa" ? SITE : SITE + "#" + name;
+  document.title = t;
+  document.querySelector('meta[name="description"]').content = d || DEF_DESC;
+  document.querySelector('meta[property="og:url"]').content = url;
+  document.querySelector('meta[property="og:title"]').content = t;
+}
 function swap(name) {
+  setMeta(name);
   $$(".view").forEach(v => v.classList.toggle("on", v.id === "v-" + name));
   $$("[data-nav]").forEach(a => a.classList.toggle("active", a.dataset.nav === name));
   const t = pendingTarget && document.getElementById(pendingTarget); pendingTarget = null;
