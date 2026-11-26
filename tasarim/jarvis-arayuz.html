@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Ev Jarvis'i – arayüz taslağı</title>
+<style>
+  :root{
+    --bg:#0b1016; --panel:#121a23; --panel2:#17212c; --line:#223040;
+    --text:#e6edf3; --muted:#8b9bab; --acc:#38d6f5; --acc2:#7c5cff;
+    --ok:#3ddc97; --warn:#ffb547; --bad:#ff6b6b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#05080c;font-family:Inter,system-ui,sans-serif;color:var(--text);padding:40px;display:flex;gap:40px;align-items:flex-start}
+  .muted{color:var(--muted)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .ttl{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+  .chip{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);font-size:13px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+  .btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;padding:9px 14px;font:600 13px Inter}
+  .btn.p{background:linear-gradient(135deg,var(--acc),#2a9df4);color:#04121a;border:none}
+  .tag{font-size:11px;padding:3px 8px;border-radius:999px;font-weight:600}
+  .tag.l{background:rgba(61,220,151,.12);color:var(--ok)}
+  .tag.c{background:rgba(124,92,255,.15);color:#a993ff}
+  .tag.j{background:rgba(56,214,245,.12);color:var(--acc)}
+
+  /* ---------- Masaüstü ---------- */
+  #masaustu{width:1440px;height:900px;background:var(--bg);border-radius:22px;overflow:hidden;display:flex;border:1px solid #1b2530;flex-shrink:0}
+  .side{width:230px;background:#0d141c;border-right:1px solid var(--line);padding:24px 16px;display:flex;flex-direction:column;gap:6px}
+  .logo{display:flex;align-items:center;gap:12px;padding:0 8px 22px}
+  .logo b{font-size:20px;letter-spacing:.18em}
+  .nav{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;color:var(--muted);font-size:14px}
+  .nav.on{background:var(--panel2);color:var(--text)}
+  .nav i{font-style:normal;width:20px;text-align:center}
+  .side .alt{margin-top:auto}
+  .main{flex:1;padding:26px 30px;display:flex;flex-direction:column;gap:18px}
+  .top{display:flex;justify-content:space-between;align-items:flex-end}
+  .top h1{font-size:28px;font-weight:700}
+  .grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:auto auto;gap:18px;flex:1}
+  .orbcard{grid-row:span 2;display:flex;flex-direction:column}
+  .orbwrap{display:flex;align-items:center;gap:18px;margin-bottom:16px}
+  .msgs{display:flex;flex-direction:column;gap:12px;flex:1}
+  .m{max-width:88%;padding:11px 14px;border-radius:14px;font-size:14px;line-height:1.45}
+  .m.u{align-self:flex-end;background:#1d2a38;border-bottom-right-radius:4px}
+  .m.j{background:linear-gradient(135deg,rgba(56,214,245,.12),rgba(124,92,255,.10));border:1px solid rgba(56,214,245,.25);border-bottom-left-radius:4px}
+  .meta{display:flex;gap:8px;align-items:center;margin-top:6px;font-size:11px;color:var(--muted)}
+  .ask{display:flex;gap:10px;margin-top:14px}
+  .ask .in{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px 14px;color:var(--muted);font-size:14px}
+  .mic{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;font-size:18px}
+  .rooms{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .room{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:13px}
+  .room h4{font-size:14px;margin-bottom:8px;display:flex;justify-content:space-between}
+  .big{font-size:24px;font-weight:700}
+  .row{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-top:7px}
+  .sw{width:34px;height:20px;border-radius:999px;background:#2a3846;position:relative}
+  .sw:after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#7d8b99}
+  .sw.on{background:var(--acc)} .sw.on:after{left:17px;background:#fff}
+  .cams{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .cam{border-radius:12px;overflow:hidden;position:relative;height:118px;border:1px solid var(--line)}
+  .cam .lbl{position:absolute;left:8px;bottom:8px;font-size:11px;background:rgba(0,0,0,.55);padding:4px 8px;border-radius:8px}
+  .cam .rec{position:absolute;right:8px;top:8px;font-size:10px;background:rgba(255,107,107,.85);padding:2px 7px;border-radius:6px;font-weight:700}
+  .pc{display:flex;gap:14px;align-items:center}
+  .pcic{width:52px;height:52px;border-radius:14px;background:var(--panel2);display:grid;place-items:center;font-size:24px;border:1px solid var(--line)}
+  .bars{display:flex;align-items:flex-end;gap:6px;height:70px;margin-top:8px}
+  .bars div{flex:1;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,var(--acc),rgba(56,214,245,.25))}
+  .task{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .task:last-child{border:none}
+  .meter{height:6px;border-radius:9px;background:#223040;overflow:hidden;margin-top:5px}
+  .meter i{display:block;height:100%;background:var(--acc)}
+
+  /* ---------- Telefon ---------- */
+  #telefon{width:390px;height:844px;background:var(--bg);border-radius:46px;border:10px solid #1a222c;overflow:hidden;display:flex;flex-direction:column;flex-shrink:0;position:relative}
+  .sbar{display:flex;justify-content:space-between;padding:14px 28px 6px;font-size:14px;font-weight:600}
+  .ph{flex:1;display:flex;flex-direction:column;padding:10px 18px 22px}
+  .phhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .phorb{display:flex;flex-direction:column;align-items:center;margin:8px 0 18px;gap:10px}
+  .phmsgs{display:flex;flex-direction:column;gap:10px;flex:1}
+  .phmsgs .m{font-size:14px}
+  .quick{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+  .quick span{font-size:12px;padding:7px 11px;border-radius:999px;background:var(--panel2);border:1px solid var(--line)}
+  .bigmic{width:74px;height:74px;border-radius:50%;margin:0 auto;background:radial-gradient(circle at 35% 30%,#7fe9ff,var(--acc) 45%,var(--acc2));display:grid;place-items:center;font-size:30px;box-shadow:0 0 0 10px rgba(56,214,245,.10),0 0 40px rgba(56,214,245,.45)}
+  .listen{text-align:center;font-size:12px;color:var(--acc);margin-top:10px;letter-spacing:.05em}
+</style>
+</head>
+<body>
+
+<!-- ======================= MASAÜSTÜ / TABLET ======================= -->
+<div id="masaustu">
+  <aside class="side">
+    <div class="logo">
+      <svg width="38" height="38" viewBox="0 0 38 38"><defs><radialGradient id="g1"><stop offset="0" stop-color="#bff6ff"/><stop offset=".5" stop-color="#38d6f5"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0"/></radialGradient></defs><circle cx="19" cy="19" r="18" fill="url(#g1)" opacity=".35"/><circle cx="19" cy="19" r="13" fill="none" stroke="#38d6f5" stroke-width="2"/><circle cx="19" cy="19" r="6" fill="#38d6f5"/></svg>
+      <b>JARVIS</b>
+    </div>
+    <div class="nav on"><i>◉</i>Genel bakış</div>
+    <div class="nav"><i>⌂</i>Odalar</div>
+    <div class="nav"><i>◎</i>Kameralar</div>
+    <div class="nav"><i>ϟ</i>Enerji</div>
+    <div class="nav"><i>▭</i>Bilgisayar</div>
+    <div class="nav"><i>⟳</i>Otomasyonlar</div>
+    <div class="nav"><i>✦</i>Jarvis görevleri</div>
+    <div class="nav alt"><i>⚙</i>Ayarlar</div>
+    <div class="card" style="padding:12px;margin-top:10px">
+      <div style="font-size:12px" class="muted">Mini PC</div>
+      <div class="row" style="margin-top:6px"><span>İşlemci</span><span>18%</span></div><div class="meter"><i style="width:18%"></i></div>
+      <div class="row"><span>RAM</span><span>14 / 24 GB</span></div><div class="meter"><i style="width:58%"></i></div>
+      <div class="row"><span>Disk</span><span>96 / 500 GB</span></div><div class="meter"><i style="width:19%"></i></div>
+    </div>
+  </aside>
+
+  <section class="main">
+    <div class="top">
+      <div>
+        <div class="muted" style="font-size:14px;margin-bottom:4px">Çarşamba, 26 Kasım · 21:40</div>
+        <h1>İyi akşamlar 👋</h1>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+        <span class="chip"><span class="dot"></span>Yerel mod hazır</span>
+        <span class="chip"><span class="dot" style="background:#a993ff;box-shadow:0 0 8px #a993ff"></span>Claude bağlı</span>
+        <span class="chip">⛅ Dışarısı 12°C</span>
+        <span class="chip">🛡️ Son yedek 03:00 ✓</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Jarvis sohbet -->
+      <div class="card orbcard">
+        <div class="ttl"><span lang="en">Jarvis</span> <span class="tag j"><span lang="en">Hey Jarvis</span> · 3 oda dinliyor</span></div>
+        <div class="orbwrap">
+          <svg width="86" height="86" viewBox="0 0 100 100"><defs><radialGradient id="o"><stop offset="0" stop-color="#e8fdff"/><stop offset=".35" stop-color="#38d6f5"/><stop offset=".75" stop-color="#7c5cff" stop-opacity=".55"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="48" fill="url(#o)"/><circle cx="50" cy="50" r="30" fill="none" stroke="#bff6ff" stroke-opacity=".6" stroke-width="1.5" stroke-dasharray="4 6"/><circle cx="50" cy="50" r="40" fill="none" stroke="#38d6f5" stroke-opacity=".35" stroke-width="1"/></svg>
+          <div>
+            <div style="font-size:18px;font-weight:700">Size nasıl yardımcı olabilirim?</div>
+            <div class="muted" style="font-size:13px;margin-top:4px">Basit komutlar evde, internetsiz çalışır. Zor sorular Claude'a gider.</div>
+          </div>
+        </div>
+        <div class="msgs">
+          <div class="m u">Salonun ışığını kıs, klimayı 22 dereceye ayarla.</div>
+          <div><div class="m j">Salon ışığını %40'a kıstım, klimayı 22 dereceye ayarladım.</div>
+            <div class="meta"><span class="tag l">yerel</span>0,4 sn · Salon uydusu</div></div>
+          <div class="m u">Yarın sabah hava nasıl, şemsiye alayım mı?</div>
+          <div><div class="m j">Yarın sabah 9 derece ve hafif yağmur bekleniyor. Şemsiye almanızı öneririm efendim.</div>
+            <div class="meta"><span class="tag c">Claude</span>1,8 sn</div></div>
+          <div class="m u">Bilgisayarımı aç, bu hafta sonu için etkinlik önerilerini hazırla.</div>
+          <div><div class="m j">Bilgisayarınızı açtım. Etkinlik araştırmasını başlattım, hazır olunca size haber vereceğim.</div>
+            <div class="meta"><span class="tag j">OpenJarvis görevi</span>arka planda çalışıyor</div></div>
+        </div>
+        <div class="ask"><div class="in">Jarvis'e yazın ya da "Hey Jarvis" deyin…</div><div class="mic">🎙️</div></div>
+      </div>
+
+      <!-- Odalar -->
+      <div class="card">
+        <div class="ttl">Odalar <span class="muted" style="text-transform:none;letter-spacing:0">9 Zigbee cihazı</span></div>
+        <div class="rooms">
+          <div class="room"><h4>Salon <span>💡</span></h4><div class="big">22,4°</div><div class="muted" style="font-size:12px">Nem %48 · 1 kişi</div>
+            <div class="row"><span>Işık %40</span><span class="sw on"></span></div><div class="row"><span>Klima 22°</span><span class="sw on"></span></div></div>
+          <div class="room"><h4>Yatak odası <span>🛏️</span></h4><div class="big">20,1°</div><div class="muted" style="font-size:12px">Nem %51 · boş</div>
+            <div class="row"><span>Işık</span><span class="sw"></span></div><div class="row"><span>Perde</span><span class="sw on"></span></div></div>
+          <div class="room"><h4>Mutfak <span>🍳</span></h4><div class="big">21,7°</div><div class="muted" style="font-size:12px">Hava kalitesi iyi</div>
+            <div class="row"><span>Işık</span><span class="sw"></span></div><div class="row"><span>Kettle prizi</span><span class="sw"></span></div></div>
+          <div class="room"><h4>Banyo <span>🚿</span></h4><div class="big">23,0°</div><div class="muted" style="font-size:12px">Su kaçağı yok ✓</div>
+            <div class="row"><span>Havlupan</span><span class="sw on"></span></div><div class="row"><span>Işık</span><span class="sw"></span></div></div>
+        </div>
+      </div>
+
+      <!-- Kameralar -->
+      <div class="card">
+        <div class="ttl">Kameralar <span class="tag l" style="text-transform:none">kişi algılama açık</span></div>
+        <div class="cams">
+          <div class="cam">
+            <svg width="100%" height="100%" viewBox="0 0 200 118" preserveAspectRatio="xMidYMid slice"><rect width="200" height="118" fill="#1a2430"/><rect x="70" y="18" width="60" height="100" fill="#26364a"/><rect x="76" y="24" width="48" height="88" fill="#2d4058"/><circle cx="117" cy="70" r="3" fill="#c9a86a"/><rect x="0" y="100" width="200" height="18" fill="#141c26"/></svg>
+            <span class="rec">● CANLI</span><span class="lbl">Kapı girişi · kimse yok</span></div>
+          <div class="cam">
+            <svg width="100%" height="100%" viewBox="0 0 200 118" preserveAspectRatio="xMidYMid slice"><rect width="200" height="118" fill="#1d2633"/><rect x="0" y="80" width="200" height="38" fill="#18202b"/><rect x="20" y="62" width="90" height="30" rx="6" fill="#3a4a5e"/><rect x="20" y="50" width="90" height="16" rx="6" fill="#33435a"/><circle cx="140" cy="52" r="9" fill="#556b85"/><rect x="131" y="62" width="18" height="30" rx="6" fill="#556b85"/><rect x="126" y="42" width="28" height="54" fill="none" stroke="#3ddc97" stroke-width="2" rx="3"/><text x="127" y="39" font-size="8" fill="#3ddc97" font-family="Inter">kişi 94%</text></svg>
+            <span class="rec">● CANLI</span><span class="lbl">Salon · 1 kişi</span></div>
+        </div>
+        <div class="row" style="margin-top:12px"><span class="muted">Son olay</span><span>Kargo görevlisi · 14:12</span></div>
+      </div>
+
+      <!-- Bilgisayar + enerji -->
+      <div class="card">
+        <div class="ttl">Bilgisayar</div>
+        <div class="pc">
+          <div class="pcic">🖥️</div>
+          <div style="flex:1"><div style="font-weight:700">Masaüstü PC</div><div style="font-size:13px;color:var(--ok)">● Açık · kullanıcı aktif</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+          <button class="btn p">Kilitle</button><button class="btn">Uyut</button><button class="btn">Kapat</button><button class="btn">Uygulama aç</button>
+        </div>
+        <div class="ttl" style="margin-top:18px">Enerji · bugün 4,2 kWh</div>
+        <div class="bars"><div style="height:30%"></div><div style="height:22%"></div><div style="height:18%"></div><div style="height:35%"></div><div style="height:55%"></div><div style="height:48%"></div><div style="height:62%"></div><div style="height:80%"></div><div style="height:66%"></div><div style="height:90%"></div><div style="height:72%"></div><div style="height:58%"></div></div>
+      </div>
+
+      <!-- Görevler -->
+      <div class="card">
+        <div class="ttl"><span><span lang="en">Jarvis</span> görevleri</span></div>
+        <div class="task"><span>⏳</span><div><div>Hafta sonu etkinlik önerileri</div><div class="muted" style="font-size:12px">OpenJarvis · araştırıyor</div></div></div>
+        <div class="task"><span>✅</span><div><div>Sabah özeti hazırlandı</div><div class="muted" style="font-size:12px">07:30 · hava, takvim, enerji</div></div></div>
+        <div class="task"><span>🔔</span><div><div>"Gece modu" 23:30'da açılacak</div><div class="muted" style="font-size:12px">ışıklar kapanır, kapı kontrol edilir</div></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= TELEFON ======================= -->
+<div id="telefon">
+  <div class="sbar"><span>21:41</span><span>📶 5G 🔋</span></div>
+  <div class="ph">
+    <div class="phhead"><span style="font-size:20px">‹</span><b style="letter-spacing:.18em">JARVIS</b><span class="chip" style="padding:5px 10px;font-size:11px"><span class="dot"></span>Evde</span></div>
+    <div class="phorb">
+      <svg width="120" height="120" viewBox="0 0 100 100"><defs><radialGradient id="o2"><stop offset="0" stop-color="#e8fdff"/><stop offset=".35" stop-color="#38d6f5"/><stop offset=".75" stop-color="#7c5cff" stop-opacity=".55"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="48" fill="url(#o2)"/><circle cx="50" cy="50" r="30" fill="none" stroke="#bff6ff" stroke-opacity=".6" stroke-width="1.5" stroke-dasharray="4 6"/><circle cx="50" cy="50" r="40" fill="none" stroke="#38d6f5" stroke-opacity=".35"/></svg>
+      <div style="font-weight:700">Dinliyorum…</div>
+    </div>
+    <div class="phmsgs">
+      <div class="m u">Evden çıkıyorum.</div>
+      <div><div class="m j">İyi günler efendim. Tüm ışıkları ve kettle prizini kapattım, klimayı ekonomi moduna aldım. Kapı ve pencereler kapalı.</div>
+        <div class="meta"><span class="tag l">yerel</span>"Evden çıkış" senaryosu</div></div>
+      <div class="m u">Kapıya biri gelirse haber ver.</div>
+      <div><div class="m j">Tamam. Kapı kamerasında bir kişi algılanırsa telefonunuza fotoğrafla bildirim göndereceğim.</div>
+        <div class="meta"><span class="tag c">Claude</span>otomasyon oluşturuldu</div></div>
+    </div>
+    <div class="quick"><span>💡 Işıkları kapat</span><span>🌡️ Ev kaç derece?</span><span>🖥️ PC'yi aç</span><span>📷 Kapıyı göster</span></div>
+    <div class="bigmic">🎙️</div>
+    <div class="listen">BASILI TUT VE KONUŞ</div>
+  </div>
+</div>
+
+</body>
+</html>
