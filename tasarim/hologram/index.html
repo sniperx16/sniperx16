@@ -54,17 +54,33 @@ composer.addPass(new OutputPass());
 const ortak = {
   uZaman: { value: 0 }, uCene: { value: 0 }, uParlak: { value: 0.7 },
   uRenk: { value: RENK }, uTarama: { value: 0 }, uBozulma: { value: 0 },
+  uGenis: { value: 0 }, uYuvarlak: { value: 0 }, uGulum: { value: 0 }, uKas: { value: 0 },
 };
-// Çene: dudak çizgisinin (y≈0.22) altındaki ön bölge, kulak hizasındaki menteşe etrafında döner
+// Mimikler (modelin ölçülerine göre): dudak çizgisi y≈0.22, ağız köşeleri x≈±0.75, kaşlar y≈2.15
+//  uGenis: dudakları yana yay (i, e) · uYuvarlak: dudakları büzüp öne çıkar (o, u)
+//  uGulum: ağız köşelerini kaldır · uKas: kaşları kaldır · uCene: çeneyi aç
 const deformGLSL = /* glsl */`
-  uniform float uZaman, uCene, uBozulma;
-  vec3 deform(vec3 p){
-    float alt = 1.0 - smoothstep(0.05, 0.30, p.y);          // dudak çizgisinin altı
-    float on  = smoothstep(-0.6, 1.2, p.z);                  // yüzün önü
-    float yan = 1.0 - smoothstep(1.6, 3.2, abs(p.x));        // yanaklara doğru azalır
-    float govde = smoothstep(-3.2, -1.2, p.y);               // boyun sabit
+  uniform float uZaman, uCene, uBozulma, uGenis, uYuvarlak, uGulum, uKas;
+  float gs(vec2 d, vec2 r){ return exp(-dot(d/r, d/r)); }
+  vec3 deform(vec3 p0){
+    vec3 p = p0;
+    float onY = smoothstep(0.6, 1.9, p0.z);                          // yalnızca yüzün ön yüzeyi
+    float dudak = gs(vec2(p0.x, p0.y-0.25), vec2(0.95, 0.42)) * onY;
+    float yanX = sign(p0.x) * smoothstep(0.05, 0.7, abs(p0.x));
+    p.x += yanX * uGenis * 0.24 * dudak;                             // yayma
+    p.x -= p0.x * uYuvarlak * 0.45 * dudak;                          // büzme
+    p.z += uYuvarlak * 0.32 * dudak;
+    float koseler = gs(vec2(abs(p0.x)-0.80, p0.y-0.28), vec2(0.38, 0.30)) * onY;
+    p.y += uGulum * 0.26 * koseler;                                  // gülümseme
+    p.x += sign(p0.x) * uGulum * 0.06 * koseler;
+    float kas = gs(vec2(abs(p0.x)-0.85, p0.y-2.15), vec2(0.65, 0.32)) * onY;
+    p.y += uKas * 0.22 * kas;                                        // kaş kaldırma
+    float alt = 1.0 - smoothstep(0.17, 0.27, p0.y);         // dudak aralığının (y≈0.25) altı
+    float on  = smoothstep(-0.6, 1.2, p0.z);                 // yüzün önü
+    float yan = 1.0 - smoothstep(1.6, 3.2, abs(p0.x));       // yanaklara doğru azalır
+    float govde = smoothstep(-3.2, -1.2, p0.y);              // boyun sabit
     float w = alt * on * yan * govde;
-    float a = uCene * 0.22 * w;
+    float a = uCene * 0.30 * w;
     vec3 piv = vec3(0.0, 0.9, -1.2);
     vec3 q = p - piv;
     float c = cos(a), s = sin(a);
@@ -89,7 +105,7 @@ const yuzMat = new THREE.ShaderMaterial({
       gl_Position = projectionMatrix * mv;
     }`,
   fragmentShader: /* glsl */`
-    uniform float uZaman, uParlak, uTarama; uniform vec3 uRenk;
+    uniform float uZaman, uParlak, uTarama, uCene; uniform vec3 uRenk;
     varying vec3 vN; varying vec3 vV; varying vec3 vP;
     float hash(float n){ return fract(sin(n)*43758.5453); }
     void main(){
@@ -98,7 +114,9 @@ const yuzMat = new THREE.ShaderMaterial({
       float tarama = 0.5*exp(-pow((vP.y - uTarama)*3.0, 2.0));                    // aşağı inen ışık bandı
       float kenarAlt = smoothstep(-2.4, -0.8, vP.y);                               // boyun kaybolur
       float titreme = 0.92 + 0.08*hash(floor(uZaman*24.0));
-      float a = (0.05 + fr*0.85 + cizgi*0.10 + tarama*0.55) * kenarAlt * uParlak * titreme;
+      vec2 dd = vec2(vP.x/0.85, (vP.y-0.24)/0.16);
+      float dudakIsik = exp(-dot(dd,dd)) * smoothstep(1.4, 2.0, vP.z) * (0.15 + 0.85*uCene);   // konuşurken dudaklar parlar
+      float a = (0.05 + fr*0.85 + cizgi*0.10 + tarama*0.55 + dudakIsik*0.55) * kenarAlt * uParlak * titreme;
       vec3 c = mix(uRenk, vec3(0.85,0.97,1.0), fr*0.5 + tarama*0.4);
       gl_FragColor = vec4(c * a, a);
     }`,
@@ -201,16 +219,44 @@ let durum = params.get('durum') || 'bekliyor';
 const tanitim = !params.get('durum');
 let altyazi = params.get('metin') || '', altyaziBas = 0, konusmaBitis = 0;
 window.jarvisDurum = d => { durum = d; };
-window.jarvisSoyle = m => { altyazi = m; altyaziBas = zaman(); durum = 'konusuyor'; konusmaBitis = zaman() + Math.max(2.5, m.length*0.065); };
+// Konuşma hızı (harf/sn). Gerçek ses bağlanınca sesin süresine göre ayarlanır.
+const HIZ = 14;
+const konusmaSuresi = m => m.length / HIZ + 0.6;
+window.jarvisSoyle = m => { altyazi = m; altyaziBas = zaman(); durum = 'konusuyor'; konusmaBitis = zaman() + konusmaSuresi(m); };
+const M1 = 'İyi akşamlar efendim. Salon yirmi iki derece, tüm sistemler normal çalışıyor.';
+const M2 = 'Bilgisayarınızı açtım. Kapıda kimse yok, alarm devrede.';
 const SENARYO = [
-  ['bekliyor', 2.6, ''],
-  ['dinliyor', 2.4, ''],
-  ['dusunuyor', 1.6, ''],
-  ['konusuyor', 4.6, 'İyi akşamlar efendim. Salon yirmi iki derece, tüm sistemler normal çalışıyor.'],
-  ['dinliyor', 2.0, ''],
+  ['bekliyor', 2.4, ''],
+  ['dinliyor', 2.2, ''],
   ['dusunuyor', 1.4, ''],
-  ['konusuyor', 4.2, 'Bilgisayarınızı açtım. Kapıda kimse yok, alarm devrede.'],
+  ['konusuyor', konusmaSuresi(M1), M1],
+  ['bekliyor', 1.2, ''],
+  ['dinliyor', 1.8, ''],
+  ['dusunuyor', 1.2, ''],
+  ['konusuyor', konusmaSuresi(M2), M2],
 ];
+
+/* ---------------- dudak senkronu: Türkçe harf → ağız şekli ----------------
+   [çene, yayma, büzme]  */
+const VISEME = {};
+const ata = (harfler, v) => [...harfler].forEach(h => VISEME[h] = v);
+ata('aâ',   [1.00, 0.25, 0.00]);
+ata('e',    [0.65, 0.65, 0.00]);
+ata('ıi',   [0.35, 0.85, 0.00]);
+ata('oö',   [0.70, 0.00, 0.80]);
+ata('uü',   [0.35, 0.00, 1.00]);
+ata('mbp',  [0.00, 0.00, 0.15]);
+ata('fv',   [0.15, 0.35, 0.00]);
+ata('şcçj', [0.30, 0.00, 0.55]);
+ata('szdtnlrgğkyh', [0.30, 0.30, 0.00]);
+const SESSIZLIK = [0.03, 0.05, 0.00];
+function viseme(metin, sure){                 // sure: konuşmanın başından beri geçen sn
+  const k = sure * HIZ, i = Math.floor(k), f = k - i;
+  const harf = c => VISEME[(c || ' ').toLocaleLowerCase('tr-TR')] || SESSIZLIK;
+  const a = harf(metin[i]), b = harf(metin[i+1]);
+  const e = f*f*(3-2*f);                      // yumuşak geçiş
+  return [0,1,2].map(j => a[j]*(1-e) + b[j]*e);
+}
 const SENARYO_SURE = SENARYO.reduce((a,s)=>a+s[1],0);
 const ETIKET = { bekliyor:'BEKLEMEDE', dinliyor:'DİNLİYORUM', dusunuyor:'İŞLENİYOR', konusuyor:'YANITLIYOR' };
 const DURUM_RENK = { bekliyor:'#7f93a6', dinliyor:'#3ddc97', dusunuyor:'#a58bff', konusuyor:'#35d4ff' };
@@ -312,7 +358,7 @@ function hudCiz(t, ses){
   h.fillText(`${nokta}  ${ETIKET[durum]}`, cx, 74); h.letterSpacing='0px';
   // altyazı
   if (altyazi && durum==='konusuyor'){
-    const n = Math.min(altyazi.length, Math.floor((t-altyaziBas)*22));
+    const n = Math.min(altyazi.length, Math.floor((t-altyaziBas)*HIZ) + 1);
     h.font=`500 ${Math.round(Math.min(W,H)*0.026)}px ${SANS}`; h.fillStyle='rgba(230,244,252,0.95)';
     h.fillText(altyazi.slice(0,n) + (n<altyazi.length?'▍':''), cx, H*0.955);
   }
@@ -322,7 +368,7 @@ function hudCiz(t, ses){
 }
 
 /* ---------------- döngü ---------------- */
-let cene = 0, ses = 0, parlak = 0.6, yaw = 0, pitch = 0, kirpma = 1, bozulma = 0;
+let cene = 0, genis = 0, yuvarlak = 0, gulum = 0, kas = 0, ses = 0, parlak = 0.6, yaw = 0, pitch = 0, kirpma = 1, bozulma = 0;
 let oncekiDurum = '';
 function kare(){
   const t = zaman();
@@ -333,12 +379,20 @@ function kare(){
   } else if (durum==='konusuyor' && konusmaBitis && t > konusmaBitis) durum = 'bekliyor';
   if (durum !== oncekiDurum){ bozulma = 1; oncekiDurum = durum; }
 
-  let ceneH = 0.02, sesH = 0.05;
-  if (durum==='konusuyor'){ const hece = Math.max(0, 0.6*Math.sin(t*12.5) + 0.4*Math.sin(t*7.1+1.3));
-    ceneH = 0.15 + 0.85*hece*(0.65+0.35*Math.sin(t*1.9)); sesH = 0.45 + 0.55*hece; }
-  else if (durum==='dinliyor'){ sesH = 0.25 + 0.25*Math.abs(Math.sin(t*4.3)*Math.sin(t*1.7)); }
-  else if (durum==='dusunuyor'){ sesH = 0.15; }
-  cene += (ceneH-cene)*0.45; ses += (sesH-ses)*0.25;
+  let ceneH = 0.02, genisH = 0, yuvarlakH = 0, gulumH = 0.12, kasH = 0, sesH = 0.05;
+  if (durum==='konusuyor'){
+    const gecen = t - altyaziBas, bitti = gecen*HIZ >= altyazi.length;
+    const [c, g, y] = bitti ? SESSIZLIK : viseme(altyazi, gecen);
+    ceneH = c; genisH = g; yuvarlakH = y;
+    gulumH = bitti ? 0.45 : 0.10;                           // cümle bitince hafif gülümser
+    kasH = 0.15 + 0.15*Math.max(0, Math.sin(gecen*1.7));    // konuşurken kaşlar canlı
+    sesH = bitti ? 0.05 : 0.35 + 0.65*c;
+  }
+  else if (durum==='dinliyor'){ kasH = 0.45; gulumH = 0.15; sesH = 0.25 + 0.25*Math.abs(Math.sin(t*4.3)*Math.sin(t*1.7)); }
+  else if (durum==='dusunuyor'){ kasH = -0.35; gulumH = 0; yuvarlakH = 0.15; sesH = 0.15; }
+  const yum = (a, b, k) => a + (b - a) * k;
+  cene = yum(cene, ceneH, 0.5); genis = yum(genis, genisH, 0.45); yuvarlak = yum(yuvarlak, yuvarlakH, 0.45);
+  gulum = yum(gulum, gulumH, 0.12); kas = yum(kas, kasH, 0.15); ses = yum(ses, sesH, 0.3);
   const parlakH = {bekliyor:0.6, dinliyor:0.95, dusunuyor:0.8, konusuyor:1.0}[durum];
   parlak += (parlakH-parlak)*0.06;
   bozulma *= 0.9;
@@ -356,6 +410,8 @@ function kare(){
   gozler.forEach(g => { g.scale.set(0.55*gp, 0.55*gp*kirpma, 1); g.material.opacity = Math.min(1, gp); });
 
   ortak.uZaman.value = t; ortak.uCene.value = cene; ortak.uParlak.value = parlak;
+  if (window.__mimik) ({cene, genis, yuvarlak, gulum, kas} = Object.assign({cene, genis, yuvarlak, gulum, kas}, window.__mimik));  // test için
+  ortak.uCene.value = cene; ortak.uGenis.value = genis; ortak.uYuvarlak.value = yuvarlak; ortak.uGulum.value = gulum; ortak.uKas.value = kas;
   ortak.uTarama.value = 4.2 - ((t*0.9) % 9.5); ortak.uBozulma.value = bozulma;
   const toz = scene.getObjectByName('toz'); toz.rotation.y = t*0.02;
   bloom.strength = 0.55 + 0.45*parlak;
