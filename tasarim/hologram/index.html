@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JARVIS</title>
+<style>
+  html,body{margin:0;height:100%;background:#010409;overflow:hidden}
+  #gl,#hud{position:fixed;inset:0;width:100vw;height:100vh;display:block}
+  #hud{pointer-events:none}
+</style>
+<script type="importmap">
+{ "imports": { "three": "./lib/three.module.js", "three/addons/": "./lib/addons/" } }
+</script>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<canvas id="hud"></canvas>
+<script type="module">
+/* =====================================================================
+   Ev Jarvis'i – holografik yüz (three.js)
+   Model: "Infinite, 3D Head Scan" – Lee Perry-Smith, CC BY 3.0 (KAYNAKLAR.md)
+
+   Kontrol:
+     ?durum=bekliyor|dinliyor|dusunuyor|konusuyor   (yoksa tanıtım modu)
+     window.jarvisDurum('dinliyor')
+     window.jarvisSoyle('Merhaba efendim.')          (altyazı + konuşma)
+   ===================================================================== */
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+
+const RENK = new THREE.Color(0x35d4ff);
+const glc = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({ canvas: glc, antialias: true, alpha: false, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setClearColor(0x000000, 1);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 200);
+camera.position.set(0, 1.0, 19);
+camera.lookAt(0, 0.9, 0);
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.9, 0.5, 0.12);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+/* ---------------- ortak shader parçaları ---------------- */
+const ortak = {
+  uZaman: { value: 0 }, uCene: { value: 0 }, uParlak: { value: 0.7 },
+  uRenk: { value: RENK }, uTarama: { value: 0 }, uBozulma: { value: 0 },
+};
+// Çene: dudak çizgisinin (y≈0.22) altındaki ön bölge, kulak hizasındaki menteşe etrafında döner
+const deformGLSL = /* glsl */`
+  uniform float uZaman, uCene, uBozulma;
+  vec3 deform(vec3 p){
+    float alt = 1.0 - smoothstep(0.05, 0.30, p.y);          // dudak çizgisinin altı
+    float on  = smoothstep(-0.6, 1.2, p.z);                  // yüzün önü
+    float yan = 1.0 - smoothstep(1.6, 3.2, abs(p.x));        // yanaklara doğru azalır
+    float govde = smoothstep(-3.2, -1.2, p.y);               // boyun sabit
+    float w = alt * on * yan * govde;
+    float a = uCene * 0.22 * w;
+    vec3 piv = vec3(0.0, 0.9, -1.2);
+    vec3 q = p - piv;
+    float c = cos(a), s = sin(a);
+    q = vec3(q.x, c*q.y + s*q.z, -s*q.y + c*q.z);
+    p = mix(p, q + piv, step(0.0001, w));
+    // hologram bozulması: yatay kayma
+    float bant = step(0.985, fract(sin(floor(p.y*6.0 + uZaman*20.0))*43758.5));
+    p.x += bant * uBozulma * 0.25;
+    return p;
+  }`;
+
+const yuzMat = new THREE.ShaderMaterial({
+  uniforms: ortak, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.FrontSide,
+  vertexShader: deformGLSL + /* glsl */`
+    varying vec3 vN; varying vec3 vV; varying vec3 vP;
+    void main(){
+      vec3 p = deform(position);
+      vP = position;
+      vec4 mv = modelViewMatrix * vec4(p,1.0);
+      vN = normalize(normalMatrix * normal);
+      vV = normalize(-mv.xyz);
+      gl_Position = projectionMatrix * mv;
+    }`,
+  fragmentShader: /* glsl */`
+    uniform float uZaman, uParlak, uTarama; uniform vec3 uRenk;
+    varying vec3 vN; varying vec3 vV; varying vec3 vP;
+    float hash(float n){ return fract(sin(n)*43758.5453); }
+    void main(){
+      float fr = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 2.4);
+      float cizgi = smoothstep(0.82, 1.0, abs(sin(vP.y*26.0 - uZaman*1.5)));     // ince tarama çizgileri
+      float tarama = 0.5*exp(-pow((vP.y - uTarama)*3.0, 2.0));                    // aşağı inen ışık bandı
+      float kenarAlt = smoothstep(-2.4, -0.8, vP.y);                               // boyun kaybolur
+      float titreme = 0.92 + 0.08*hash(floor(uZaman*24.0));
+      float a = (0.05 + fr*0.85 + cizgi*0.10 + tarama*0.55) * kenarAlt * uParlak * titreme;
+      vec3 c = mix(uRenk, vec3(0.85,0.97,1.0), fr*0.5 + tarama*0.4);
+      gl_FragColor = vec4(c * a, a);
+    }`,
+});
+
+const telMat = new THREE.ShaderMaterial({
+  uniforms: ortak, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, wireframe: true,
+  vertexShader: deformGLSL + /* glsl */`
+    varying float vOn; varying float vY;
+    void main(){
+      vec3 p = deform(position);
+      vec4 mv = modelViewMatrix * vec4(p,1.0);
+      vOn = clamp(dot(normalize(normalMatrix*normal), normalize(-mv.xyz)), 0.0, 1.0);
+      vY = position.y;
+      gl_Position = projectionMatrix * mv;
+    }`,
+  fragmentShader: /* glsl */`
+    uniform float uParlak, uTarama; uniform vec3 uRenk; varying float vOn; varying float vY;
+    void main(){
+      float tarama = 0.6*exp(-pow((vY - uTarama)*3.5, 2.0));
+      float a = (0.035 + 0.05*vOn + tarama*0.35) * smoothstep(-2.4,-0.8,vY) * uParlak;
+      gl_FragColor = vec4(uRenk * a, a);
+    }`,
+});
+
+const noktaMat = new THREE.ShaderMaterial({
+  uniforms: ortak, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+  vertexShader: deformGLSL + /* glsl */`
+    attribute float aRast; varying float vA;
+    void main(){
+      vec3 p = deform(position);
+      vec4 mv = modelViewMatrix * vec4(p,1.0);
+      float on = clamp(dot(normalize(normalMatrix*normal), normalize(-mv.xyz)), 0.0, 1.0);
+      float pirilti = pow(0.5+0.5*sin(uZaman*3.0 + aRast*40.0), 6.0);
+      vA = (0.15 + 0.85*pirilti) * on * smoothstep(-2.4,-0.8,position.y) * step(aRast, 0.35);
+      gl_PointSize = (1.2 + 2.2*pirilti) * (300.0 / -mv.z) * 0.06;
+      gl_Position = projectionMatrix * mv;
+    }`,
+  fragmentShader: /* glsl */`
+    uniform float uParlak; uniform vec3 uRenk; varying float vA;
+    void main(){
+      float d = length(gl_PointCoord - 0.5); if (d > 0.5) discard;
+      float a = vA * (1.0 - d*2.0) * uParlak;
+      gl_FragColor = vec4(mix(uRenk, vec3(1.0), 0.6) * a, a);
+    }`,
+});
+
+/* ---------------- göz parıltısı ---------------- */
+function parlamaDokusu(){
+  const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d');
+  const g = x.createRadialGradient(64,64,0,64,64,64);
+  g.addColorStop(0,'rgba(255,255,255,1)'); g.addColorStop(0.12,'rgba(190,245,255,0.95)');
+  g.addColorStop(0.35,'rgba(53,212,255,0.35)'); g.addColorStop(1,'rgba(53,212,255,0)');
+  x.fillStyle = g; x.fillRect(0,0,128,128); return new THREE.CanvasTexture(c);
+}
+const gozDoku = parlamaDokusu();
+const gozler = [-1,1].map(sx => {
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: gozDoku, color: 0xffffff, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
+  s.position.set(sx*0.62, 1.62, 2.0); s.scale.set(0.6,0.6,1); return s;
+});
+
+/* ---------------- kafa ---------------- */
+const kafa = new THREE.Group();
+scene.add(kafa);
+gozler.forEach(g => kafa.add(g));
+new GLTFLoader().load('model/LeePerrySmith.glb', gltf => {
+  // Doku dikişlerindeki çift köşeleri birleştir → pürüzsüz normaller (dikiş çizgisi görünmez)
+  const ham = new THREE.BufferGeometry();
+  ham.setAttribute('position', gltf.scene.children[0].geometry.attributes.position);
+  ham.setIndex(gltf.scene.children[0].geometry.index);
+  const geo = mergeVertices(ham, 1e-3);
+  geo.computeVertexNormals();
+  const r = new Float32Array(geo.attributes.position.count); for (let i=0;i<r.length;i++) r[i]=Math.random();
+  geo.setAttribute('aRast', new THREE.BufferAttribute(r,1));
+  // Derinlik ön geçişi: hologram yarı saydam olduğu için ağız/göz içi gibi iç yüzeyler
+  // görünmesin diye önce sadece derinlik yazılır, renk yazılmaz.
+  const ortu = new THREE.ShaderMaterial({ uniforms: ortak, colorWrite: false, polygonOffset: true, polygonOffsetFactor: 2, polygonOffsetUnits: 4,
+    vertexShader: deformGLSL + 'void main(){ gl_Position = projectionMatrix * modelViewMatrix * vec4(deform(position),1.0); }',
+    fragmentShader: 'void main(){ gl_FragColor = vec4(0.0); }' });
+  const ortuMesh = new THREE.Mesh(geo, ortu); ortuMesh.renderOrder = -1; kafa.add(ortuMesh);
+  kafa.add(new THREE.Mesh(geo, yuzMat));
+  kafa.add(new THREE.Mesh(geo, telMat));
+  kafa.add(new THREE.Points(geo, noktaMat));
+  window.jarvisHazir = true;
+});
+
+/* ---------------- arka plan parçacıkları ---------------- */
+{
+  const n = 900, p = new Float32Array(n*3);
+  for (let i=0;i<n;i++){ const r = 7+Math.random()*9, a = Math.random()*Math.PI*2;
+    p[i*3]=Math.cos(a)*r; p[i*3+1]=(Math.random()-0.5)*14; p[i*3+2]=Math.sin(a)*r-4; }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p,3));
+  const toz = new THREE.Points(g, new THREE.PointsMaterial({ color: 0x2aa8d8, size: 0.05, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite:false }));
+  toz.name = 'toz'; scene.add(toz);
+}
+
+/* ---------------- durum ---------------- */
+const params = new URLSearchParams(location.search);
+let durum = params.get('durum') || 'bekliyor';
+const tanitim = !params.get('durum');
+let altyazi = params.get('metin') || '', altyaziBas = 0, konusmaBitis = 0;
+window.jarvisDurum = d => { durum = d; };
+window.jarvisSoyle = m => { altyazi = m; altyaziBas = zaman(); durum = 'konusuyor'; konusmaBitis = zaman() + Math.max(2.5, m.length*0.065); };
+const SENARYO = [
+  ['bekliyor', 2.6, ''],
+  ['dinliyor', 2.4, ''],
+  ['dusunuyor', 1.6, ''],
+  ['konusuyor', 4.6, 'İyi akşamlar efendim. Salon yirmi iki derece, tüm sistemler normal çalışıyor.'],
+  ['dinliyor', 2.0, ''],
+  ['dusunuyor', 1.4, ''],
+  ['konusuyor', 4.2, 'Bilgisayarınızı açtım. Kapıda kimse yok, alarm devrede.'],
+];
+const SENARYO_SURE = SENARYO.reduce((a,s)=>a+s[1],0);
+const ETIKET = { bekliyor:'BEKLEMEDE', dinliyor:'DİNLİYORUM', dusunuyor:'İŞLENİYOR', konusuyor:'YANITLIYOR' };
+const DURUM_RENK = { bekliyor:'#7f93a6', dinliyor:'#3ddc97', dusunuyor:'#a58bff', konusuyor:'#35d4ff' };
+
+// Kayıt için sabit zaman: window.__kare (30 fps)
+const t0 = performance.now();
+const zaman = () => (window.__kare !== undefined ? window.__kare/30 : (performance.now()-t0)/1000);
+
+/* ---------------- HUD (2B katman) ---------------- */
+const hud = document.getElementById('hud'), h = hud.getContext('2d');
+let W=0, H=0, D=1;
+function boyut(){
+  D = Math.min(devicePixelRatio, 2); W = innerWidth; H = innerHeight;
+  renderer.setSize(W, H, false); composer.setSize(W, H); bloom.setSize(W*D, H*D);
+  camera.aspect = W/H; camera.updateProjectionMatrix();
+  hud.width = W*D; hud.height = H*D; h.setTransform(D,0,0,D,0,0);
+}
+addEventListener('resize', boyut); boyut();
+
+const MONO = '"JetBrains Mono", "DejaVu Sans Mono", monospace';
+const SANS = 'Inter, "DejaVu Sans", sans-serif';
+const cyan = a => `rgba(53,212,255,${a})`;
+const spektrum = new Array(48).fill(0);
+const grafik = new Array(60).fill(0).map((_,i)=>0.4+0.3*Math.sin(i/5));
+
+function yay(x,y,r,a0,a1,lw,renk){ h.beginPath(); h.arc(x,y,r,a0,a1); h.lineWidth=lw; h.strokeStyle=renk; h.stroke(); }
+function kose(x,y,w,hh,l){ h.beginPath();
+  h.moveTo(x,y+l); h.lineTo(x,y); h.lineTo(x+l,y); h.moveTo(x+w-l,y); h.lineTo(x+w,y); h.lineTo(x+w,y+l);
+  h.moveTo(x+w,y+hh-l); h.lineTo(x+w,y+hh); h.lineTo(x+w-l,y+hh); h.moveTo(x+l,y+hh); h.lineTo(x,y+hh); h.lineTo(x,y+hh-l); h.stroke(); }
+function panel(x,y,w,baslik,satirlar){
+  h.strokeStyle=cyan(0.45); h.lineWidth=1; kose(x,y,w,22+satirlar.length*19,8);
+  h.fillStyle=cyan(0.06); h.fillRect(x,y,w,20);
+  h.font=`600 10px ${MONO}`; h.fillStyle=cyan(0.9); h.textAlign='left'; h.fillText(baslik, x+8, y+14);
+  satirlar.forEach(([k,v,renk],i)=>{ h.fillStyle=cyan(0.55); h.fillText(k, x+8, y+38+i*19);
+    h.textAlign='right'; h.fillStyle=renk||'rgba(220,245,255,0.92)'; h.fillText(v, x+w-8, y+38+i*19); h.textAlign='left'; });
+}
+
+function hudCiz(t, ses){
+  h.clearRect(0,0,W,H);
+  const cx = W/2, cy = H*0.47, R = Math.min(W,H)*0.36;
+  const hz = durum==='dusunuyor' ? 2.6 : 1;
+
+  // merkez halkaları
+  yay(cx,cy,R,0,Math.PI*2,1,cyan(0.12));
+  for (let i=0;i<3;i++){ const b=t*0.35*hz+i*2.094; yay(cx,cy,R,b,b+0.55,2,cyan(0.7)); }
+  yay(cx,cy,R*1.06,0,Math.PI*2,1,cyan(0.06));
+  for (let i=0;i<6;i++){ const b=-t*0.18*hz+i*Math.PI/3; yay(cx,cy,R*1.06,b,b+0.22,3,'rgba(165,139,255,0.55)'); }
+  // ölçek
+  h.save(); h.translate(cx,cy); h.rotate(t*0.04);
+  for (let i=0;i<180;i++){ const a=i/180*Math.PI*2, uzun=i%15===0; h.strokeStyle=cyan(uzun?0.6:0.18); h.lineWidth=1;
+    h.beginPath(); h.moveTo(Math.cos(a)*R*1.12, Math.sin(a)*R*1.12); h.lineTo(Math.cos(a)*(R*1.12+(uzun?12:5)), Math.sin(a)*(R*1.12+(uzun?12:5))); h.stroke(); }
+  h.restore();
+  // ses halkası
+  h.beginPath();
+  for (let i=0;i<=240;i++){ const a=i/240*Math.PI*2;
+    const r = R*0.93 + (Math.sin(a*9+t*7)*0.55+Math.sin(a*17-t*11)*0.45)*R*0.035*ses;
+    i ? h.lineTo(cx+Math.cos(a)*r, cy+Math.sin(a)*r) : h.moveTo(cx+Math.cos(a)*r, cy+Math.sin(a)*r); }
+  h.closePath(); h.strokeStyle=cyan(0.2+0.6*ses); h.lineWidth=1.5; h.shadowColor=cyan(1); h.shadowBlur=10; h.stroke(); h.shadowBlur=0;
+  // hedef işaretleri
+  h.strokeStyle=cyan(0.5); h.lineWidth=1;
+  [[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy])=>{ h.beginPath(); h.moveTo(cx+dx*R*1.2, cy+dy*R*1.2); h.lineTo(cx+dx*R*1.3, cy+dy*R*1.3); h.stroke(); });
+
+  // sol panel
+  const pw = Math.min(250, W*0.2), sx = 28;
+  panel(sx, 70, pw, 'SİSTEM DURUMU', [
+    ['ÇEKİRDEK', 'ÇEVRİMİÇİ', '#3ddc97'], ['YEREL ZEKÂ', 'HAZIR', '#3ddc97'], ['CLAUDE', 'BAĞLI', '#3ddc97'],
+    ['ZIGBEE AĞI', '9 CİHAZ'], ['KAMERALAR', '2 / 2 CANLI'], ['SON YEDEK', '03:00 ✓'] ]);
+  panel(sx, 230, pw, 'EV', [
+    ['SALON', '22,4°C  %48'], ['YATAK ODASI', '20,1°C  %51'], ['MUTFAK', '21,7°C'], ['KAPI', 'KİLİTLİ', '#3ddc97'], ['ALARM', 'DEVREDE', '#3ddc97'] ]);
+  // sağ panel
+  const rx = W - pw - 28;
+  const tarih = new Date(Date.UTC(2026,10,26,18,41,0) + t*1000);
+  const saat = tarih.toLocaleTimeString('tr-TR', {timeZone:'Europe/Istanbul'});
+  panel(rx, 70, pw, 'ZAMAN', [['SAAT', saat], ['TARİH', '26.11.2026'], ['DIŞARISI', '12°C  BULUTLU']]);
+  panel(rx, 172, pw, 'MİNİ PC', [
+    ['İŞLEMCİ', (16+Math.round(5*Math.sin(t*0.9)))+'%'], ['RAM', '14,2 / 24 GB'], ['DİSK', '96 / 500 GB'],
+    ['AĞ', (1.2+0.5*Math.sin(t*1.7)).toFixed(1)+' MB/s'] ]);
+  // yük grafiği
+  grafik.push(0.35+0.25*Math.sin(t*1.3)+0.15*Math.sin(t*4.1)); grafik.shift();
+  const gy = 280, gh = 50; h.strokeStyle=cyan(0.45); kose(rx, gy, pw, gh+20, 8);
+  h.font=`600 10px ${MONO}`; h.fillStyle=cyan(0.9); h.textAlign='left'; h.fillText('İŞLEM YÜKÜ', rx+8, gy+14);
+  h.beginPath(); grafik.forEach((v,i)=>{ const x=rx+8+i*(pw-16)/59, y=gy+gh+14-v*gh*0.8; i?h.lineTo(x,y):h.moveTo(x,y); });
+  h.strokeStyle=cyan(0.85); h.lineWidth=1.2; h.stroke();
+
+  // alt spektrum
+  for (let i=0;i<spektrum.length;i++){
+    const hedef = ses * (0.3 + 0.7*Math.abs(Math.sin(t*9 + i*0.7) * Math.sin(t*3.3 + i*0.23)));
+    spektrum[i] += (hedef - spektrum[i]) * 0.35; }
+  const bw = Math.min(520, W*0.42), bx = cx - bw/2, by = H*0.88;
+  spektrum.forEach((v,i)=>{ const x = bx + i*bw/spektrum.length, hh = 2 + v*34;
+    h.fillStyle = cyan(0.25+0.6*v); h.fillRect(x, by-hh, bw/spektrum.length-2, hh); h.fillRect(x, by+3, bw/spektrum.length-2, hh*0.35); });
+
+  // başlık ve durum
+  h.textAlign='center';
+  h.font=`700 ${Math.round(Math.min(W,H)*0.042)}px ${SANS}`; h.letterSpacing=`${Math.round(Math.min(W,H)*0.02)}px`;
+  h.fillStyle='rgba(225,248,255,0.95)'; h.shadowColor=cyan(0.9); h.shadowBlur=16; h.fillText('JARVIS', cx+Math.round(Math.min(W,H)*0.01), 52);
+  h.shadowBlur=0; h.letterSpacing='3px'; h.font=`600 12px ${MONO}`; h.fillStyle=DURUM_RENK[durum];
+  const nokta = (Math.floor(t*2)%2===0 || durum==='bekliyor') ? '●' : '○';
+  h.fillText(`${nokta}  ${ETIKET[durum]}`, cx, 74); h.letterSpacing='0px';
+  // altyazı
+  if (altyazi && durum==='konusuyor'){
+    const n = Math.min(altyazi.length, Math.floor((t-altyaziBas)*22));
+    h.font=`500 ${Math.round(Math.min(W,H)*0.026)}px ${SANS}`; h.fillStyle='rgba(230,244,252,0.95)';
+    h.fillText(altyazi.slice(0,n) + (n<altyazi.length?'▍':''), cx, H*0.955);
+  }
+  // çerçeve köşeleri ve tarama çizgileri
+  h.strokeStyle=cyan(0.35); h.lineWidth=1.5; kose(14,14,W-28,H-28,46);
+  h.fillStyle='rgba(0,0,0,0.10)'; for (let y=0;y<H;y+=3) h.fillRect(0,y,W,1);
+}
+
+/* ---------------- döngü ---------------- */
+let cene = 0, ses = 0, parlak = 0.6, yaw = 0, pitch = 0, kirpma = 1, bozulma = 0;
+let oncekiDurum = '';
+function kare(){
+  const t = zaman();
+  if (tanitim){
+    let k = t % SENARYO_SURE, i = 0; while (k > SENARYO[i][1]) { k -= SENARYO[i][1]; i++; }
+    const [d,,m] = SENARYO[i];
+    if (d !== durum || (m && altyazi !== m)) { durum = d; if (m){ altyazi = m; altyaziBas = t - k; } }
+  } else if (durum==='konusuyor' && konusmaBitis && t > konusmaBitis) durum = 'bekliyor';
+  if (durum !== oncekiDurum){ bozulma = 1; oncekiDurum = durum; }
+
+  let ceneH = 0.02, sesH = 0.05;
+  if (durum==='konusuyor'){ const hece = Math.max(0, 0.6*Math.sin(t*12.5) + 0.4*Math.sin(t*7.1+1.3));
+    ceneH = 0.15 + 0.85*hece*(0.65+0.35*Math.sin(t*1.9)); sesH = 0.45 + 0.55*hece; }
+  else if (durum==='dinliyor'){ sesH = 0.25 + 0.25*Math.abs(Math.sin(t*4.3)*Math.sin(t*1.7)); }
+  else if (durum==='dusunuyor'){ sesH = 0.15; }
+  cene += (ceneH-cene)*0.45; ses += (sesH-ses)*0.25;
+  const parlakH = {bekliyor:0.6, dinliyor:0.95, dusunuyor:0.8, konusuyor:1.0}[durum];
+  parlak += (parlakH-parlak)*0.06;
+  bozulma *= 0.9;
+
+  // baş hareketi: beklerken yavaş bakınma, dinlerken kameraya döner, düşünürken hafif yukarı
+  const yawH = durum==='dinliyor' ? 0.05*Math.sin(t*0.8) : durum==='konusuyor' ? 0.12*Math.sin(t*0.6) : 0.32*Math.sin(t*0.27);
+  const pitchH = durum==='dusunuyor' ? -0.12 : 0.04*Math.sin(t*0.5) + (durum==='konusuyor'? 0.03*Math.sin(t*2.3):0);
+  yaw += (yawH-yaw)*0.04; pitch += (pitchH-pitch)*0.05;
+  kafa.rotation.set(pitch, yaw, durum==='dinliyor'? 0.04 : 0);
+  kafa.position.y = 0.12*Math.sin(t*0.6);
+
+  // göz kırpma (her ~4 sn)
+  const kp = (t % 4.2); kirpma = kp < 0.14 ? Math.abs(Math.cos(kp/0.14*Math.PI)) * 0.9 + 0.1 : 1;
+  const gp = (durum==='dinliyor'?1.15:durum==='konusuyor'?1.0:0.8) * parlak;
+  gozler.forEach(g => { g.scale.set(0.55*gp, 0.55*gp*kirpma, 1); g.material.opacity = Math.min(1, gp); });
+
+  ortak.uZaman.value = t; ortak.uCene.value = cene; ortak.uParlak.value = parlak;
+  ortak.uTarama.value = 4.2 - ((t*0.9) % 9.5); ortak.uBozulma.value = bozulma;
+  const toz = scene.getObjectByName('toz'); toz.rotation.y = t*0.02;
+  bloom.strength = 0.55 + 0.45*parlak;
+
+  composer.render();
+  hudCiz(t, ses);
+}
+window.__ciz = kare;                       // kayıt aracı için
+renderer.setAnimationLoop(() => { if (window.__kare === undefined) kare(); });
+</script>
+</body>
+</html>
