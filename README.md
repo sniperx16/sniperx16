@@ -50,7 +50,7 @@ Kılavuz PDF'teki bölüm numaraları parantez içinde.
 
 ### A. Senin yapacakların (cihazın başında, ≈ 45 dk)
 1. RAM ve SSD'yi tak (1), BIOS ayarlarını yap (2).
-2. Proxmox'u **1 TB** diske kur (3). Sabit IP: `jarvis.env.ornek` içindeki `PROXMOX_IP`.
+2. Proxmox'u **500 GB** diske kur (256 GB'a değil) (3). Sabit IP: `jarvis.env.ornek` içindeki `PROXMOX_IP`.
 
 ### B. Proxmox (tarayıcıdan `https://<PROXMOX_IP>:8006` → jarvis → Shell)
 ```bash
