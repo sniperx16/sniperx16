@@ -10,6 +10,7 @@ bilgisayarını açıp kontrol edebilir.
 | `Jarvis_Uygun_Maliyet_Calismasi.pdf` | Parça listesi ve maliyet çalışması |
 | `homeassistant/SESLI-ASISTAN.md` | Sesli asistan, Claude ve paket kurulumu |
 | `esphome/BAGLANTI.md` | Ses uydusu bağlantı şeması |
+| `SALI-HAZIRLIK.md` · `Jarvis_Sali_Kontrol_Listesi.pdf` | Kurulum günü kontrol listesi (sırayla, süreleriyle; yazdırılabilir) |
 
 ## Sistem nasıl çalışır
 
@@ -40,7 +41,8 @@ bilgisayarını açıp kontrol edebilir.
 | `jarvis.env.ornek` | IP adresleri, şifreler, MAC – **tek ayar dosyası** | — |
 | `proxmox/kur.sh` | Depo, yedek disk, HA VM, OpenJarvis VM, gece yedeği, Zigbee USB | Proxmox Shell (root) |
 | `openjarvis/` | Kurulum betiği, ayar şablonu, Jarvis kişiliği | Ubuntu VM (jarvis kullanıcısı) |
-| `homeassistant/` | Jarvis paketi (betikler, otomasyonlar), secrets örneği, ses rehberi | Home Assistant |
+| `homeassistant/` | Kurulum betiği (`kur.sh`), Jarvis paketi, pano, secrets örneği, ses rehberi | Home Assistant (Terminal & SSH) |
+| `homeassistant/www/jarvis/` | Holografik Jarvis yüzü (canlı HA bağlantılı) + `ayarlar.json` | `http://<HA-IP>:8123/local/jarvis/` |
 | `esphome/` | "Hey Jarvis" ses uydusu kodu ve bağlantı şeması | ESP32-S3 |
 | `windows/` | Wake-on-LAN hazırlık betiği | Windows bilgisayar (yönetici) |
 
@@ -66,11 +68,10 @@ chmod +x proxmox/kur.sh openjarvis/kur.sh
 ./proxmox/kur.sh jarvis        # (6)   Ubuntu VM (kurulum ekranı yok, otomatik)
 ./proxmox/kur.sh yedekleme     # (9)   her gece 03:00 yedek
 ```
-> Repo gizliyse `git clone` kullanıcı adı ve şifre yerine GitHub **Personal Access Token** ister
-> (GitHub → Settings → Developer settings → Fine-grained tokens → bu repoya "Contents: Read").
-
 ### C. Home Assistant (`http://<HA-IP>:8123`)
-Hesabını oluştur, sonra `homeassistant/SESLI-ASISTAN.md` içindeki 1–6. adımlar.
+Hesabını oluştur, sonra `homeassistant/SESLI-ASISTAN.md`:
+1. adımdaki **tek komutla** Jarvis dosyalarını yükle (Terminal & SSH eklentisinde `homeassistant/kur.sh`),
+2–6. adımlarda ses hattını, Claude'u ve MCP'yi tıklayarak ayarla, 8. adımda hologram ve panoyu aç.
 
 ### D. OpenJarvis (Ubuntu VM)
 ```bash

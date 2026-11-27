@@ -8,6 +8,17 @@
   html,body{margin:0;height:100%;background:#010409;overflow:hidden}
   #gl,#hud{position:fixed;inset:0;width:100vw;height:100vh;display:block}
   #hud{pointer-events:none}
+  .kutu{position:fixed;left:50%;transform:translateX(-50%);font:500 16px Inter,"DejaVu Sans",sans-serif;color:#e6f6ff}
+  #sor{bottom:7vh;width:min(640px,80vw);display:none}
+  #sor input{width:100%;box-sizing:border-box;padding:14px 18px;border-radius:14px;border:1px solid rgba(53,212,255,.55);
+    background:rgba(2,14,24,.85);color:#e6f6ff;font:inherit;outline:none;box-shadow:0 0 24px rgba(53,212,255,.25)}
+  #kurulum{top:50%;transform:translate(-50%,-50%);width:min(520px,88vw);display:none;background:rgba(2,14,24,.94);
+    border:1px solid rgba(53,212,255,.5);border-radius:16px;padding:22px;box-shadow:0 0 40px rgba(53,212,255,.2)}
+  #kurulum h3{margin:0 0 8px;letter-spacing:.12em;color:#35d4ff;font-size:15px}
+  #kurulum p{margin:6px 0 12px;font-size:13px;line-height:1.5;color:#a9c3d3}
+  #kurulum input{width:100%;box-sizing:border-box;padding:11px 12px;border-radius:10px;border:1px solid #23465a;background:#03121d;color:#e6f6ff;font:13px "JetBrains Mono",monospace}
+  #kurulum button{margin-top:12px;padding:10px 16px;border:0;border-radius:10px;background:#35d4ff;color:#02121c;font-weight:700;cursor:pointer}
+  #kurulum .ikinci{background:transparent;color:#7f93a6;margin-left:8px}
 </style>
 <script type="importmap">
 { "imports": { "three": "./lib/three.module.js", "three/addons/": "./lib/addons/" } }
@@ -16,13 +27,28 @@
 <body>
 <canvas id="gl"></canvas>
 <canvas id="hud"></canvas>
+<div id="sor" class="kutu"><input id="sorGiris" placeholder="Jarvis'e yazın ve Enter'a basın…" autocomplete="off"></div>
+<div id="kurulum" class="kutu">
+  <h3>HOME ASSISTANT BAĞLANTISI</h3>
+  <p>Jarvis'in gerçek verileri göstermesi için bu cihaza bir kez <b>uzun ömürlü erişim jetonu</b> girin.<br>
+     Home Assistant → profil (sol alt) → Güvenlik → Uzun ömürlü erişim jetonları → Jeton oluştur.<br>
+     Jeton yalnızca bu cihazın tarayıcısında saklanır.</p>
+  <input id="jetonGiris" placeholder="eyJhbGciOi…" autocomplete="off">
+  <div><button id="jetonKaydet">Bağlan</button><button id="tanitimDevam" class="ikinci">Tanıtım modunda kal</button></div>
+</div>
 <script type="module">
 /* =====================================================================
    Ev Jarvis'i – holografik yüz (three.js)
    Model: "Infinite, 3D Head Scan" – Lee Perry-Smith, CC BY 3.0 (KAYNAKLAR.md)
 
+   Home Assistant'tan açıldığında (http://<HA>:8123/local/jarvis/index.html) otomatik bağlanır:
+     ses uydusunun durumu, Jarvis'in cevabı, panellerdeki sensörler canlı gelir (ayarlar.json).
+     Ekrana dokun / bir tuşa bas → Jarvis'e yaz; cevap sesli okunur, ağız sese göre hareket eder.
+
    Kontrol:
-     ?durum=bekliyor|dinliyor|dusunuyor|konusuyor   (yoksa tanıtım modu)
+     ?demo=1                                          tanıtım modu (bağlanmaz)
+     ?ha=http://192.168.1.52:8123                     başka adresteki Home Assistant
+     ?durum=bekliyor|dinliyor|dusunuyor|konusuyor   (sabit durum, test için)
      window.jarvisDurum('dinliyor')
      window.jarvisSoyle('Merhaba efendim.')          (altyazı + konuşma)
    ===================================================================== */
@@ -216,13 +242,18 @@ new GLTFLoader().load('model/LeePerrySmith.glb', gltf => {
 /* ---------------- durum ---------------- */
 const params = new URLSearchParams(location.search);
 let durum = params.get('durum') || 'bekliyor';
-const tanitim = !params.get('durum');
+let tanitim = !params.get('durum');          // HA'ya bağlanınca kapanır
 let altyazi = params.get('metin') || '', altyaziBas = 0, konusmaBitis = 0;
+let duyulan = '';                            // kullanıcının söylediği/yazdığı son cümle
+let sesSeviyesi = 0;                         // çalan sesin anlık şiddeti (0–1)
 window.jarvisDurum = d => { durum = d; };
-// Konuşma hızı (harf/sn). Gerçek ses bağlanınca sesin süresine göre ayarlanır.
-const HIZ = 14;
-const konusmaSuresi = m => m.length / HIZ + 0.6;
-window.jarvisSoyle = m => { altyazi = m; altyaziBas = zaman(); durum = 'konusuyor'; konusmaBitis = zaman() + konusmaSuresi(m); };
+// Konuşma hızı (harf/sn). Gerçek ses çalarken sesin süresine göre ayarlanır.
+const HIZ_VARSAYILAN = 14;
+let HIZ = HIZ_VARSAYILAN;
+const konusmaSuresi = m => m.length / HIZ_VARSAYILAN + 0.6;
+// sure: saniye; null → durum dışarıdan (HA) bitirilene kadar konuşur
+window.jarvisSoyle = (m, sure) => { altyazi = m; altyaziBas = zaman(); durum = 'konusuyor';
+  konusmaBitis = sure === null ? 0 : zaman() + (sure || konusmaSuresi(m)); };
 const M1 = 'İyi akşamlar efendim. Salon yirmi iki derece, tüm sistemler normal çalışıyor.';
 const M2 = 'Bilgisayarınızı açtım. Kapıda kimse yok, alarm devrede.';
 const SENARYO = [
@@ -264,6 +295,230 @@ const DURUM_RENK = { bekliyor:'#7f93a6', dinliyor:'#3ddc97', dusunuyor:'#a58bff'
 // Kayıt için sabit zaman: window.__kare (30 fps)
 const t0 = performance.now();
 const zaman = () => (window.__kare !== undefined ? window.__kare/30 : (performance.now()-t0)/1000);
+
+/* =====================================================================
+   Home Assistant bağlantısı
+   ===================================================================== */
+const DEMO_SOL = [
+  { baslik:'SİSTEM DURUMU', satirlar:[['ÇEKİRDEK','ÇEVRİMİÇİ','#3ddc97'],['YEREL ZEKÂ','HAZIR','#3ddc97'],['CLAUDE','BAĞLI','#3ddc97'],
+    ['ZIGBEE AĞI','9 CİHAZ'],['KAMERALAR','2 / 2 CANLI'],['SON YEDEK','03:00 ✓']] },
+  { baslik:'EV', satirlar:[['SALON','22,4°C  %48'],['YATAK ODASI','20,1°C  %51'],['MUTFAK','21,7°C'],['KAPI','KİLİTLİ','#3ddc97'],['ALARM','DEVREDE','#3ddc97']] },
+];
+const DEMO_SAG = [
+  { baslik:'MİNİ PC', satirlar:[['İŞLEMCİ','16%'],['RAM','14,2 / 24 GB'],['DİSK','96 / 500 GB'],['AĞ','1,2 MB/s']] },
+];
+const HAVA_TR = { 'clear-night':'AÇIK', 'cloudy':'BULUTLU', 'fog':'SİSLİ', 'hail':'DOLU', 'lightning':'ŞİMŞEKLİ',
+  'lightning-rainy':'FIRTINALI', 'partlycloudy':'PARÇALI BULUTLU', 'pouring':'SAĞANAK', 'rainy':'YAĞMURLU', 'snowy':'KARLI',
+  'snowy-rainy':'KARLA KARIŞIK', 'sunny':'GÜNEŞLİ', 'windy':'RÜZGÂRLI', 'windy-variant':'RÜZGÂRLI', 'exceptional':'OLAĞANDIŞI' };
+const YESIL = '#3ddc97', KIRMIZI = '#ff6b6b', SARI = '#ffb547';
+
+const HA = (() => {
+  let ayar = {}, ws = null, bagli = false, kimlik = 1, beklenen = new Map(), olaylar = new Map();
+  const durumlar = new Map();
+  let pipelineId = '', sohbetId = null, yukGecmisi = 0.3, ses = null, analiz = null, sesVeri = null;
+
+  const haUrl = () => (params.get('ha') || ayar.ha_url || location.origin).replace(/\/$/, '');
+  const st = id => durumlar.get(id);
+
+  async function jeton(){
+    const elle = localStorage.getItem('jarvis_token');
+    if (elle) return elle;
+    // Home Assistant arayüzünde oturum açılmış bu tarayıcıda (aynı adres) oturumu kullan
+    try {
+      const t = JSON.parse(localStorage.getItem('hassTokens') || 'null');
+      if (!t) return null;
+      if (Date.now() < t.expires - 60000) return t.access_token;
+      const r = await fetch(haUrl() + '/auth/token', { method:'POST',
+        body: new URLSearchParams({ grant_type:'refresh_token', client_id:t.clientId, refresh_token:t.refresh_token }) });
+      if (!r.ok) return null;
+      const y = await r.json(); t.access_token = y.access_token; t.expires = Date.now() + y.expires_in*1000;
+      localStorage.setItem('hassTokens', JSON.stringify(t)); return y.access_token;
+    } catch { return null; }
+  }
+
+  function gonder(msg){ const id = kimlik++; msg.id = id; ws.send(JSON.stringify(msg));
+    return new Promise((ok, hata) => beklenen.set(id, { ok, hata })); }
+  function abone(msg, isle){ const id = kimlik++; msg.id = id; olaylar.set(id, isle); ws.send(JSON.stringify(msg));
+    return new Promise((ok, hata) => beklenen.set(id, { ok, hata })); }
+
+  let deneme = 0;
+  async function baglan(){
+    const tk = await jeton();
+    if (!tk) { kurulumGoster(); return; }
+    const url = haUrl().replace(/^http/, 'ws') + '/api/websocket';
+    ws = new WebSocket(url);
+    ws.onmessage = async e => {
+      const m = JSON.parse(e.data);
+      if (m.type === 'auth_required') ws.send(JSON.stringify({ type:'auth', access_token: tk }));
+      else if (m.type === 'auth_invalid') { localStorage.removeItem('jarvis_token'); kurulumGoster('Jeton geçersiz, yeniden girin.'); ws.close(); }
+      else if (m.type === 'auth_ok') { bagli = true; deneme = 0; tanitim = false; durum = 'bekliyor'; await basla(); }
+      else if (m.type === 'result') { const b = beklenen.get(m.id); if (b){ beklenen.delete(m.id); m.success ? b.ok(m.result) : b.hata(m.error); } }
+      else if (m.type === 'event') { const f = olaylar.get(m.id); if (f) f(m.event); }
+    };
+    ws.onclose = () => { bagli = false; olaylar.clear(); beklenen.clear();
+      if (document.getElementById('kurulum').style.display !== 'block') setTimeout(baglan, Math.min(30000, 1000 * 2 ** deneme++)); };
+  }
+
+  async function basla(){
+    (await gonder({ type:'get_states' })).forEach(s => durumlar.set(s.entity_id, s));
+    await abone({ type:'subscribe_events', event_type:'state_changed' }, ev => {
+      const { entity_id, new_state, old_state } = ev.data;
+      if (new_state) durumlar.set(entity_id, new_state); else durumlar.delete(entity_id);
+      if (entity_id === uydu() && new_state) uyduDegisti(new_state.state, old_state && old_state.state);
+    });
+    try { const p = await gonder({ type:'assist_pipeline/pipeline/list' }); pipelineId = ayar.pipeline || p.preferred_pipeline || ''; } catch {}
+    const u = st(uydu()); if (u) uyduDegisti(u.state);
+  }
+
+  // ses uydusu: ayarlar.json'daki ya da bulunan ilk assist_satellite varlığı
+  const uydu = () => ayar.uydu || [...durumlar.keys()].find(k => k.startsWith('assist_satellite.')) || '';
+
+  async function sonCalisma(){
+    if (!pipelineId) return null;
+    try {
+      const l = await gonder({ type:'assist_pipeline/pipeline_debug/list', pipeline_id: pipelineId });
+      const son = l.pipeline_runs[l.pipeline_runs.length - 1]; if (!son) return null;
+      const d = await gonder({ type:'assist_pipeline/pipeline_debug/get', pipeline_id: pipelineId, pipeline_run_id: son.pipeline_run_id });
+      const bul = tip => (d.events || []).filter(e => e.type === tip).pop();
+      const stt = bul('stt-end'), ie = bul('intent-end');
+      return { duyulan: stt && stt.data.stt_output && stt.data.stt_output.text,
+               cevap: ie && ie.data.intent_output && ie.data.intent_output.response.speech.plain.speech };
+    } catch { return null; }
+  }
+
+  async function uyduDegisti(yeni, eski){
+    if (yeni === 'listening') { durum = 'dinliyor'; duyulan = ''; }
+    else if (yeni === 'processing') { durum = 'dusunuyor'; const c = await sonCalisma(); if (c && c.duyulan) duyulan = c.duyulan; }
+    else if (yeni === 'responding') {
+      const c = await sonCalisma();
+      if (c && c.duyulan) duyulan = c.duyulan;
+      window.jarvisSoyle(c && c.cevap ? c.cevap : '…', null);   // uydu konuşmayı bitirince 'idle' gelir
+    }
+    else if (yeni === 'idle' && !ses) { if (durum === 'konusuyor') { konusmaBitis = zaman() + 0.8; } else { durum = 'bekliyor'; duyulan = ''; } }
+  }
+
+  /* ---- tabletten yazarak sorma: Assist hattı (metin → cevap → ses) ---- */
+  async function sor(metin, sonAsama = 'tts'){
+    if (!bagli) { duyulan = metin; window.jarvisSoyle('Home Assistant bağlantısı yok. Tanıtım modundayım.'); return; }
+    duyulan = metin; durum = 'dusunuyor';
+    let cevap = '';
+    const istek = { type:'assist_pipeline/run', start_stage:'intent', end_stage: sonAsama, input:{ text: metin } };
+    if (pipelineId) istek.pipeline = pipelineId;
+    if (sohbetId) istek.conversation_id = sohbetId;
+    try {
+      await abone(istek, ev => {
+        if (ev.type === 'intent-end') {
+          const o = ev.data.intent_output; cevap = o.response.speech.plain.speech; sohbetId = o.conversation_id || sohbetId;
+        } else if (ev.type === 'tts-end') {
+          const u = ev.data.tts_output && (ev.data.tts_output.url || ev.data.tts_output.media_id);
+          sesliOku(cevap, u && u.startsWith('/') ? haUrl() + u : u);
+        } else if (ev.type === 'error') {
+          if (cevap) window.jarvisSoyle(cevap); else window.jarvisSoyle('Bir sorun oluştu: ' + ev.data.message);
+        } else if (ev.type === 'run-end' && cevap && durum !== 'konusuyor') window.jarvisSoyle(cevap);
+      });
+    } catch (e) {
+      // Ses hattında yazıdan sese (TTS) yoksa sessiz, yalnızca yazılı cevap ver
+      // (HA bu durumda yalnızca "Unknown error" döndürüyor, bu yüzden her hatada bir kez sessiz dener)
+      if (sonAsama === 'tts') return sor(metin, 'intent');
+      window.jarvisSoyle('Bir sorun oluştu: ' + ((e && (e.message || e.code)) || 'bilinmeyen hata'));
+    }
+  }
+
+  function sesliOku(metin, url){
+    if (!url) { window.jarvisSoyle(metin); return; }
+    ses = new Audio(url); ses.crossOrigin = 'anonymous';
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const kaynak = ctx.createMediaElementSource(ses); analiz = ctx.createAnalyser(); analiz.fftSize = 512;
+      kaynak.connect(analiz); analiz.connect(ctx.destination); sesVeri = new Uint8Array(analiz.fftSize);
+    } catch { analiz = null; }
+    ses.onloadedmetadata = () => { if (isFinite(ses.duration) && ses.duration > 0.5) HIZ = Math.max(8, Math.min(22, metin.length / (ses.duration - 0.3))); };
+    ses.onplay = () => window.jarvisSoyle(metin, null);
+    ses.onended = ses.onerror = () => { konusmaBitis = zaman() + 0.4; HIZ = HIZ_VARSAYILAN; ses = null; analiz = null; sesSeviyesi = 0; };
+    ses.play().catch(() => { ses = null; window.jarvisSoyle(metin); });
+  }
+
+  function sesOlc(){
+    if (!analiz) return 0;
+    analiz.getByteTimeDomainData(sesVeri);
+    let t = 0; for (const v of sesVeri) { const x = (v - 128) / 128; t += x*x; }
+    return Math.min(1, Math.sqrt(t / sesVeri.length) * 4);
+  }
+
+  /* ---- paneller (ayarlar.json) ---- */
+  function deger(satir){
+    const s = st(satir.varlik);
+    if (!s || s.state === 'unavailable' || s.state === 'unknown') return ['—'];
+    if (satir.durumlar && satir.durumlar[s.state]) { const d = satir.durumlar[s.state]; return Array.isArray(d) ? d : [d]; }
+    const n = parseFloat(s.state);
+    if (!isNaN(n) && /^-?[\d.]+$/.test(s.state)) {
+      const b = satir.birim ?? s.attributes.unit_of_measurement ?? '';
+      return [n.toLocaleString('tr-TR', { maximumFractionDigits: satir.ondalik ?? 1 }) + (b ? (b === '%' ? '%' : ' ' + b) : '')];
+    }
+    return [String(s.state).toLocaleUpperCase('tr-TR')];
+  }
+  function sistem(){
+    const u = st(uydu());
+    return { baslik:'SİSTEM DURUMU', satirlar:[
+      ['HOME ASSISTANT', 'BAĞLI', YESIL],
+      ['SES UYDUSU', u ? (u.state === 'unavailable' ? 'ÇEVRİMDIŞI' : 'HAZIR') : 'YOK', u && u.state !== 'unavailable' ? YESIL : SARI],
+      ['ZIGBEE AĞI', zigbee()],
+      ['CİHAZ SAYISI', String(durumlar.size)],
+    ]};
+  }
+  const zigbee = () => { const n = [...durumlar.values()].filter(s => s.attributes && s.attributes.device_class && s.entity_id.startsWith('binary_sensor.')).length; return n ? n + ' SENSÖR' : '—'; };
+  function paneller(taraf){
+    if (!bagli) return taraf === 'sol' ? DEMO_SOL : DEMO_SAG;
+    const liste = (ayar.paneller && ayar.paneller[taraf]) || [];
+    const sonuc = liste.map(p => ({ baslik: p.baslik, satirlar: p.satirlar.map(r => [r.ad, ...deger(r)]) }));
+    return taraf === 'sol' ? [sistem(), ...sonuc] : sonuc;
+  }
+  function hava(){
+    if (!bagli) return '12°C  BULUTLU';
+    const id = ayar.hava || [...durumlar.keys()].find(k => k.startsWith('weather.'));
+    const s = id && st(id); if (!s) return '—';
+    const tmp = s.attributes.temperature;
+    return (tmp !== undefined ? Math.round(tmp) + '°C  ' : '') + (HAVA_TR[s.state] || s.state.toUpperCase());
+  }
+  function yuk(t){
+    if (!bagli) return 0.35+0.25*Math.sin(t*1.3)+0.15*Math.sin(t*4.1);
+    const s = ayar.yuk_sensoru && st(ayar.yuk_sensoru);
+    const v = s ? parseFloat(s.state)/100 : NaN;
+    if (!isNaN(v)) yukGecmisi += (v - yukGecmisi) * 0.05;
+    return yukGecmisi;
+  }
+
+  /* ---- kurulum penceresi ve yazma kutusu ---- */
+  function kurulumGoster(mesaj){
+    if (params.get('demo')) return;
+    const k = document.getElementById('kurulum'); k.style.display = 'block';
+    if (mesaj) k.querySelector('p').insertAdjacentHTML('afterbegin', `<b style="color:#ff6b6b">${mesaj}</b><br>`);
+  }
+  document.getElementById('jetonKaydet').onclick = () => {
+    const v = document.getElementById('jetonGiris').value.trim(); if (!v) return;
+    localStorage.setItem('jarvis_token', v); document.getElementById('kurulum').style.display = 'none'; baglan();
+  };
+  document.getElementById('tanitimDevam').onclick = () => { document.getElementById('kurulum').style.display = 'none'; };
+  const kutu = document.getElementById('sor'), giris = document.getElementById('sorGiris');
+  const ac = () => { if (document.getElementById('kurulum').style.display === 'block') return; kutu.style.display = 'block'; giris.focus(); };
+  addEventListener('pointerdown', e => { if (!e.target.closest('.kutu')) ac(); });
+  addEventListener('keydown', e => {
+    if (e.target === giris) {
+      if (e.key === 'Enter' && giris.value.trim()) { sor(giris.value.trim()); giris.value = ''; kutu.style.display = 'none'; }
+      else if (e.key === 'Escape') kutu.style.display = 'none';
+    } else if (e.key.length === 1 && !e.target.closest('.kutu')) ac();
+  });
+
+  async function baslat(){
+    try { ayar = await (await fetch('ayarlar.json', { cache:'no-store' })).json(); } catch { ayar = {}; }
+    if (params.get('demo') || params.get('durum') || window.__kare !== undefined) return;
+    baglan();
+  }
+  baslat();
+  return { paneller, hava, yuk, sesOlc, sor, bagliMi: () => bagli };
+})();
+window.jarvisSor = m => HA.sor(m);
+window.__jarvis = () => ({ durum, altyazi, duyulan, bagli: HA.bagliMi(), tanitim });   // tanılama
 
 /* ---------------- HUD (2B katman) ---------------- */
 const hud = document.getElementById('hud'), h = hud.getContext('2d');
@@ -321,22 +576,18 @@ function hudCiz(t, ses){
 
   // sol panel
   const pw = Math.min(250, W*0.2), sx = 28;
-  panel(sx, 70, pw, 'SİSTEM DURUMU', [
-    ['ÇEKİRDEK', 'ÇEVRİMİÇİ', '#3ddc97'], ['YEREL ZEKÂ', 'HAZIR', '#3ddc97'], ['CLAUDE', 'BAĞLI', '#3ddc97'],
-    ['ZIGBEE AĞI', '9 CİHAZ'], ['KAMERALAR', '2 / 2 CANLI'], ['SON YEDEK', '03:00 ✓'] ]);
-  panel(sx, 230, pw, 'EV', [
-    ['SALON', '22,4°C  %48'], ['YATAK ODASI', '20,1°C  %51'], ['MUTFAK', '21,7°C'], ['KAPI', 'KİLİTLİ', '#3ddc97'], ['ALARM', 'DEVREDE', '#3ddc97'] ]);
+  { let y = 70; for (const p of HA.paneller('sol')) { panel(sx, y, pw, p.baslik, p.satirlar); y += 22 + p.satirlar.length*19 + 26; } }
   // sağ panel
   const rx = W - pw - 28;
-  const tarih = new Date(Date.UTC(2026,10,26,18,41,0) + t*1000);
+  const tarih = window.__kare !== undefined ? new Date(Date.UTC(2026,10,26,18,41,0) + t*1000) : new Date();
   const saat = tarih.toLocaleTimeString('tr-TR', {timeZone:'Europe/Istanbul'});
-  panel(rx, 70, pw, 'ZAMAN', [['SAAT', saat], ['TARİH', '26.11.2026'], ['DIŞARISI', '12°C  BULUTLU']]);
-  panel(rx, 172, pw, 'MİNİ PC', [
-    ['İŞLEMCİ', (16+Math.round(5*Math.sin(t*0.9)))+'%'], ['RAM', '14,2 / 24 GB'], ['DİSK', '96 / 500 GB'],
-    ['AĞ', (1.2+0.5*Math.sin(t*1.7)).toFixed(1)+' MB/s'] ]);
+  const gun = tarih.toLocaleDateString('tr-TR', {timeZone:'Europe/Istanbul'});
+  let y = 70;
+  panel(rx, y, pw, 'ZAMAN', [['SAAT', saat], ['TARİH', gun], ['DIŞARISI', HA.hava()]]); y += 22 + 3*19 + 26;
+  for (const p of HA.paneller('sag')) { panel(rx, y, pw, p.baslik, p.satirlar); y += 22 + p.satirlar.length*19 + 26; }
   // yük grafiği
-  grafik.push(0.35+0.25*Math.sin(t*1.3)+0.15*Math.sin(t*4.1)); grafik.shift();
-  const gy = 280, gh = 50; h.strokeStyle=cyan(0.45); kose(rx, gy, pw, gh+20, 8);
+  grafik.push(HA.yuk(t)); grafik.shift();
+  const gy = y, gh = 50; h.strokeStyle=cyan(0.45); kose(rx, gy, pw, gh+20, 8);
   h.font=`600 10px ${MONO}`; h.fillStyle=cyan(0.9); h.textAlign='left'; h.fillText('İŞLEM YÜKÜ', rx+8, gy+14);
   h.beginPath(); grafik.forEach((v,i)=>{ const x=rx+8+i*(pw-16)/59, y=gy+gh+14-v*gh*0.8; i?h.lineTo(x,y):h.moveTo(x,y); });
   h.strokeStyle=cyan(0.85); h.lineWidth=1.2; h.stroke();
@@ -356,6 +607,11 @@ function hudCiz(t, ses){
   h.shadowBlur=0; h.letterSpacing='3px'; h.font=`600 12px ${MONO}`; h.fillStyle=DURUM_RENK[durum];
   const nokta = (Math.floor(t*2)%2===0 || durum==='bekliyor') ? '●' : '○';
   h.fillText(`${nokta}  ${ETIKET[durum]}`, cx, 74); h.letterSpacing='0px';
+  // kullanıcının söylediği
+  if (duyulan && (durum==='dusunuyor' || durum==='konusuyor')){
+    h.font=`500 ${Math.round(Math.min(W,H)*0.019)}px ${SANS}`; h.fillStyle='rgba(61,220,151,0.85)';
+    h.fillText('“' + duyulan + '”', cx, H*0.915);
+  }
   // altyazı
   if (altyazi && durum==='konusuyor'){
     const n = Math.min(altyazi.length, Math.floor((t-altyaziBas)*HIZ) + 1);
@@ -372,11 +628,12 @@ let cene = 0, genis = 0, yuvarlak = 0, gulum = 0, kas = 0, ses = 0, parlak = 0.6
 let oncekiDurum = '';
 function kare(){
   const t = zaman();
+  sesSeviyesi = HA.sesOlc();
   if (tanitim){
     let k = t % SENARYO_SURE, i = 0; while (k > SENARYO[i][1]) { k -= SENARYO[i][1]; i++; }
     const [d,,m] = SENARYO[i];
     if (d !== durum || (m && altyazi !== m)) { durum = d; if (m){ altyazi = m; altyaziBas = t - k; } }
-  } else if (durum==='konusuyor' && konusmaBitis && t > konusmaBitis) durum = 'bekliyor';
+  } else if (durum==='konusuyor' && konusmaBitis && t > konusmaBitis) { durum = 'bekliyor'; duyulan = ''; }
   if (durum !== oncekiDurum){ bozulma = 1; oncekiDurum = durum; }
 
   let ceneH = 0.02, genisH = 0, yuvarlakH = 0, gulumH = 0.12, kasH = 0, sesH = 0.05;
@@ -384,6 +641,7 @@ function kare(){
     const gecen = t - altyaziBas, bitti = gecen*HIZ >= altyazi.length;
     const [c, g, y] = bitti ? SESSIZLIK : viseme(altyazi, gecen);
     ceneH = c; genisH = g; yuvarlakH = y;
+    if (sesSeviyesi > 0) ceneH = Math.min(1, ceneH * (0.35 + 1.4*sesSeviyesi));   // gerçek ses çalıyorsa şiddete göre
     gulumH = bitti ? 0.45 : 0.10;                           // cümle bitince hafif gülümser
     kasH = 0.15 + 0.15*Math.max(0, Math.sin(gecen*1.7));    // konuşurken kaşlar canlı
     sesH = bitti ? 0.05 : 0.35 + 0.65*c;

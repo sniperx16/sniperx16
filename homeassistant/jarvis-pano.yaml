@@ -1,0 +1,64 @@
+# =====================================================================
+#  Ev Jarvis'i – Home Assistant panosu
+#  Ekleme: Ayarlar → Panolar → Pano ekle → "Sıfırdan yeni pano" → ad: Jarvis
+#  → panoyu aç → ✏️ (sağ üst) → ⋮ → "Ham yapılandırma düzenleyici" →
+#  içeriği tamamen bu dosyayla değiştir → Kaydet.
+#  "binary_sensor.salon_hareket" gibi ÖRNEK adları kendi cihazlarınla değiştir.
+# =====================================================================
+title: Jarvis
+views:
+  - title: Jarvis
+    path: jarvis
+    icon: mdi:robot
+    type: panel
+    cards:
+      - type: iframe
+        url: /local/jarvis/index.html
+        aspect_ratio: "56.25%"
+
+  - title: Ev
+    path: ev
+    icon: mdi:home
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Jarvis
+          - type: tile
+            entity: script.jarvis_gorev_ver
+            name: Jarvis'e görev ver
+          - type: tile
+            entity: script.iyi_geceler
+            name: İyi geceler
+          - type: tile
+            entity: input_boolean.gece_modu
+          - type: tile
+            entity: input_boolean.misafir_modu
+          - type: tile
+            entity: input_boolean.hareket_isik_otomasyonu
+      - type: grid
+        cards:
+          - type: heading
+            heading: Salon
+          # ÖRNEK – kendi cihaz adlarınla değiştir
+          - type: tile
+            entity: light.salon
+          - type: tile
+            entity: sensor.salon_sicaklik
+          - type: tile
+            entity: sensor.salon_nem
+          - type: tile
+            entity: binary_sensor.salon_hareket
+      - type: grid
+        cards:
+          - type: heading
+            heading: Bilgisayar
+          - type: tile
+            entity: script.bilgisayari_ac
+            name: Bilgisayarı aç
+          - type: heading
+            heading: Güvenlik
+          - type: tile
+            entity: binary_sensor.banyo_su_kacagi

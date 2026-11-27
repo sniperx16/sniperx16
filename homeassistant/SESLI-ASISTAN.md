@@ -5,19 +5,24 @@ Bu ayarlarla:
 - Anlaşılmayan veya karmaşık istekler **Claude**'a gider (Jarvis kişiliğiyle).
 - Bilgisayar, araştırma gibi büyük görevler **OpenJarvis**'e devredilir.
 
-## 1. Paketi yükle
-1. **Ayarlar → Eklentiler → Eklenti Mağazası → Studio Code Server** (veya File editor) kur ve aç.
-2. `/config/packages/` klasörünü oluştur, içine `homeassistant/packages/jarvis.yaml` dosyasını kopyala.
-3. `/config/configuration.yaml` dosyasının **en sonuna** ekle:
-   ```yaml
-   homeassistant:
-     packages: !include_dir_named packages
+## 1. Jarvis dosyalarını yükle (tek komut)
+1. Sol alttaki **profil adına** tıkla → **Gelişmiş mod**'u aç (eklenti mağazasında Terminal görünsün diye).
+2. **Ayarlar → Eklentiler → Eklenti Mağazası → "Terminal & SSH"** → Yükle → Başlat → **Web arayüzünü aç**.
+3. Açılan siyah ekrana şunu yapıştır ve Enter'a bas:
+   ```bash
+   curl -fsSL https://raw.githubusercontent.com/sniperx16/sniperx16/claude/home-automation-jarvis-rbwn7x/homeassistant/kur.sh | bash
    ```
-   (Dosyada zaten `homeassistant:` satırı varsa altına sadece `packages:` satırını ekle.)
-4. `/config/secrets.yaml` dosyasına `homeassistant/secrets.yaml.ornek` içindeki satırları ekle ve değerleri doldur.
-   OpenJarvis adresi ve anahtarı için OpenJarvis VM'inde: `./openjarvis/kur.sh anahtar`
-5. **Geliştirici Araçları → YAML → Yapılandırmayı kontrol et** → yeşilse **Yeniden başlat**.
-6. Örnek otomasyonlardaki cihaz adlarını (`binary_sensor.salon_hareket`, `light.salon` …) cihazların gelince kendi adlarınla değiştir.
+4. Betik sırayla sorar (bilmediğini boş geç, sonra **File editor** ile `secrets.yaml`'dan düzeltirsin):
+   - OpenJarvis adresi ve anahtarı → OpenJarvis VM'inde `./openjarvis/kur.sh anahtar` çıktısı
+   - Windows bilgisayarın MAC adresi → `windows/wol-hazirla.ps1` çıktısı
+   - Ev Wi-Fi adı ve şifresi → ses uydusu için
+5. Betik yapılandırmayı kontrol edip Home Assistant'ı yeniden başlatır (1–2 dk).
+
+Betik şunları kurar: Jarvis paketi (betikler, otomasyonlar), hologram arayüzü (`/config/www/jarvis`),
+pano dosyası (`/config/jarvis-pano.yaml`). Güncellemek için aynı komutu tekrar çalıştırman yeterli.
+
+Örnek otomasyonlardaki cihaz adlarını (`binary_sensor.salon_hareket`, `light.salon` …) cihazların gelince
+`/config/packages/jarvis.yaml` içinde kendi adlarınla değiştir.
 
 ## 2. Yerel ses eklentileri
 **Ayarlar → Eklentiler → Eklenti Mağazası**:
@@ -88,3 +93,16 @@ OpenJarvis yalnızca 5. adımda "Göster" ile açtığın cihazları görebilir.
 - "Hey Jarvis, ev çok sıcak, ne yapalım?" → Claude
 - "Hey Jarvis, bilgisayarımı aç." → betik
 - "Hey Jarvis, bu hafta sonu İstanbul'da yapılacak etkinlikleri araştır." → OpenJarvis'e görev
+
+## 8. Hologram ve pano
+- **Hologram (tam ekran):** `http://<HA-IP>:8123/local/jarvis/index.html`
+  - Home Assistant'ta oturum açılmış tarayıcıda otomatik bağlanır. Duvar tableti gibi başka bir cihazda
+    açarsan bir kez **uzun ömürlü jeton** ister; jeton sadece o cihazda saklanır.
+  - "Hey Jarvis" denince dinler, düşünür, Jarvis'in gerçek cevabını altyazıyla gösterir.
+  - Ekrana dokun ya da klavyede yazmaya başla → Jarvis'e yazılı soru sor; cevap sesli okunur,
+    ağız sese göre hareket eder.
+  - Paneller: `/config/www/jarvis/ayarlar.json` içindeki sensörler (File editor ile düzenle, sayfayı yenile).
+- **Pano:** Ayarlar → Panolar → **Pano ekle** → "Sıfırdan yeni pano" → ad: **Jarvis** → panoyu aç →
+  ✏️ → ⋮ → **Ham yapılandırma düzenleyici** → içeriği `/config/jarvis-pano.yaml` ile değiştir → Kaydet.
+  İlk sekme tam ekran hologram, ikinci sekme ev kontrolleri.
+

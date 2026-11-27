@@ -1,0 +1,39 @@
+{
+  "_aciklama": "Jarvis hologram ayarları. Varlık adlarını kendi cihazlarınla değiştir (Ayarlar → Cihazlar ve Hizmetler → Varlıklar). Bulunamayan varlık '—' görünür. Bu dosya herkese açık sunulur: içine şifre/jeton YAZMA.",
+  "ha_url": "",
+  "uydu": "",
+  "pipeline": "",
+  "hava": "",
+  "yuk_sensoru": "sensor.system_monitor_processor_use",
+  "paneller": {
+    "sol": [
+      {
+        "baslik": "EV",
+        "satirlar": [
+          { "ad": "SALON", "varlik": "sensor.salon_sicaklik" },
+          { "ad": "SALON NEM", "varlik": "sensor.salon_nem" },
+          { "ad": "HAREKET", "varlik": "binary_sensor.salon_hareket", "durumlar": { "on": ["VAR", "#ffb547"], "off": ["YOK", "#3ddc97"] } },
+          { "ad": "SU KAÇAĞI", "varlik": "binary_sensor.banyo_su_kacagi", "durumlar": { "on": ["ALARM!", "#ff6b6b"], "off": ["YOK", "#3ddc97"] } },
+          { "ad": "GECE MODU", "varlik": "input_boolean.gece_modu", "durumlar": { "on": ["AÇIK", "#a58bff"], "off": ["KAPALI"] } },
+          { "ad": "MİSAFİR MODU", "varlik": "input_boolean.misafir_modu", "durumlar": { "on": ["AÇIK", "#ffb547"], "off": ["KAPALI"] } }
+        ]
+      }
+    ],
+    "sag": [
+      {
+        "baslik": "MİNİ PC",
+        "satirlar": [
+          { "ad": "İŞLEMCİ", "varlik": "sensor.system_monitor_processor_use", "ondalik": 0 },
+          { "ad": "RAM", "varlik": "sensor.system_monitor_memory_usage", "ondalik": 0 },
+          { "ad": "DİSK", "varlik": "sensor.system_monitor_disk_usage", "ondalik": 0 }
+        ]
+      },
+      {
+        "baslik": "BİLGİSAYAR",
+        "satirlar": [
+          { "ad": "DURUM", "varlik": "sensor.masaustu_pc_durum" }
+        ]
+      }
+    ]
+  }
+}
